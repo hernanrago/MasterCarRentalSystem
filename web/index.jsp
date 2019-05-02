@@ -16,7 +16,7 @@
 <body>
 	<div id="header">
 		<div>
-                    <a href="index.html" id="logo"><img src="resources/images/logo.png" alt="logo"></a>
+                    <a href="index.html" id="logo"><img src="resources/images/car-logo.png" alt="logo"></a>
 			<ul>
 				<li class="selected">
 					<a href="index.html">Home</a>
@@ -40,25 +40,19 @@
 		<div class="blog">
 			<img src="resources/images/house.png" alt="">
 			<div>
-				<img src="resources/images/kayamura.png" alt="">
+                            <img src="resources/images/mcr-logo.png" alt="">
 				<h3>This is just a place holder</h3>
-				<p>
-					This website template has been designed by <br> <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free. You can replace all this <br> text with your own text. You can remove any link to our website <br> from this website template, you're free to use this website template <br> without linking back to us. If you're having problems editing this <br> website template, then don't hesitate to ask for help on the <br> <a href="http://www.freewebsitetemplates.com/forums/">Forums</a>.
-				</p>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
+                                </p>
 			</div>
 		</div>
 		<div class="article">
 			<div>
 				<h3>This is just a place holder</h3>
 				<p>
-					This website template has been designed by <br> <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free.
-				</p>
-				<p>
-					This website template has been designed by <br> <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free.
-				</p>
-								<p>
-					This website template has been designed by <br> <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free.
-				</p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
+                                </p>
 			</div>
 			<img src="resources/images/nature-place-photo.png" alt="">
 		</div>
@@ -67,8 +61,8 @@
 			<div>
 				<h3>This is just a place holder</h3>
 				<p>
-					This website template has been designed by <br> <a href="http://www.freewebsitetemplates.com/">Free Website Templates</a> for you, for free. You can replace all this <br> text with your own text. You can remove any link to our website <br> from this website template, you're free to use this website template <br> without linking back to us. If you're having problems editing this <br> website template, then don't hesitate to ask for help on the <br> <a href="http://www.freewebsitetemplates.com/forums/">Forums</a>.
-				</p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
+                                </p>
 			</div>
 		</div>
 	</div>
