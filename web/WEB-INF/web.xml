@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>Guru_register</servlet-name>
-        <servlet-class>demotest.Guru_register</servlet-class>
+        <servlet-name>RegistroUsuarioServlet</servlet-name>
+        <servlet-class>net.ifts16.RegistroUsuarioServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Guru_register</servlet-name>
-        <url-pattern>/Guru_register</url-pattern>
+        <servlet-name>RegistroUsuarioServlet</servlet-name>
+        <url-pattern>/RegistroUsuarioServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
