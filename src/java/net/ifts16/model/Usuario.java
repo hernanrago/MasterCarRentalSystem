@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.ifts16.modelo;
+package net.ifts16.model;
 
 /**
  *
@@ -12,15 +12,23 @@ package net.ifts16.modelo;
 public class Usuario {
     private int id;
     private String nombre, apellido, nombreUsuario, contrasena;
+    private Rol rol;
+    
+    enum Rol {
+        ADMINISTRADOR,
+        OPERADOR,
+        CLIENTE        
+    }
 
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, String nombreUsuario, String contrasena) {
+    public Usuario(String nombre, String apellido, String nombreUsuario, String contrasena, String rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
+        this.rol = Rol.valueOf(rol);
     }
     
     /**
@@ -78,6 +86,21 @@ public class Usuario {
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+
+    /**
+     * @return the rol
+     */
+    public Rol getRol() {
+        return rol;
+    }
+
+    /**
+     * @param rol the rol to set
+     */
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    
     
     
 }

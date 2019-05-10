@@ -3,9 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.ifts16;
+package net.ifts16.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.ifts16.dao.UsuarioDAO;
-import net.ifts16.modelo.Usuario;
+import net.ifts16.model.Usuario;
 
 /**
  *
@@ -34,9 +37,12 @@ public class RegistroUsuarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      * @throws java.lang.ClassNotFoundException
      * @throws java.sql.SQLException
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.UnsupportedEncodingException
+     * @throws java.security.spec.InvalidKeySpecException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ClassNotFoundException, SQLException {
+            throws ServletException, IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
 
         insertarUsuario(request, response);
@@ -55,10 +61,14 @@ public class RegistroUsuarioServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, UnsupportedEncodingException {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
             Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -73,10 +83,14 @@ public class RegistroUsuarioServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, UnsupportedEncodingException {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
             Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -92,12 +106,13 @@ public class RegistroUsuarioServlet extends HttpServlet {
     }// </editor-fold>
 
     private void insertarUsuario(HttpServletRequest request, HttpServletResponse response)
-            throws SQLException, IOException, ServletException {
+            throws SQLException, IOException, ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
         String nombreUsuario = request.getParameter("nombreUsuario");
         String contrasena = request.getParameter("contrasena");
-        Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena);
+        String rol = request.getParameter("rol");
+        Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.insertarUsuario(usuario);
         request.getRequestDispatcher("index.jsp").forward(request, response);
