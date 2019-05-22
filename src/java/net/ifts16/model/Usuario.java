@@ -5,6 +5,8 @@
  */
 package net.ifts16.model;
 
+import net.ifts16.enums.Rol;
+
 /**
  *
  * @author Hernán Rago
@@ -14,12 +16,6 @@ public class Usuario {
     private String nombre, apellido, nombreUsuario, contrasena;
     private Rol rol;
     
-    enum Rol {
-        ADMINISTRADOR,
-        OPERADOR,
-        CLIENTE        
-    }
-
     public Usuario() {
     }
 

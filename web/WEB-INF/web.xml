@@ -8,6 +8,10 @@
         <servlet-name>SedeServlet</servlet-name>
         <servlet-class>net.ifts16.controller.SedeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AutomovilServlet</servlet-name>
+        <servlet-class>net.ifts16.controller.AutomovilServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuarioServlet</servlet-name>
         <url-pattern>/RegistroUsuarioServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SedeServlet</servlet-name>
         <url-pattern>/SedeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AutomovilServlet</servlet-name>
+        <url-pattern>/AutomovilServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
