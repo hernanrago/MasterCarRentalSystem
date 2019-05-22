@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import net.ifts16.db.AdministradorBaseDatos;
+import net.ifts16.util.AdministradorBaseDatos;
 import net.ifts16.interfaces.Dao;
 import net.ifts16.model.Automovil;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.ifts16.db;
+package net.ifts16.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
