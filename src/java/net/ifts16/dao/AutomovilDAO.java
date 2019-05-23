@@ -19,7 +19,7 @@ import net.ifts16.model.Automovil;
  */
 public class AutomovilDAO implements Dao<Automovil> {
 
-    private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo, pasajeros, puertas, precio, cambios, sede_radicacion, sede_ubicacion, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
+    private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo_id, pasajeros, puertas, precio, cambios, sede_radicacion_id, sede_ubicacion_id, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
 
     @Override
     public Automovil obtener(int id) {
@@ -45,6 +45,7 @@ public class AutomovilDAO implements Dao<Automovil> {
             preparedStatement.setInt(8, t.getSedeUbicacion().getId());
             preparedStatement.setBoolean(9, t.isReservado());
             preparedStatement.setBoolean(10, t.isReservado());
+            preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);

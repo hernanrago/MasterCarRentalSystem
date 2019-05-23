@@ -24,20 +24,28 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Nombre</td>
-                            <td><input type="text" name="nombre"/></td>
+                            <td>Patente</td>
+                            <td><input type="text" name="patente"/></td>
                         </tr>
                         <tr>
-                            <td>Apellido</td>
-                            <td><input type="text" name="apellido"/></td>
+                            <td>Modelo</td>
+                            <td><input type="text" name="modelo"/></td>
                         </tr>
                         <tr>
-                            <td>Nombre de Usuario</td>
-                            <td><input type="text" name="nombreUsuario"/></td>
+                            <td>pasajeros</td>
+                            <td><input type="number" name="pasajeros"/></td>
                         </tr>
                         <tr>
-                            <td>Contraseña</td>
-                            <td><input type="password" name="contrasena"/></td>
+                            <td>puertas</td>
+                            <td><input type="number" name="puertas"/></td>
+                        </tr>
+                        <tr>
+                            <td>precio</td>
+                            <td><input type="number" name="precio"/></td>
+                        </tr>
+                        <tr>
+                            <td>cambios</td>
+                            <td><input type="text" name="cambios"/></td>
                         </tr>
                     </tbody>
                 </table>

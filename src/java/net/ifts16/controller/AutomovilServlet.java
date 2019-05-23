@@ -40,13 +40,17 @@ public class AutomovilServlet extends HttpServlet {
 
         Automovil automovil = new Automovil(
                 request.getParameter("patente"), 
-                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+//                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+                new ModeloDAO().obtener(1),
                 Integer.parseInt(request.getParameter("pasajeros")), 
                 Integer.parseInt(request.getParameter("puertas")),
                 new BigDecimal(request.getParameter("precio")),
-                Cambios.valueOf(request.getParameter("cambios")) ,
-                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
-                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
+//                Cambios.valueOf(request.getParameter("cambios")) ,
+                Cambios.AUTOMATICO,
+//                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
+//                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
+                new SedeDAO().obtener(1),
+                new SedeDAO().obtener(1),
                 false,
                 false);
         
