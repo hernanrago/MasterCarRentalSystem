@@ -114,7 +114,7 @@ public class RegistroUsuarioServlet extends HttpServlet {
         String rol = request.getParameter("rol");
         Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
         usuarioDAO = new UsuarioDAO();
-        usuarioDAO.insertarUsuario(usuario);
+        usuarioDAO.crear(usuario);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

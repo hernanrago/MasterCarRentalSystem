@@ -7,27 +7,22 @@ package net.ifts16.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.ifts16.dao.AutomovilDAO;
-import net.ifts16.dao.ModeloDAO;
-import net.ifts16.dao.SedeDAO;
-import net.ifts16.enums.Cambios;
-import net.ifts16.model.Automovil;
+import net.ifts16.dao.ReservaDAO;
+import net.ifts16.dao.UsuarioDAO;
+import net.ifts16.model.Reserva;
 
 /**
  *
  * @author Hernán Rago
  */
-public class AutomovilServlet extends HttpServlet {
-
-    private AutomovilDAO automovilDAO;
+public class ReservaServlet extends HttpServlet {
+    private ReservaDAO reservaDAO;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,44 +35,27 @@ public class AutomovilServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String x = request.getParameter("comando");
-        switch (x) {
-            case "automovilesDisponibles":
-                mostrarAutomovilesDisponibles(request, response);
-                break;
-            default:
-                System.out.println("No entró");
-        }
-
-        Automovil automovil = new Automovil(
-                request.getParameter("patente"),
-                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
-                new ModeloDAO().obtener(1),
-                Integer.parseInt(request.getParameter("pasajeros")),
-                Integer.parseInt(request.getParameter("puertas")),
-                new BigDecimal(request.getParameter("precio")),
-                //                Cambios.valueOf(request.getParameter("cambios")) ,
-                Cambios.AUTOMATICO,
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
-                new SedeDAO().obtener(1),
-                new SedeDAO().obtener(1),
-                false,
-                false);
-
-        automovilDAO = new AutomovilDAO();
-        automovilDAO.crear(automovil);
-
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        
+        Reserva reserva = new Reserva(
+                Date.valueOf(request.getParameter("fechaReserva")),
+                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovil"))),
+                new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuario"))) 
+        );
+        
+        reservaDAO = new ReservaDAO();
+        reservaDAO.crear(reserva);
+        
+        
+        try (PrintWriter out = response.getWriter()) {   
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AutomovilServlet</title>");
+            out.println("<title>Servlet ReservaServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AutomovilServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ReservaServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -95,9 +73,7 @@ public class AutomovilServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         processRequest(request, response);
-
     }
 
     /**
@@ -123,20 +99,5 @@ public class AutomovilServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void mostrarAutomovilesDisponibles(HttpServletRequest request,
-            HttpServletResponse response) {
-        
-        automovilDAO = new AutomovilDAO();
-        List<Automovil> automoviles = automovilDAO.obtenerTodos();
-        request.setAttribute("automoviles", automoviles);
-        
-        try {
-            request.getRequestDispatcher("automoviles.jsp").forward(request,response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(AutomovilServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
 
 }

@@ -12,6 +12,10 @@
         <servlet-name>AutomovilServlet</servlet-name>
         <servlet-class>net.ifts16.controller.AutomovilServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReservaServlet</servlet-name>
+        <servlet-class>net.ifts16.controller.ReservaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegistroUsuarioServlet</servlet-name>
         <url-pattern>/RegistroUsuarioServlet</url-pattern>
@@ -23,6 +27,19 @@
     <servlet-mapping>
         <servlet-name>AutomovilServlet</servlet-name>
         <url-pattern>/AutomovilServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservaServlet</servlet-name>
+        <url-pattern>/ReservaServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>xxx</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>xxx</servlet-name>
+        <url-pattern>/xxx</url-pattern>   
     </servlet-mapping>
     <session-config>
         <session-timeout>

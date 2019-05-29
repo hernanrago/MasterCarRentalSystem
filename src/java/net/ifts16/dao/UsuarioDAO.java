@@ -13,61 +13,95 @@ import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import net.ifts16.interfaces.Dao;
 import net.ifts16.model.Usuario;
+import net.ifts16.util.AdministradorBaseDatos;
 
 /**
  *
  * @author Hernán Rago
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements Dao<Usuario> {
 
-    private final String jdbcURL = "jdbc:mysql://localhost:3306/master_car_rental_system";
-    private final String jdbcUsername = "root";
-    private final String jdbcPassword = "root";
-    private static final String INSERT_USERS_SQL = "INSERT INTO usuario (nombre, apellido, usuario, contrasena) VALUES (?, ?, ?, ?);";
+    private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, usuario, contrasena) VALUES (?, ?, ?, ?);";
+    private static final String SELECT_USER = "SELECT * from usuario where id = ?";
 
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        } catch (SQLException | ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace(System.err);
+    @Override
+    public Usuario obtener(int id) {
+        try (Connection connection = AdministradorBaseDatos.obtenerConexion();
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+            preparedStatement.setInt(1, id);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            return new Usuario(
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+            rs.getString("nombre_usuario"),
+            rs.getString("contrasena"),
+            rs.getString("rol"));
+            
+            
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
         }
-        // TODO Auto-generated catch block
-        return connection;
+        return null;
     }
 
-    public void insertarUsuario(Usuario usuario) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException {
-        System.out.println(INSERT_USERS_SQL);
-        // try-with-resource statement will auto close the connection.
-        try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
-            preparedStatement.setString(1, usuario.getNombre());
-            preparedStatement.setString(2, usuario.getApellido());
-            preparedStatement.setString(3, usuario.getNombreUsuario());
-            preparedStatement.setString(4, encriptarContrasena(usuario.getContrasena()));
+    @Override
+    public List<Usuario> obtenerTodos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void crear(Usuario t) {
+        try (Connection connection = AdministradorBaseDatos.obtenerConexion();
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setString(2, t.getApellido());
+            preparedStatement.setString(3, t.getNombreUsuario());
+            preparedStatement.setString(4, encriptarContrasena(t.getContrasena()));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
     }
 
-    private String encriptarContrasena(String contrasena) throws NoSuchAlgorithmException, InvalidKeySpecException, UnsupportedEncodingException {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
+    @Override
+    public void actualizar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
-        KeySpec spec = new PBEKeySpec(contrasena.toCharArray(), salt, 65536, 128);
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-        
-        byte[] hash = factory.generateSecret(spec).getEncoded();
-        
-        return new String(hash, "UTF-8");
+    @Override
+    public void borrar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String encriptarContrasena(String contrasena) {
+        try {
+            SecureRandom random = new SecureRandom();
+            byte[] salt = new byte[16];
+            random.nextBytes(salt);
+
+            KeySpec spec = new PBEKeySpec(contrasena.toCharArray(), salt, 65536, 128);
+            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+
+            byte[] hash = factory.generateSecret(spec).getEncoded();
+
+            return new String(hash, "UTF-8");
+
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException | UnsupportedEncodingException e) {
+            e.printStackTrace(System.out);
+
+        }
+        return null;
     }
 
 }

@@ -7,8 +7,11 @@ package net.ifts16.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import net.ifts16.enums.Cambios;
 import net.ifts16.util.AdministradorBaseDatos;
 import net.ifts16.interfaces.Dao;
 import net.ifts16.model.Automovil;
@@ -20,6 +23,7 @@ import net.ifts16.model.Automovil;
 public class AutomovilDAO implements Dao<Automovil> {
 
     private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo_id, pasajeros, puertas, precio, cambios, sede_radicacion_id, sede_ubicacion_id, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
+    private static final String SELECT_AUTOMOVIL = "SELECT * FROM automovil";
 
     @Override
     public Automovil obtener(int id) {
@@ -28,7 +32,29 @@ public class AutomovilDAO implements Dao<Automovil> {
 
     @Override
     public List<Automovil> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conn = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement ps = conn.prepareStatement(SELECT_AUTOMOVIL);
+            ResultSet rs = ps.executeQuery();
+            List<Automovil> automoviles = new ArrayList<>();
+            while (rs.next()) {
+                automoviles.add(new Automovil(
+                        rs.getString("patente"),
+                        new ModeloDAO().obtener(rs.getInt("modelo_id")),
+                        rs.getInt("pasajeros"),
+                        rs.getInt("puertas"),
+                        rs.getBigDecimal("precio"),
+                        Cambios.valueOf(rs.getString("cambios")),
+                        new SedeDAO().obtener(rs.getInt("sede_radicacion_id")),
+                        new SedeDAO().obtener(rs.getInt("sede_ubicacion_id")),
+                        rs.getBoolean("reservado"),
+                        rs.getBoolean("alquilado")
+                ));
+            }
+            return automoviles;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     @Override

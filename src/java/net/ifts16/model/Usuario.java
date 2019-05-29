@@ -12,6 +12,7 @@ import net.ifts16.enums.Rol;
  * @author Hernán Rago
  */
 public class Usuario {
+   
     private int id;
     private String nombre, apellido, nombreUsuario, contrasena;
     private Rol rol;
@@ -25,6 +26,20 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.rol = Rol.valueOf(rol);
+    }
+    
+        /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
     /**
@@ -95,8 +110,5 @@ public class Usuario {
      */
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
-    
-    
-    
+    }    
 }

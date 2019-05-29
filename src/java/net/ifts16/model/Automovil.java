@@ -28,7 +28,9 @@ public class Automovil {
     public Automovil() {
     }
 
-    public Automovil(String patente, Modelo modelo, int pasajeros, int puertas, BigDecimal precio, Cambios cambios, Sede sedeRadicacion, Sede sedeUbicacion, boolean reservado, boolean alquilado) {
+    public Automovil(String patente, Modelo modelo, int pasajeros, int puertas, 
+            BigDecimal precio, Cambios cambios, Sede sedeRadicacion, 
+            Sede sedeUbicacion, boolean reservado, boolean alquilado) {
         this.patente = patente;
         this.modelo = modelo;
         this.pasajeros = pasajeros;
