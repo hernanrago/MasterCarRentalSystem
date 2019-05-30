@@ -13,6 +13,7 @@ import net.ifts16.enums.Cambios;
  * @author Hernán Rago
  */
 public class Automovil {
+
     private int id;
     private String patente;
     private Modelo modelo;
@@ -28,8 +29,8 @@ public class Automovil {
     public Automovil() {
     }
 
-    public Automovil(String patente, Modelo modelo, int pasajeros, int puertas, 
-            BigDecimal precio, Cambios cambios, Sede sedeRadicacion, 
+    public Automovil(String patente, Modelo modelo, int pasajeros, int puertas,
+            BigDecimal precio, Cambios cambios, Sede sedeRadicacion,
             Sede sedeUbicacion, boolean reservado, boolean alquilado) {
         this.patente = patente;
         this.modelo = modelo;
@@ -42,7 +43,22 @@ public class Automovil {
         this.reservado = reservado;
         this.alquilado = alquilado;
     }
-  
+
+    public Automovil(int id, String patente, Modelo modelo, int pasajeros, int puertas,
+            BigDecimal precio, Cambios cambios, Sede sedeRadicacion,
+            Sede sedeUbicacion, boolean reservado, boolean alquilado) {
+        this.id = id;
+        this.patente = patente;
+        this.modelo = modelo;
+        this.pasajeros = pasajeros;
+        this.puertas = puertas;
+        this.precio = precio;
+        this.cambios = cambios;
+        this.sedeRadicacion = sedeRadicacion;
+        this.sedeUbicacion = sedeUbicacion;
+        this.reservado = reservado;
+        this.alquilado = alquilado;
+    }
 
     /**
      * @return the id

@@ -38,6 +38,7 @@ public class AutomovilDAO implements Dao<Automovil> {
             List<Automovil> automoviles = new ArrayList<>();
             while (rs.next()) {
                 automoviles.add(new Automovil(
+                        rs.getInt("id"),
                         rs.getString("patente"),
                         new ModeloDAO().obtener(rs.getInt("modelo_id")),
                         rs.getInt("pasajeros"),

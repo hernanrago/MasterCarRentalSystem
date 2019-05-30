@@ -27,7 +27,7 @@ public class SedeDAO implements Dao<Sede> {
     public Sede obtener(int id) {
         try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(SELECT_SEDE);
-            preparedStatement.setInt(id, id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Sede sede = new Sede();
             while (resultSet.next()) {

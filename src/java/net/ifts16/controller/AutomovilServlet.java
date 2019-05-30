@@ -49,38 +49,38 @@ public class AutomovilServlet extends HttpServlet {
                 System.out.println("No entró");
         }
 
-        Automovil automovil = new Automovil(
-                request.getParameter("patente"),
-                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
-                new ModeloDAO().obtener(1),
-                Integer.parseInt(request.getParameter("pasajeros")),
-                Integer.parseInt(request.getParameter("puertas")),
-                new BigDecimal(request.getParameter("precio")),
-                //                Cambios.valueOf(request.getParameter("cambios")) ,
-                Cambios.AUTOMATICO,
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
-                new SedeDAO().obtener(1),
-                new SedeDAO().obtener(1),
-                false,
-                false);
-
-        automovilDAO = new AutomovilDAO();
-        automovilDAO.crear(automovil);
-
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AutomovilServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AutomovilServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+//        Automovil automovil = new Automovil(
+//                request.getParameter("patente"),
+//                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+//                new ModeloDAO().obtener(1),
+//                Integer.parseInt(request.getParameter("pasajeros")),
+//                Integer.parseInt(request.getParameter("puertas")),
+//                new BigDecimal(request.getParameter("precio")),
+//                //                Cambios.valueOf(request.getParameter("cambios")) ,
+//                Cambios.AUTOMATICO,
+//                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
+//                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
+//                new SedeDAO().obtener(1),
+//                new SedeDAO().obtener(1),
+//                false,
+//                false);
+//
+//        automovilDAO = new AutomovilDAO();
+//        automovilDAO.crear(automovil);
+//
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet AutomovilServlet</title>");
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet AutomovilServlet at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

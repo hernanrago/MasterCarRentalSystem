@@ -31,12 +31,12 @@ a img {
 	border:0;
 	display:block;
 }
-p {
+/*p {
 	font-size:12px;
 	line-height:24px;
 	letter-spacing:0.05em;
 	color:#959595;
-}
+}*/
 p a {
 	color:#959595;
 }
@@ -57,7 +57,7 @@ p a:hover {
 #header div a#logo {
 	display:block;
 	float:left;
-	margin:25px 0 0;
+	margin:15px 0 10px;
 }
 #header div ul {
 	float:right;
@@ -94,7 +94,7 @@ p a:hover {
 	margin:0 auto 97px;
 	min-height:1005px;
 	padding:38px 29px 0;
-	width:902px;
+	width:949px;
 }
 #body.home .blog {
 	overflow:hidden;

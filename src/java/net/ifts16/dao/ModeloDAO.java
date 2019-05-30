@@ -27,7 +27,7 @@ public class ModeloDAO implements Dao<Modelo> {
     public Modelo obtener(int id) {
         try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(SELECT_MODELO);
-            preparedStatement.setInt(id, id);
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             Modelo modelo = new Modelo();
             while (resultSet.next()) {

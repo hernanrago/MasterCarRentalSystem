@@ -10,6 +10,17 @@ package net.ifts16.enums;
  * @author Hernán Rago
  */
 public enum Cambios {
-    AUTOMATICO,
-    MANUAL
+    AUTOMATICO {
+        @Override
+        public String toString() {
+            return "Automático";
+        }
+    },
+    MANUAL {
+        @Override
+        public String toString() {
+            return "Manual";
+        }
+    },
+
 }
