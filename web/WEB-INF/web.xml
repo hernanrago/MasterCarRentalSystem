@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>RegistroUsuarioServlet</servlet-name>
-        <servlet-class>net.ifts16.controller.RegistroUsuarioServlet</servlet-class>
+        <servlet-name>UsuarioServlet</servlet-name>
+        <servlet-class>net.ifts16.controller.UsuarioServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SedeServlet</servlet-name>
@@ -17,8 +17,8 @@
         <servlet-class>net.ifts16.controller.ReservaServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RegistroUsuarioServlet</servlet-name>
-        <url-pattern>/RegistroUsuarioServlet</url-pattern>
+        <servlet-name>UsuarioServlet</servlet-name>
+        <url-pattern>/UsuarioServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SedeServlet</servlet-name>
@@ -39,16 +39,25 @@
     <!--mapping-->
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
-        <url-pattern>/</url-pattern>   
+        <url-pattern>/Index</url-pattern>
     </servlet-mapping>
-        <servlet>
+    <servlet>
         <servlet-name>Registro</servlet-name>
         <jsp-file>/registro.jsp</jsp-file>
     </servlet>
     <!--mapping-->
     <servlet-mapping>
         <servlet-name>Registro</servlet-name>
-        <url-pattern>/Registro</url-pattern>   
+        <url-pattern>/Registro</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Ingreso</servlet-name>
+        <jsp-file>/ingreso.jsp</jsp-file>
+    </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Ingreso</servlet-name>
+        <url-pattern>/Ingreso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -60,4 +69,5 @@
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>jdbc:mysql://localhost:3306/master_car_rental_system/</env-entry-value>
     </env-entry>
+
 </web-app>

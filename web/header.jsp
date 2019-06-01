@@ -6,10 +6,10 @@
                 <a href="index.jsp">Home</a>
             </li>
             <li>
-                <a href="subdivisions.html">Ingresar</a>
+                <a href="/MasterCarRentalSystem/Ingreso">Ingresar</a>
             </li>
             <li>
-                <a href="/MasterCarRentalSystem/Registro">Registrarse</a>
+                <a href="/MasterCarRentalSystem/Registro">Registrar</a>
             </li>
             <li>
                 <a href="about.html">La Empresa</a>
@@ -17,6 +17,10 @@
             <li>
                 <a href="contact.html">Contacto</a>
             </li>
+            <%
+                String usuario = (String)request.getSession().getAttribute("usuario");
+                if(usuario != null) out.print("<li><a>" + usuario.toUpperCase() + "</a></li>");
+            %>
         </ul>
     </div>
 </div>

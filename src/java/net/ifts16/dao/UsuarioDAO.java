@@ -28,24 +28,45 @@ import net.ifts16.util.AdministradorBaseDatos;
 public class UsuarioDAO implements Dao<Usuario> {
 
     private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, nombre_usuario, contrasena, rol) VALUES (?, ?, ?, ?, ?);";
-    private static final String SELECT_USER = "SELECT * from usuario where id = ?";
+    private static final String SELECT_USER_ID = "SELECT * from usuario where id = ?";
+//    private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ? and contrasena = ?";
+    private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ?";
+
+    public Usuario identificar(String usuario, String contrasena) {
+        try (Connection c = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement ps = c.prepareStatement(SELECT_USER_NOMBRE_USUARIO_CONTRASENA);
+            ps.setString(1, usuario);
+//            ps.setString(2, encriptarContrasena(contrasena));
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.first()) {
+                Usuario u = new Usuario();
+                u.setNombreUsuario(usuario);
+                return u;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
 
     @Override
     public Usuario obtener(int id) {
         try (Connection connection = AdministradorBaseDatos.obtenerConexion();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID)) {
             preparedStatement.setInt(1, id);
-            
+
             ResultSet rs = preparedStatement.executeQuery();
-            
+
             return new Usuario(
                     rs.getString("nombre"),
                     rs.getString("apellido"),
-            rs.getString("nombre_usuario"),
-            rs.getString("contrasena"),
-            rs.getString("rol"));
-            
-            
+                    rs.getString("nombre_usuario"),
+                    rs.getString("contrasena"),
+                    rs.getString("rol"));
+
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }

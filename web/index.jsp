@@ -1,18 +1,17 @@
 <%-- 
     Document   : index
     Created on : May 2, 2019, 12:32:59 AM
-    Author     : HernÃ¡n Rago
+    Author     : Hernán Rago
 --%>
 
 <%@page import="net.ifts16.dao.SedeDAO"%>
 <%@page import="net.ifts16.model.Sede"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <%@include file="head.html" %>
     <body>
-        <%@include file="header.html"%>
+        <%@include file="header.jsp"%>
         <div id="body" class="home">
             <div>
                 <form action="AutomovilServlet" method="GET">
@@ -23,7 +22,7 @@
                             <input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="exampleInputEmail1">Fecha de devoluciÃ³n</label>
+                            <label for="exampleInputEmail1">Fecha de devolución</label>
                             <input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha"">
                         </div>
                         <div class="form-group col-md-3">

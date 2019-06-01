@@ -12,10 +12,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import net.ifts16.dao.UsuarioDAO;
 import net.ifts16.enums.Rol;
 import net.ifts16.model.Usuario;
@@ -24,7 +26,7 @@ import net.ifts16.model.Usuario;
  *
  * @author h3ln4n_l33
  */
-public class RegistroUsuarioServlet extends HttpServlet {
+public class UsuarioServlet extends HttpServlet {
 
     private UsuarioDAO usuarioDAO;
 
@@ -46,9 +48,23 @@ public class RegistroUsuarioServlet extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
 
-        insertarUsuario(request, response);
+        switch (request.getParameter("comando")) {
+            case "ingreso":
+                Usuario u = new UsuarioDAO().identificar(request.getParameter("nombreUsuario"), request.getParameter("contrasena"));
 
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", u.getNombreUsuario());
+                
+                rd.forward(request, response);
+                break;
+
+        }
+
+//        insertarUsuario(request, response);
+//
+//        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,11 +82,11 @@ public class RegistroUsuarioServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -88,11 +104,11 @@ public class RegistroUsuarioServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(RegistroUsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -112,7 +128,7 @@ public class RegistroUsuarioServlet extends HttpServlet {
         String apellido = request.getParameter("apellido");
         String nombreUsuario = request.getParameter("nombreUsuario");
         String contrasena = request.getParameter("contrasena");
-        String rol =  request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name();  
+        String rol = request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name();
         Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.crear(usuario);

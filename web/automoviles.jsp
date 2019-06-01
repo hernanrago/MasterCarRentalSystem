@@ -13,7 +13,7 @@
 <html>
     <%@include file="head.html" %>
     <body>
-        <%@include file="header.html"%>
+        <%@include file="header.jsp"%>
         <div id="body" class="home">
             <div class="card-deck">
                 <div class="row">
