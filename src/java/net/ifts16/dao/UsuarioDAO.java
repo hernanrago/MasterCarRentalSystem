@@ -11,13 +11,10 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import net.ifts16.interfaces.Dao;
@@ -30,7 +27,7 @@ import net.ifts16.util.AdministradorBaseDatos;
  */
 public class UsuarioDAO implements Dao<Usuario> {
 
-    private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, usuario, contrasena) VALUES (?, ?, ?, ?);";
+    private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, nombre_usuario, contrasena, rol) VALUES (?, ?, ?, ?, ?);";
     private static final String SELECT_USER = "SELECT * from usuario where id = ?";
 
     @Override
@@ -68,6 +65,7 @@ public class UsuarioDAO implements Dao<Usuario> {
             preparedStatement.setString(2, t.getApellido());
             preparedStatement.setString(3, t.getNombreUsuario());
             preparedStatement.setString(4, encriptarContrasena(t.getContrasena()));
+            preparedStatement.setString(5, t.getRol().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);

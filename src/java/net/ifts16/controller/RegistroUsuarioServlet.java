@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.ifts16.dao.UsuarioDAO;
+import net.ifts16.enums.Rol;
 import net.ifts16.model.Usuario;
 
 /**
@@ -47,7 +48,7 @@ public class RegistroUsuarioServlet extends HttpServlet {
 
         insertarUsuario(request, response);
 
-        response.sendRedirect("/index.jsp");
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -111,11 +112,10 @@ public class RegistroUsuarioServlet extends HttpServlet {
         String apellido = request.getParameter("apellido");
         String nombreUsuario = request.getParameter("nombreUsuario");
         String contrasena = request.getParameter("contrasena");
-        String rol = request.getParameter("rol");
+        String rol =  request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name();  
         Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.crear(usuario);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 }
