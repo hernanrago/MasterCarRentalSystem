@@ -24,10 +24,35 @@ public class AutomovilDAO implements Dao<Automovil> {
 
     private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo_id, pasajeros, puertas, precio, cambios, sede_radicacion_id, sede_ubicacion_id, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
     private static final String SELECT_AUTOMOVIL = "SELECT * FROM automovil";
+    private static final String SELECT_AUTOMOVIL_ID = "SELECT * FROM automovil WHERE id = ?";
 
     @Override
     public Automovil obtener(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection connection = AdministradorBaseDatos.obtenerConexion();
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_AUTOMOVIL_ID)) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.first()) {
+                return new Automovil(
+                        rs.getInt("id"),
+                        rs.getString("patente"),
+                        new ModeloDAO().obtener(rs.getInt("modelo_id")),
+                        rs.getInt("pasajeros"),
+                        rs.getInt("puertas"),
+                        rs.getBigDecimal("precio"),
+                        Cambios.valueOf(rs.getString("cambios")),
+                        new SedeDAO().obtener(rs.getInt("sede_radicacion_id")),
+                        new SedeDAO().obtener(rs.getInt("sede_ubicacion_id")),
+                        rs.getBoolean("reservado"),
+                        rs.getBoolean("alquilado")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     @Override

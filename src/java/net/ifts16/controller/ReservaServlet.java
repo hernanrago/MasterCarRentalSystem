@@ -38,9 +38,11 @@ public class ReservaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Reserva reserva = new Reserva(
-                Date.valueOf(request.getParameter("fechaReserva")),
-                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovil"))),
-                new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuario"))) 
+                new Date(new java.util.Date().getTime()),
+//                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovilId"))),
+                new AutomovilDAO().obtener(1),
+//                new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuario"))) 
+                new UsuarioDAO().obtener(1) 
         );
         
         reservaDAO = new ReservaDAO();

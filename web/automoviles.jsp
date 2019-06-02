@@ -34,7 +34,7 @@
                                 <li class="list-group-item"><%= a.getCambios().toString()%></li>
                             </ul>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <button type="button" class="btn btn-primary automovil" value="<%= a.getId()%>" data-toggle="modal" data-target="#exampleModal">
                                     Reservar
                                 </button>
                             </div>
@@ -50,7 +50,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Reservar</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -59,8 +59,11 @@
                             <p>¿Desea reservar este automóvil?</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <form action="ReservaServlet" method="POST">
+                                <input type="hidden" name="automovilId" id="automovilId" value="">
+                                <button type="submit" class="btn btn-primary">Reservar</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -70,3 +73,10 @@
         <%@include file="footer.html" %>
     </body>
 </html>
+
+<script>
+$(document).on("click",".automovil", function () {
+   let automovilId = $(this).val();
+   $('#automovilId').val(automovilId);
+});
+</script>

@@ -60,12 +60,15 @@ public class UsuarioDAO implements Dao<Usuario> {
 
             ResultSet rs = preparedStatement.executeQuery();
 
-            return new Usuario(
-                    rs.getString("nombre"),
-                    rs.getString("apellido"),
-                    rs.getString("nombre_usuario"),
-                    rs.getString("contrasena"),
-                    rs.getString("rol"));
+            if (rs.first()) {
+                return new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("contrasena"),
+                        rs.getString("rol"));
+            }
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);
