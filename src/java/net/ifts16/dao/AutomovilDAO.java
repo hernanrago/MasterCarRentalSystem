@@ -25,6 +25,7 @@ public class AutomovilDAO implements Dao<Automovil> {
     private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo_id, pasajeros, puertas, precio, cambios, sede_radicacion_id, sede_ubicacion_id, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
     private static final String SELECT_AUTOMOVIL = "SELECT * FROM automovil";
     private static final String SELECT_AUTOMOVIL_ID = "SELECT * FROM automovil WHERE id = ?";
+    private static final String RESERVA = "UPDATE automovil set reservado = true WHERE id = ?";
 
     @Override
     public Automovil obtener(int id) {
@@ -113,6 +114,18 @@ public class AutomovilDAO implements Dao<Automovil> {
     @Override
     public void borrar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void reservar(int id) {
+        try (Connection c = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement ps = c.prepareStatement(RESERVA);
+            ps.setInt(1, id);
+            ps.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+
     }
 
 }

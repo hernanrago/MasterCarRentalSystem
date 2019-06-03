@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `automovil`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `automovil` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `patente` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `pasajeros` int(11) NOT NULL,
   `puertas` int(11) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE `automovil` (
   CONSTRAINT `automovil_modelo__FK` FOREIGN KEY (`modelo_id`) REFERENCES `modelo` (`id`),
   CONSTRAINT `automovil_sede_radicacion_FK` FOREIGN KEY (`sede_radicacion_id`) REFERENCES `sede` (`id`),
   CONSTRAINT `automovil_sede_ubicacion_FK` FOREIGN KEY (`sede_ubicacion_id`) REFERENCES `sede` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `automovil` (
 
 LOCK TABLES `automovil` WRITE;
 /*!40000 ALTER TABLE `automovil` DISABLE KEYS */;
+INSERT INTO `automovil` VALUES (1,'AL845HI',1,1,1000,'AUTOMATICO',0,0,1,1,1),(2,'AQ375IV',5,5,2000,'MANUAL',1,0,2,2,2),(3,'AB294OC',5,4,2000,'MANUAL',1,0,3,3,3);
 /*!40000 ALTER TABLE `automovil` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,10 +65,10 @@ DROP TABLE IF EXISTS `modelo`;
 CREATE TABLE `modelo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `marca` enum(' FORD','FIAT',' VOLKSWAGEN','CHEVROLET') COLLATE utf8_spanish_ci NOT NULL,
+  `marca` enum('FORD','FIAT',' VOLKSWAGEN','CHEVROLET') COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `modelo_id_IDX` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +77,40 @@ CREATE TABLE `modelo` (
 
 LOCK TABLES `modelo` WRITE;
 /*!40000 ALTER TABLE `modelo` DISABLE KEYS */;
+INSERT INTO `modelo` VALUES (1,'Focus II 1.6 Trend Sigma','FORD'),(2,'Argo 1.8 Precision Connect','FIAT'),(3,'Cruze II 1.4 Sedan Lt','CHEVROLET');
 /*!40000 ALTER TABLE `modelo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reserva`
+--
+
+DROP TABLE IF EXISTS `reserva`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reserva` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fecha_reserva` date NOT NULL,
+  `fecha_cancelacion` date DEFAULT NULL,
+  `automovil_id` int(10) unsigned NOT NULL,
+  `usuario_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reserva_UN` (`id`),
+  KEY `reserva_automovil_FK` (`automovil_id`),
+  KEY `reserva_usuario_FK` (`usuario_id`),
+  CONSTRAINT `reserva_automovil_FK` FOREIGN KEY (`automovil_id`) REFERENCES `automovil` (`id`),
+  CONSTRAINT `reserva_usuario_FK` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reserva`
+--
+
+LOCK TABLES `reserva` WRITE;
+/*!40000 ALTER TABLE `reserva` DISABLE KEYS */;
+INSERT INTO `reserva` VALUES (4,'2019-06-02',NULL,1,1),(5,'2019-06-02',NULL,1,1),(6,'2019-06-02',NULL,1,1),(7,'2019-06-02',NULL,1,1),(8,'2019-06-02',NULL,1,1),(9,'2019-06-02',NULL,1,1),(10,'2019-06-02',NULL,1,1),(11,'2019-06-02',NULL,1,1),(12,'2019-06-02',NULL,1,1),(13,'2019-06-02',NULL,1,1),(14,'2019-06-02',NULL,1,1),(15,'2019-06-02',NULL,1,1),(16,'2019-06-02',NULL,1,1),(17,'2019-06-02',NULL,1,1),(18,'2019-06-02',NULL,1,1),(19,'2019-06-02',NULL,1,1),(20,'2019-06-02',NULL,1,1),(21,'2019-06-02',NULL,1,1),(22,'2019-06-02',NULL,1,1),(23,'2019-06-02',NULL,1,1),(24,'2019-06-02',NULL,1,1),(25,'2019-06-02',NULL,1,1),(26,'2019-06-02',NULL,1,1),(27,'2019-06-02',NULL,1,1),(28,'2019-06-02',NULL,1,1),(29,'2019-06-02',NULL,1,1),(30,'2019-06-02',NULL,1,1),(31,'2019-06-03',NULL,1,1),(32,'2019-06-03',NULL,1,1),(33,'2019-06-03',NULL,1,1),(34,'2019-06-03',NULL,1,1),(35,'2019-06-03',NULL,1,1),(36,'2019-06-03',NULL,1,1),(37,'2019-06-03',NULL,1,1),(38,'2019-06-03',NULL,1,1),(39,'2019-06-03',NULL,1,1),(40,'2019-06-03',NULL,1,1),(41,'2019-06-03',NULL,1,1),(42,'2019-06-03',NULL,1,1),(43,'2019-06-03',NULL,1,1),(44,'2019-06-03',NULL,1,1),(45,'2019-06-03',NULL,1,1),(46,'2019-06-03',NULL,1,1),(47,'2019-06-03',NULL,1,1),(48,'2019-06-03',NULL,1,1),(49,'2019-06-03',NULL,1,1),(50,'2019-06-03',NULL,1,1),(51,'2019-06-03',NULL,1,1),(52,'2019-06-03',NULL,1,1),(53,'2019-06-03',NULL,1,1),(54,'2019-06-03',NULL,1,1),(55,'2019-06-03',NULL,1,1),(56,'2019-06-03',NULL,1,1),(57,'2019-06-03',NULL,1,1),(58,'2019-06-03',NULL,1,1),(59,'2019-06-03',NULL,1,1),(60,'2019-06-03',NULL,1,1),(61,'2019-06-03',NULL,1,1),(62,'2019-06-03',NULL,1,1),(63,'2019-06-03',NULL,1,1),(64,'2019-06-03',NULL,1,1),(65,'2019-06-03',NULL,1,1),(66,'2019-06-03',NULL,1,1),(67,'2019-06-03',NULL,1,1),(68,'2019-06-03',NULL,1,1),(69,'2019-06-03',NULL,1,1),(70,'2019-06-03',NULL,1,1),(71,'2019-06-03',NULL,1,1),(72,'2019-06-03',NULL,1,1),(73,'2019-06-03',NULL,1,1),(74,'2019-06-03',NULL,1,1),(75,'2019-06-03',NULL,1,1),(76,'2019-06-03',NULL,1,1),(77,'2019-06-03',NULL,1,1),(78,'2019-06-03',NULL,1,1),(79,'2019-06-03',NULL,1,1),(80,'2019-06-03',NULL,1,1),(81,'2019-06-03',NULL,1,1),(82,'2019-06-03',NULL,1,1),(83,'2019-06-03',NULL,1,1),(84,'2019-06-03',NULL,1,1),(85,'2019-06-03',NULL,1,1),(86,'2019-06-03',NULL,1,1),(87,'2019-06-03',NULL,1,1),(88,'2019-06-03',NULL,1,1),(89,'2019-06-03',NULL,1,1),(90,'2019-06-03',NULL,1,1),(91,'2019-06-03',NULL,1,1),(92,'2019-06-03',NULL,1,1),(93,'2019-06-03',NULL,1,1),(94,'2019-06-03',NULL,1,1),(95,'2019-06-03',NULL,1,1),(96,'2019-06-03',NULL,1,1),(97,'2019-06-03',NULL,1,1),(98,'2019-06-03',NULL,2,1),(99,'2019-06-03',NULL,3,1),(100,'2019-06-03',NULL,2,1),(101,'2019-06-03',NULL,1,1),(102,'2019-06-03',NULL,3,1),(103,'2019-06-03',NULL,2,1),(104,'2019-06-03',NULL,1,1),(105,'2019-06-03',NULL,2,1),(106,'2019-06-03',NULL,3,1),(107,'2019-06-03',NULL,1,1),(108,'2019-06-03',NULL,3,1),(109,'2019-06-03',NULL,2,1),(110,'2019-06-03',NULL,1,1),(111,'2019-06-03',NULL,2,1),(112,'2019-06-03',NULL,3,1),(113,'2019-06-03',NULL,1,1),(114,'2019-06-03',NULL,1,1),(115,'2019-06-03',NULL,3,1),(116,'2019-06-03',NULL,2,1),(117,'2019-06-03',NULL,3,1),(118,'2019-06-03',NULL,2,1);
+/*!40000 ALTER TABLE `reserva` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -94,7 +128,7 @@ CREATE TABLE `sede` (
   `provincia` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `sede_id_IDX` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,6 +137,7 @@ CREATE TABLE `sede` (
 
 LOCK TABLES `sede` WRITE;
 /*!40000 ALTER TABLE `sede` DISABLE KEYS */;
+INSERT INTO `sede` VALUES (1,'Lascano 4044','C1417GZJ','Ciudad Autónoma de Buenos Aires','Buenos Aires'),(2,'Miller 2901','C1431GEG','Ciudad Autónoma de Buenos Aires','Buenos Aires'),(3,'Av. Mitre 2683','B1605','Buenos Aires','Buenos Aires');
 /*!40000 ALTER TABLE `sede` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +157,7 @@ CREATE TABLE `usuario` (
   `rol` enum('ADMINISTRADOR','OPERADOR','CLIENTE') COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario_id_IDX` (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,6 +166,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
+INSERT INTO `usuario` VALUES (1,'Dade','Murphy','zerocool','n?!\'?2-','CLIENTE');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +183,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-22  0:26:10
+-- Dump completed on 2019-06-03 14:14:22

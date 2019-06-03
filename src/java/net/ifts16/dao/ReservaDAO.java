@@ -20,6 +20,7 @@ import net.ifts16.util.AdministradorBaseDatos;
 public class ReservaDAO implements Dao<Reserva> {
 
     private static final String INSERT_RESERVA = "INSERT INTO reserva (fecha_reserva, automovil_id, usuario_id) VALUES (?, ?, ?);";
+    private AutomovilDAO automovilDAO;
 
     @Override
     public Reserva obtener(int id) {
@@ -39,7 +40,11 @@ public class ReservaDAO implements Dao<Reserva> {
             preparedStatement.setInt(2, t.getAutomovil().getId());
             preparedStatement.setInt(3, t.getUsuario().getId());
 
-            preparedStatement.executeUpdate();
+            int x = preparedStatement.executeUpdate();
+            System.out.println(x);
+            
+            automovilDAO = new AutomovilDAO();
+            automovilDAO.reservar(t.getAutomovil().getId());
 
         } catch (SQLException e) {
             e.printStackTrace(System.out);

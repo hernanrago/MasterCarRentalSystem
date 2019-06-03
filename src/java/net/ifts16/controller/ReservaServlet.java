@@ -5,6 +5,7 @@
  */
 package net.ifts16.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -21,33 +22,24 @@ import net.ifts16.model.Reserva;
  *
  * @author Hernán Rago
  */
+
 public class ReservaServlet extends HttpServlet {
     private ReservaDAO reservaDAO;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+                
         Reserva reserva = new Reserva(
                 new Date(new java.util.Date().getTime()),
-//                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovilId"))),
-                new AutomovilDAO().obtener(1),
-//                new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuario"))) 
+                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovilId"))),
+//                new AutomovilDAO().obtener(1),
+//                new UsuarioDAO().oUbtener(Integer.parseInt(request.getParameter("usuario"))) 
                 new UsuarioDAO().obtener(1) 
         );
         
         reservaDAO = new ReservaDAO();
-        reservaDAO.crear(reserva);
-        
+        reservaDAO.crear(reserva);        
         
         try (PrintWriter out = response.getWriter()) {   
             /* TODO output your page here. You may use following sample code. */
@@ -60,6 +52,8 @@ public class ReservaServlet extends HttpServlet {
             out.println("<h1>Servlet ReservaServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            
+            response.setStatus(200);
         }
     }
 
@@ -89,6 +83,7 @@ public class ReservaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+                
         processRequest(request, response);
     }
 
