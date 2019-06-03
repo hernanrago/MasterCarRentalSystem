@@ -30,20 +30,6 @@ public class UsuarioServlet extends HttpServlet {
 
     private UsuarioDAO usuarioDAO;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     * @throws java.lang.ClassNotFoundException
-     * @throws java.sql.SQLException
-     * @throws java.security.NoSuchAlgorithmException
-     * @throws java.io.UnsupportedEncodingException
-     * @throws java.security.spec.InvalidKeySpecException
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
@@ -58,6 +44,9 @@ public class UsuarioServlet extends HttpServlet {
                 session.setAttribute("usuario", u.getNombreUsuario());
                 
                 rd.forward(request, response);
+                break;
+            case "registro":
+                insertarUsuario(request, response);
                 break;
 
         }
@@ -132,6 +121,9 @@ public class UsuarioServlet extends HttpServlet {
         Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.crear(usuario);
+        
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        rd.forward(request, response);      
     }
 
 }

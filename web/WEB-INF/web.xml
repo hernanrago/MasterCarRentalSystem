@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
+        <servlet-name>Index</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Ingreso</servlet-name>
+        <jsp-file>/ingreso.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>Registro</servlet-name>
+        <jsp-file>/registro.jsp</jsp-file>
+    </servlet>
+    <servlet>
         <servlet-name>UsuarioServlet</servlet-name>
         <servlet-class>net.ifts16.controller.UsuarioServlet</servlet-class>
     </servlet>
@@ -16,6 +28,19 @@
         <servlet-name>ReservaServlet</servlet-name>
         <servlet-class>net.ifts16.controller.ReservaServlet</servlet-class>
     </servlet>
+    <!--mapping-->
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/Index</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Ingreso</servlet-name>
+        <url-pattern>/Ingreso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Registro</servlet-name>
+        <url-pattern>/Registro</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
         <url-pattern>/UsuarioServlet</url-pattern>
@@ -32,33 +57,6 @@
         <servlet-name>ReservaServlet</servlet-name>
         <url-pattern>/ReservaServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Index</servlet-name>
-        <jsp-file>/index.jsp</jsp-file>
-    </servlet>
-    <!--mapping-->
-    <servlet-mapping>
-        <servlet-name>Index</servlet-name>
-        <url-pattern>/Index</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Registro</servlet-name>
-        <jsp-file>/registro.jsp</jsp-file>
-    </servlet>
-    <!--mapping-->
-    <servlet-mapping>
-        <servlet-name>Registro</servlet-name>
-        <url-pattern>/Registro</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Ingreso</servlet-name>
-        <jsp-file>/ingreso.jsp</jsp-file>
-    </servlet>
-    <!--mapping-->
-    <servlet-mapping>
-        <servlet-name>Ingreso</servlet-name>
-        <url-pattern>/Ingreso</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -69,5 +67,4 @@
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>jdbc:mysql://localhost:3306/master_car_rental_system/</env-entry-value>
     </env-entry>
-
 </web-app>
