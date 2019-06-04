@@ -50,7 +50,7 @@
                 <% }%>
                 <!--</div>-->
             </div>
-
+                
             <!-- Modal confirmar reserva -->
             <div class="modal fade" id="confirmarReservaModal" value="" tabindex="-1" role="dialog" aria-labelledby="confirmarReservaModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">

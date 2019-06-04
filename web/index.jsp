@@ -12,20 +12,20 @@
     <%@include file="head.html" %>
     <body>
         <%@include file="header.jsp"%>
-        <div id="body" class="home">
-            <div>
-                <form action="AutomovilServlet" method="GET">
+        <div class="jumbotron">
+            <div class="container">
+                <form action="Automoviles" method="GET">
                     <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
                     <div class="form-row">
-                        <div class="form-group col-md-3">
-                            <label for="exampleInputEmail1">Fecha de alquiler</label>
+                        <div class="form-group col-md-4">
+                            <label for="fechaAlquiler">Fecha de alquiler</label>
                             <input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="exampleInputEmail1">Fecha de devolución</label>
-                            <input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha"">
+                        <div class="form-group col-md-4">
+                            <label for="fechaDevolucion">Fecha de devolución</label>
+                            <input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-4">
                             <label for="sede">Sede</label>
                             <select class="form-control custom-select" id="sel1">
                                 <% List<Sede> sedes = new SedeDAO().obtenerTodos();
@@ -37,14 +37,14 @@
                                 %>
                             </select>
                         </div>
-                        <div class="form-group col-md-3">
-                            <div></div>
+                        <div class="form-group col-md-4">
                             <button type="submit" class="btn btn-primary">Consultar</button>
                         </div>
                     </div>
                 </form>
             </div>
-
+        </div>
+        <div id="body" class="home">
             <div class="blog">
                 <img src="resources/images/house.png" alt="">
                 <div>

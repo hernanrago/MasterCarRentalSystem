@@ -1,4 +1,5 @@
-<% String usuario = (String) request.getSession().getAttribute("usuario"); %>
+<%@page import="java.security.Principal"%>
+<% Principal usuario = request.getUserPrincipal(); %>
 
 <div id="header">
     <div>
@@ -9,7 +10,7 @@
             </li>
             <%
                 if (usuario != null) {
-                    out.print("<li><a><text style=\"color:#1bb5ac;\"><strong>" + usuario.toUpperCase() + "</strong></text></a></li>");            
+                    out.print("<li><a><text style=\"color:#1bb5ac;\"><strong>" + usuario.getName().toUpperCase() + "</strong></text></a></li>");            
             } else {
                     out.print("<li><a href=\"/MasterCarRentalSystem/Ingreso\">Ingreso</a></li>");
                 }
@@ -19,14 +20,15 @@
                 <a href="/MasterCarRentalSystem/Registro">Registro</a>
             </li>
             <li>
-                <a href="about.html">La Empresa</a>
+                <a href="#">La Empresa</a>
             </li>
             <li>
-                <a href="contact.html">Contacto</a>
+                <a href="#">Contacto</a>
             </li>
             <%
                 if (usuario != null) {
-                    out.print("<li><a href=\"/MasterCarRentalSystem/Salir\">Salir</a></li>");
+                    out.print("<li><a href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</a></li>");
+                    
                 }
             %>
         </ul>

@@ -11,7 +11,7 @@
     <body>
         <%@include file="header.jsp"%>
         <div id="body" class="home">
-            <form action="UsuarioServlet" method="post">
+            <form action="Usuario" method="post">
                 <input type="hidden" name="comando" value="registro"/>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
