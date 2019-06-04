@@ -42,6 +42,8 @@ public class UsuarioServlet extends HttpServlet {
                     rd.forward(request, response);
                 } catch (ServletException e) {
                     Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, e);
+                    RequestDispatcher rd = request.getRequestDispatcher("ingreso.jsp");
+                    rd.forward(request, response);
                 }
 
                 break;

@@ -64,25 +64,6 @@
         </session-timeout>
     </session-config>
     
-    <security-constraint>
-        <display-name>Acceso a clientes</display-name>
-        <web-resource-collection>
-            <web-resource-name>Zona Protegida</web-resource-name>
-            <url-pattern>/Automoviles/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>client</role-name>
-        </auth-constraint>
-    </security-constraint>
-    
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/ingreso.jsp</form-login-page>
-            <form-error-page>/ingreso.jsp</form-error-page>
-        </form-login-config>
-    </login-config>
-    
     <security-role>
         <role-name>client</role-name>
     </security-role>

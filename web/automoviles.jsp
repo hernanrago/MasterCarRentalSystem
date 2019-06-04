@@ -89,6 +89,7 @@
 <script>
     $(document).on("click", ".reservar", function () {
         let automovilId = $(this).val();
+        let sede = <% out.print(request.getParameter("sede")); %>
         $('#confirmarReservaModal').val(automovilId);
 
         $(".confirmar").click(function () {
@@ -101,8 +102,9 @@
                         $('#aceptarReservaButton').click(function () {
                             $.ajax({
                                 method: "GET",
-                                url: "AutomovilServlet",
-                                data: {comando: "automovilesDisponibles"}
+                                url: "Automoviles",
+                                data: {comando: "automovilesDisponibles",
+                                        sede: sede}
                             })
                                     .done(function () {
                                         location.reload();

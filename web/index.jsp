@@ -28,7 +28,7 @@
                         <div class="form-group col-md-4">
                             <label for="sede">Sede</label>
                             <select class="form-control custom-select" id="sede" name="sede">
-                                <option value="">Todas la sedes</option>
+                                <option value="todas">Todas la sedes</option>
                                 <% List<Sede> sedes = new SedeDAO().obtenerTodos();
                                     for (Sede s : sedes) {
                                 %>

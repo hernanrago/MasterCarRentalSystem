@@ -6,6 +6,7 @@
 package net.ifts16.controller;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.ifts16.dao.AutomovilDAO;
+import net.ifts16.dao.ModeloDAO;
+import net.ifts16.dao.SedeDAO;
+import net.ifts16.enums.Cambios;
 import net.ifts16.model.Automovil;
 
 /**
@@ -26,46 +30,17 @@ public class AutomovilServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String x = request.getParameter("comando");
-        switch (x) {
+        switch (request.getParameter("comando")) {
             case "automovilesDisponibles":
                 mostrarAutomovilesDisponibles(request, response);
                 break;
+            case "ingresarAutomovil":
+                ingresarAutomovil(request, response);
+                break;
             default:
-                System.out.println("No entró");
+            request.getRequestDispatcher("automoviles.jsp").forward(request,response);
         }
 
-//        Automovil automovil = new Automovil(
-//                request.getParameter("patente"),
-//                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
-//                new ModeloDAO().obtener(1),
-//                Integer.parseInt(request.getParameter("pasajeros")),
-//                Integer.parseInt(request.getParameter("puertas")),
-//                new BigDecimal(request.getParameter("precio")),
-//                //                Cambios.valueOf(request.getParameter("cambios")) ,
-//                Cambios.AUTOMATICO,
-//                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
-//                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
-//                new SedeDAO().obtener(1),
-//                new SedeDAO().obtener(1),
-//                false,
-//                false);
-//
-//        automovilDAO = new AutomovilDAO();
-//        automovilDAO.crear(automovil);
-//
-//        response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet AutomovilServlet</title>");
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet AutomovilServlet at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
 //        }
     }
 
@@ -94,7 +69,7 @@ public class AutomovilServlet extends HttpServlet {
         automovilDAO = new AutomovilDAO();
         List<Automovil> automoviles;
         String sede = request.getParameter("sede");
-        automoviles = sede.equals("") ? automovilDAO.obtenerTodos() : automovilDAO.obtenerSedeUbicacion(sede);
+        automoviles = sede.equals("todas") ? automovilDAO.obtenerTodos() : automovilDAO.obtenerSedeUbicacion(sede);
         request.setAttribute("automoviles", automoviles);
         
         try {
@@ -103,6 +78,27 @@ public class AutomovilServlet extends HttpServlet {
             Logger.getLogger(AutomovilServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+
+    private void ingresarAutomovil(HttpServletRequest request, HttpServletResponse response) {
+                Automovil automovil = new Automovil(
+                request.getParameter("patente"),
+                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+                new ModeloDAO().obtener(1),
+                Integer.parseInt(request.getParameter("pasajeros")),
+                Integer.parseInt(request.getParameter("puertas")),
+                new BigDecimal(request.getParameter("precio")),
+                //                Cambios.valueOf(request.getParameter("cambios")) ,
+                Cambios.AUTOMATICO,
+                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
+                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
+                new SedeDAO().obtener(1),
+                new SedeDAO().obtener(1),
+                false,
+                false);
+
+        automovilDAO = new AutomovilDAO();
+        automovilDAO.crear(automovil);
     }
 
 }
