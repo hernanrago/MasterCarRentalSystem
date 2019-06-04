@@ -15,12 +15,11 @@
     <body>
         <%@include file="header.jsp"%>
         <div id="body" class="home">
-            <div class="card-deck">
-                <!--<div class="row">-->
+                <div class="row">
                 <%List<Automovil> automoviles = (ArrayList<Automovil>) request.getAttribute("automoviles");
                     for (Automovil a : automoviles) {
                 %>
-                <!--<div class="col-sm-6">-->
+                <div class="col-sm-4">
                 <div class="card">
                     <img src="resources/images/automoviles/<%= a.getId()%>.png" class="card-img-top" />
                     <div class="card-body">
@@ -34,6 +33,7 @@
                         <li class="list-group-item"><%= a.getCambios().toString()%></li>
                     </ul>
                     <div class="card-footer" id="<%= a.getId()%>">
+                        <p class="card-text">Ubicación: <% out.print(a.getSedeUbicacion().getDomicilio()); %></p>
                         <% if (a.isReservado()) {%>
                         <div class="alert alert-info" role="alert" style="margin-bottom: 0">
                             Reservado
@@ -46,11 +46,9 @@
                     </div>
                 </div>
 
-                <!--</div>-->
+                </div>
                 <% }%>
-                <!--</div>-->
-            </div>
-                
+                </div>              
             <!-- Modal confirmar reserva -->
             <div class="modal fade" id="confirmarReservaModal" value="" tabindex="-1" role="dialog" aria-labelledby="confirmarReservaModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">

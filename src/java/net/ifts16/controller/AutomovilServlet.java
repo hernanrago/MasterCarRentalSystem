@@ -6,8 +6,6 @@
 package net.ifts16.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,9 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.ifts16.dao.AutomovilDAO;
-import net.ifts16.dao.ModeloDAO;
-import net.ifts16.dao.SedeDAO;
-import net.ifts16.enums.Cambios;
 import net.ifts16.model.Automovil;
 
 /**
@@ -97,7 +92,9 @@ public class AutomovilServlet extends HttpServlet {
             HttpServletResponse response) {
         
         automovilDAO = new AutomovilDAO();
-        List<Automovil> automoviles = automovilDAO.obtenerTodos();
+        List<Automovil> automoviles;
+        String sede = request.getParameter("sede");
+        automoviles = sede.equals("") ? automovilDAO.obtenerTodos() : automovilDAO.obtenerSedeUbicacion(sede);
         request.setAttribute("automoviles", automoviles);
         
         try {
