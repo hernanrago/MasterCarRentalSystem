@@ -1,4 +1,5 @@
-<% String usuario = (String) request.getSession().getAttribute("usuario"); %>
+<%@page import="java.security.Principal"%>
+<% Principal usuario = request.getUserPrincipal(); %>
 
 <div>
     <div class="jumbotron" id="mjumbo">
@@ -21,7 +22,7 @@
             </li>
             <%
                 if (usuario != null) {
-                    out.print("<li class=\"nav-item active\"><a class=\"nav-link\"><text style=\"color:#1bb5ac;\"><strong>" + usuario.toUpperCase() + "</strong></text></a></li>");            
+                    out.print("<li class=\"nav-item active\"><a class=\"nav-link\"><text style=\"color:#1bb5ac;\"><strong>" + usuario.getName().toUpperCase() + "</strong></text></a></li>");            
             } else {
                     out.print("<li class=\"nav-item active\"><a class=\"nav-link\" href=\"/MasterCarRentalSystem/Ingreso\">Ingreso</a></li>");
                 }
@@ -38,7 +39,7 @@
             </li>
             <%
                 if (usuario != null) {
-                    out.print("<li><a href=\"/MasterCarRentalSystem/Salir\">Salir</a></li>");
+                    out.print("<li><a href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</a></li>");                   
                 }
             %>
             </ul>
