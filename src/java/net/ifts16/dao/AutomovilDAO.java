@@ -24,6 +24,7 @@ public class AutomovilDAO implements Dao<Automovil> {
 
     private static final String INSERT_AUTOMOVIL = "INSERT INTO automovil (patente, modelo_id, pasajeros, puertas, precio, cambios, sede_radicacion_id, sede_ubicacion_id, reservado, alquilado) VALUES (?, ?, ?, ?,?,?,?,?,?,?);";
     private static final String SELECT_AUTOMOVIL = "SELECT * FROM automovil";
+    private static final String SELECT_AUTOMOVIL_SEDE = "SELECT * FROM automovil where sede_ubicacion_id = ?";
     private static final String SELECT_AUTOMOVIL_ID = "SELECT * FROM automovil WHERE id = ?";
     private static final String RESERVA = "UPDATE automovil set reservado = true WHERE id = ?";
 
@@ -50,6 +51,34 @@ public class AutomovilDAO implements Dao<Automovil> {
                         rs.getBoolean("alquilado")
                 );
             }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public List<Automovil> obtenerSedeUbicacion(String sede) {
+        try (Connection conn = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement ps = conn.prepareStatement(SELECT_AUTOMOVIL_SEDE);
+            ps.setString(1, sede);
+            ResultSet rs = ps.executeQuery();
+            List<Automovil> automoviles = new ArrayList<>();
+            while (rs.next()) {
+                automoviles.add(new Automovil(
+                        rs.getInt("id"),
+                        rs.getString("patente"),
+                        new ModeloDAO().obtener(rs.getInt("modelo_id")),
+                        rs.getInt("pasajeros"),
+                        rs.getInt("puertas"),
+                        rs.getBigDecimal("precio"),
+                        Cambios.valueOf(rs.getString("cambios")),
+                        new SedeDAO().obtener(rs.getInt("sede_radicacion_id")),
+                        new SedeDAO().obtener(rs.getInt("sede_ubicacion_id")),
+                        rs.getBoolean("reservado"),
+                        rs.getBoolean("alquilado")
+                ));
+            }
+            return automoviles;
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }

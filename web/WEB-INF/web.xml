@@ -28,6 +28,7 @@
         <servlet-name>ReservaServlet</servlet-name>
         <servlet-class>net.ifts16.controller.ReservaServlet</servlet-class>
     </servlet>
+    
     <!--mapping-->
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
@@ -43,7 +44,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UsuarioServlet</servlet-name>
-        <url-pattern>/UsuarioServlet</url-pattern>
+        <url-pattern>/Usuario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SedeServlet</servlet-name>
@@ -51,7 +52,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AutomovilServlet</servlet-name>
-        <url-pattern>/AutomovilServlet</url-pattern>
+        <url-pattern>/Automoviles</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReservaServlet</servlet-name>
@@ -62,6 +63,11 @@
             30
         </session-timeout>
     </session-config>
+    
+    <security-role>
+        <role-name>client</role-name>
+    </security-role>
+    
     <env-entry>
         <env-entry-name>JdbcUrl</env-entry-name>
         <env-entry-type>java.lang.String</env-entry-type>
