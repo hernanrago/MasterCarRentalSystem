@@ -12,7 +12,8 @@
     <%@include file="head.html" %>
     <body>
         <%@include file="header.jsp"%>
-        <div id="body" class="home">
+        <div class="container">
+            <hr class="featurette-divider">
             <div>
                 <form action="AutomovilServlet" method="GET">
                     <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
@@ -44,37 +45,34 @@
                     </div>
                 </form>
             </div>
-
-            <div class="blog">
-                <img src="resources/images/house.png" alt="">
-                <div>
-                    <h3>This is just a place holder</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
-                    </p>
+            <hr class="featurette-divider">                    
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img class="d-block w-100" src="resources/images/ford.png" alt="First slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img class="d-block w-100" src="resources/images/fiat.png" alt="Second slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img class="d-block w-100" src="resources/images/mondeo.png" alt="Third slide">
+                  </div>
                 </div>
-            </div>
-
-            <div class="article">
-                <div>
-                    <h3>This is just a place holder</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
-                    </p>
-                </div>
-                <img src="resources/images/nature-place-photo.png" alt="">
-            </div>
-
-            <div class="news">
-                <img src="resources/images/eco-park.png" alt="">
-                <div>
-                    <h3>This is just a place holder</h3>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sollicitudin enim a nulla mollis, sed pulvinar ipsum efficitur. Nam id massa ut erat eleifend gravida ac id nulla. Nam pharetra purus at magna sodales venenatis. Nunc eget urna turpis. Cras mollis neque ut felis ultricies tempor. Aliquam condimentum erat id augue sollicitudin faucibus. Vestibulum feugiat magna a convallis consectetur. Etiam ut urna at velit tincidunt euismod. Curabitur id metus et eros sollicitudin accumsan.
-                    </p>
-                </div>
-            </div>
-
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+            </div> 
+            <hr class="featurette-divider">
         </div>
         <%@include file="footer.html" %>
     </body>
