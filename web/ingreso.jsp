@@ -11,7 +11,7 @@
     <body>
         <%@include file="header.jsp"%>
         <div class="text-center">
-            <form class="form-signin" action="UsuarioServlet" method="post">
+            <form class="form-signin" action="Usuario" method="post">
                 <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
                 <input type="hidden" name="comando" value="ingreso" />
                 <div class="form-group">
@@ -25,9 +25,9 @@
                 <button type="submit" class="btn btn-primary">Ingresar</button>
             </form>
             <div class="checkbox mb-3">
-            <label>
-                <a href="registro.jsp">Usuario Nuevo - Registrate</a>
-            </label>
+                <label>
+                    <a href="registro.jsp">Usuario Nuevo - Registrate</a>
+                </label>
             </div>
         </div>
         <%@include file="footer.html" %>
