@@ -14,7 +14,7 @@
     <%@include file="head.html" %>
     <body>
         <%@include file="header.jsp"%>
-        <div id="body" class="home">
+        <div class="container">
                 <div class="row">
                 <%List<Automovil> automoviles = (ArrayList<Automovil>) request.getAttribute("automoviles");
                     for (Automovil a : automoviles) {

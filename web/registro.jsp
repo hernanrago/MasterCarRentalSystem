@@ -12,6 +12,7 @@
         <%@include file="header.jsp"%>
         <div class="text-center">
             <form class="form-signin" action="Usuario" method="post">
+                <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
                 <input type="hidden" name="comando" value="registro"/>
                 <div class="form-group">
                     <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Ingresar nombre" required="required">
