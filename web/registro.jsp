@@ -27,11 +27,37 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingresar contraseña" required="required">
                     </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
+                    <input id="registrar" type="button" class="btn btn-primary" value="Registrar"/>
                 </form>
                 <hr class="featurette-divider">
+            </div>
+
+            <!--Modal registro confirmado-->
+            <div class="modal fade" id="registroConfirmadoModal" tabindex="-1" role="dialog" aria-labelledby="registroConfirmadoModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Usuario registrado correctamente</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="aceptarRegistroButton">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <%@include file="footer.html" %>
     </body>
 </html>
+
+<script>
+    $('#registrar').click(function () {
+        $.post('Usuario', $('.form-signin').serialize())
+                .done(function () {
+                    $('#aceptarRegistroButton').click(function(){
+                        location.href ='Index';
+                    });
+                    $('#registroConfirmadoModal').modal('toggle');
+                });
+    });
+</script>

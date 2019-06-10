@@ -9,6 +9,14 @@
         <jsp-file>/ingreso.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>Empresa</servlet-name>
+        <jsp-file>/empresa.jsp</jsp-file>
+    </servlet>
+        <servlet>
+        <servlet-name>Contacto</servlet-name>
+        <jsp-file>/contacto.jsp</jsp-file>
+    </servlet>
+        <servlet>
         <servlet-name>Registro</servlet-name>
         <jsp-file>/registro.jsp</jsp-file>
     </servlet>
@@ -57,6 +65,14 @@
     <servlet-mapping>
         <servlet-name>ReservaServlet</servlet-name>
         <url-pattern>/ReservaServlet</url-pattern>
+    </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>Empresa</servlet-name>
+        <url-pattern>/Empresa</url-pattern>
+    </servlet-mapping>
+       <servlet-mapping>
+        <servlet-name>Contacto</servlet-name>
+        <url-pattern>/Contacto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

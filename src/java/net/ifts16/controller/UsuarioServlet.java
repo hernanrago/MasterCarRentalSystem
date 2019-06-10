@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import net.ifts16.dao.UsuarioDAO;
 import net.ifts16.enums.Rol;
 import net.ifts16.model.Usuario;
@@ -45,13 +44,13 @@ public class UsuarioServlet extends HttpServlet {
                     RequestDispatcher rd = request.getRequestDispatcher("ingreso.jsp");
                     rd.forward(request, response);
                 }
-
                 break;
             case "salir":
                 salir(request, response);
                 break;
             case "registro":
-                insertarUsuario(request, response);
+                insertarUsuario(request);
+                response.setStatus(200);
                 break;
 
         }
@@ -86,7 +85,7 @@ public class UsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void insertarUsuario(HttpServletRequest request, HttpServletResponse response)
+    private void insertarUsuario(HttpServletRequest request)
             throws SQLException, IOException, ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
@@ -97,8 +96,8 @@ public class UsuarioServlet extends HttpServlet {
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.crear(usuario);
 
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+//        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+//        rd.forward(request, response);
     }
 
     private void salir(HttpServletRequest request, HttpServletResponse response) {
