@@ -24,6 +24,7 @@ public class SedeDAO implements Dao<Sede> {
     private static final String INSERT_SEDE = "INSERT INTO sede (domicilio, codigo_postal, ciudad, provincia) VALUES (?, ?, ?, ?);";
     private static final String SELECT_SEDE_ID = "SELECT * FROM sede WHERE id = ?";
     private static final String SELECT_SEDE = "SELECT * FROM sede";
+    private static final String UPDATE_SEDE = "UPDATE sede (domicilio, codigo_postal, ciudad, provincia) VALUES (?, ?, ?, ?) WHERE id= ?;";
 
     @Override
     public Sede obtener(int id) {
@@ -86,9 +87,19 @@ public class SedeDAO implements Dao<Sede> {
     }
 
     @Override
-    public void actualizar(int id
-    ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void actualizar(int id) {
+        Sede t = new SedeDAO().obtener(id);
+        
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_SEDE);
+            preparedStatement.setString(1, t.getDomicilio());
+            preparedStatement.setString(2, t.getCodigoPostal());
+            preparedStatement.setString(3, t.getCiudad());
+            preparedStatement.setString(4, t.getProvincia());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
 
     @Override

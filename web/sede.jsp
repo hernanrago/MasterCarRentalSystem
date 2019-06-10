@@ -8,42 +8,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Sede</title>
-    </head>
+    <%@include file="head.html" %>
     <body>
-        <h1>Alta de Sede</h1>
-        <div>
-            <form action="SedeServlet" method="post">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Domicilio</td>
-                            <td><input type="text" name="domicilio"/></td>
-                        </tr>
-                        <tr>
-                            <td>Código Postal</td>
-                            <td><input type="text" name="codigoPostal"/></td>
-                        </tr>
-                        <tr>
-                            <td>Ciudad</td>
-                            <td><input type="text" name="ciudad"/></td>
-                        </tr>
-                        <tr>
-                            <td>Provincia</td>
-                            <td><input type="text" name="provincia"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <input type="submit" value="registrar" />
-            </form>
+        <%@include file="header.jsp"%>
+        <div class="container">
+            <div class="text-center">
+                <h1>Alta de Sede</h1>
+                <form class="form-signin" action="SedeServlet" method="post">
+                    <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
+                    <input type="hidden" name="tipo" value="registro"/>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="domicilio" name="domicilio" aria-describedby="domicilio" placeholder="Domicilio" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" aria-describedby="codigoPostal" placeholder="Codigo Postal" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ciudad" name="ciudad" aria-describedby="ciudad" placeholder="Ciudad" required="required">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" required="required">
+                    </div>
+                    <button type="submit" class="btn btn-primary" value="registrar">Registrar</button>
+                </form>
+            </div>
         </div>
-
+        <%@include file="footer.html" %>
     </body>
 </html>

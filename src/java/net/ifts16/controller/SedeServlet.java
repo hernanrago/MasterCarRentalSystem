@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,28 +36,27 @@ public class SedeServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                
-        Sede sede = new Sede(request.getParameter("domicilio"),
-            request.getParameter("codigoPostal"),
-            request.getParameter("ciudad"),
-            request.getParameter("provincia"));
-        
-        sedeDAO = new SedeDAO();
-        sedeDAO.crear(sede);
-               
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SedeServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SedeServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
+        switch (request.getParameter("tipo")){
+            case "registro":
+                ingresarSede(request, response);
+                response.sendRedirect("consultSede.jsp");
+            break;
+            case "listado":
+                List<Sede> sedes = new ArrayList();//no funciona
+            break;    
+            case "editar":
+                editSede(request, response);                   
+            break;
+            case "eliminar":
+                elimSede(request, response);
+                response.sendRedirect("consultSede.jsp");
+            break;
         }
+        
+               
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -97,5 +97,37 @@ public class SedeServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private void ingresarSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        Sede sede = new Sede(request.getParameter("domicilio"),
+            request.getParameter("codigoPostal"),
+            request.getParameter("ciudad"),
+            request.getParameter("provincia"));
+        
+        sedeDAO = new SedeDAO();
+        sedeDAO.crear(sede);
+        
+    }
 
+    private void mostrarSedes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        sedeDAO = new SedeDAO();
+        List<Sede> sedes = new ArrayList<>();
+        sedes = sedeDAO.obtenerTodos();
+    }
+    
+    private void editSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Sede sede = new Sede(Integer.parseInt(request.getParameter("id")), request.getParameter("domicilio"),
+            request.getParameter("codigoPostal"),
+            request.getParameter("ciudad"),
+            request.getParameter("provincia"));
+        
+        sedeDAO  = new SedeDAO();
+        sedeDAO.actualizar(sede.getId());
+    }
+    
+    private void elimSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    }
 }
