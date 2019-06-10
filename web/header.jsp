@@ -47,33 +47,36 @@
             </div>
         </nav>
         <form action="Automoviles" method="GET">
-                <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="fechaAlquiler">Fecha de alquiler</label>
-                        <input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="fechaDevolucion">Fecha de devolución</label>
-                        <input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="sede">Sede</label>
-                        <select class="form-control custom-select" id="sede" name="sede">
-                            <option value="todas">Todas la sedes</option>
-                            <% List<Sede> sedes = new SedeDAO().obtenerTodos();
-                                for (Sede s : sedes) {
-                            %>
-                            <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
-                            <%
-                                }
-                            %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <button type="submit" class="btn btn-primary">Consultar</button>
-                    </div>
+            <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="fechaAlquiler">Fecha de alquiler</label>
+                    <!--<input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">-->
+                    <input id="fechaAlquiler" name="fechaAlquiler" placeholder="Escoger fecha"/>
+
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="fechaDevolucion">Fecha de devolución</label>
+                    <!--<input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">-->
+                    <input id="fechaDevolucion" name="fechaDevolucion" placeholder="Escoger fecha"/>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="sede">Sede</label>
+                    <select class="form-control custom-select" id="sede" name="sede">
+                        <option value="todas">Todas la sedes</option>
+                        <% List<Sede> sedes = new SedeDAO().obtenerTodos();
+                            for (Sede s : sedes) {
+                        %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
+                        <%
+                            }
+                        %>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+                </div>
+            </div>
         </form>
         <hr class="featurette-divider">                 
     </div>
