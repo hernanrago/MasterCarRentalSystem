@@ -27,8 +27,8 @@
                     <th class="text-center">Provincia</th>
                     <th class="text-center">Acciones</th>
                 </tr>
-                <%List<Sede> sedesList = (ArrayList<Sede>) request.getAttribute("sedes");//averiguar xq no funciona
-                    for(Sede a : sedes) {
+                <%List<Sede> sedes = new SedeDAO().obtenerTodos();
+                    for (Sede a : sedes) {
                 %>
                 <tr>
                     <td class="text-center"><%= a.getId()%></td>
