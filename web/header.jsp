@@ -6,7 +6,7 @@
 
 <div>
     <div>
-        <a href="/Index"><img class="d-block w-100" src="resources/images/logofinal.jpeg"></a>
+        <a href="Index"><img class="d-block w-100" src="resources/images/logofinal.jpeg"></a>
     </div>
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" id="miSectionNav">

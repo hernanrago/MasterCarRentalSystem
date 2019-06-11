@@ -22,7 +22,7 @@
                 <tr>
                     <th class="text-center">ID</th>
                     <th class="text-center">Domicilio</th>
-                    <th class="text-center">Codigo Postal</th>
+                    <th class="text-center">Código Postal</th>
                     <th class="text-center">Ciudad</th>
                     <th class="text-center">Provincia</th>
                     <th class="text-center">Acciones</th>

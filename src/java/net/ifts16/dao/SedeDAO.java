@@ -35,7 +35,7 @@ public class SedeDAO implements Dao<Sede> {
             ResultSet resultSet = preparedStatement.executeQuery();
             Sede sede = new Sede();
             while (resultSet.next()) {
-                sede.setId(resultSet.getString("id"));
+                sede.setId(resultSet.getInt("id"));
                 sede.setDomicilio(resultSet.getString("domicilio"));
                 sede.setCodigoPostal(resultSet.getString("codigo_postal"));
                 sede.setCiudad(resultSet.getString("ciudad"));
@@ -58,7 +58,7 @@ public class SedeDAO implements Dao<Sede> {
             while (rs.next()) {
                 sedes.add(
                         new Sede(
-                                rs.getString("id"),
+                                rs.getInt("id"),
                                 rs.getString("domicilio"),
                                 rs.getString("codigo_postal"),
                                 rs.getString("ciudad"),
@@ -87,21 +87,6 @@ public class SedeDAO implements Dao<Sede> {
         }
     }
 
-    public void actualizar(Sede sedeAc) {
-        
-        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
-            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_SEDE);
-            preparedStatement.setString(1, sedeAc.getDomicilio());
-            preparedStatement.setString(2, sedeAc.getCodigoPostal());
-            preparedStatement.setString(3, sedeAc.getCiudad());
-            preparedStatement.setString(4, sedeAc.getProvincia());
-            preparedStatement.setString(5, sedeAc.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-    }
-
     @Override
     public void borrar(int id) {
 
@@ -116,7 +101,17 @@ public class SedeDAO implements Dao<Sede> {
 
     @Override
     public void actualizar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Sede s = obtener(id);
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_SEDE);
+            preparedStatement.setString(1, s.getDomicilio());
+            preparedStatement.setString(2, s.getCodigoPostal());
+            preparedStatement.setString(3, s.getCiudad());
+            preparedStatement.setString(4, s.getProvincia());
+            preparedStatement.setInt(5, s.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
-
 }
