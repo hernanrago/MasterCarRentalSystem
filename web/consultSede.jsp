@@ -38,7 +38,7 @@
                     <td class="text-center"><%= a.getProvincia()%></td>
                     <td class="text-center">
                         <a href="editSede.jsp?id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="deleteSede.jsp?id=<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="elimSede.jsp?id=<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>
                     </td>
                 </tr>
                 <% } %>

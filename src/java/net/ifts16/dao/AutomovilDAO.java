@@ -123,8 +123,8 @@ public class AutomovilDAO implements Dao<Automovil> {
             preparedStatement.setInt(4, t.getPuertas());
             preparedStatement.setBigDecimal(5, t.getPrecio());
             preparedStatement.setString(6, t.getCambios().name());
-            preparedStatement.setInt(7, t.getSedeRadicacion().getId());
-            preparedStatement.setInt(8, t.getSedeUbicacion().getId());
+            preparedStatement.setString(7, t.getSedeRadicacion().getId());
+            preparedStatement.setString(8, t.getSedeUbicacion().getId());
             preparedStatement.setBoolean(9, t.isReservado());
             preparedStatement.setBoolean(10, t.isReservado());
             preparedStatement.executeUpdate();

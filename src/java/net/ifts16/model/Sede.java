@@ -11,7 +11,7 @@ package net.ifts16.model;
  */
 public class Sede {
 
-    private int id;
+    private String id;
     private String domicilio;
     private String codigoPostal;
     private String ciudad;
@@ -27,7 +27,7 @@ public class Sede {
         this.provincia = provincia;
     }
 
-    public Sede(int id, String domicilio, String codigoPostal, String ciudad, String provincia) {
+    public Sede(String id, String domicilio, String codigoPostal, String ciudad, String provincia) {
         this.id = id;
         this.domicilio = domicilio;
         this.codigoPostal = codigoPostal;
@@ -38,11 +38,11 @@ public class Sede {
     /**
      * @return the id
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

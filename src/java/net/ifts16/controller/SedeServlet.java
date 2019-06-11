@@ -46,7 +46,8 @@ public class SedeServlet extends HttpServlet {
                 List<Sede> sedes = new ArrayList();//no funciona
             break;    
             case "editar":
-                editSede(request, response);                   
+                editSede(request, response);   
+                response.sendRedirect("consultSede.jsp");
             break;
             case "eliminar":
                 elimSede(request, response);
@@ -118,16 +119,21 @@ public class SedeServlet extends HttpServlet {
     }
     
     private void editSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Sede sede = new Sede(Integer.parseInt(request.getParameter("id")), request.getParameter("domicilio"),
+        Sede sede = new Sede(
+            request.getParameter("id"), 
+            request.getParameter("domicilio"),
             request.getParameter("codigoPostal"),
             request.getParameter("ciudad"),
             request.getParameter("provincia"));
         
         sedeDAO  = new SedeDAO();
-        sedeDAO.actualizar(sede.getId());
+        sedeDAO.actualizar(sede);
     }
     
     private void elimSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int sede = Integer.parseInt(request.getParameter("id"));
         
+        sedeDAO  = new SedeDAO();
+        sedeDAO.borrar(sede);
     }
 }
