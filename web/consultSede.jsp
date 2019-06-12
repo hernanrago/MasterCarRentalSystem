@@ -12,9 +12,10 @@
     <body>
         <%@include file="header.jsp"%>
         <div class="container">
-            <h1>Lista Sedes</h1>
+            <br>
+            <h1>SEDES</h1>
             <hr>
-            <a href="sede.jsp" class="btn btn-success btn-lg">Ingresar Sede</a>
+            <a href="Sede?comando=nuevo" class="btn btn-success btn-lg">Ingresar Sede</a>
             <br>
             <br>
             <table class="table table-bordered">
@@ -37,13 +38,80 @@
                     <td class="text-center"><%= a.getCiudad()%></td>
                     <td class="text-center"><%= a.getProvincia()%></td>
                     <td class="text-center">
-                        <a href="editSede.jsp?id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="elimSede.jsp?id=<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>
+                        <a href="Sede?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
+                        <button type="button" class="btn btn-danger btn-sm eliminar" value="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarEliminarModal">
+                                Eliminar
+                            </button>
+                        <!--<a value="<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>-->
                     </td>
                 </tr>
                 <% } %>
             </table>
+            
+                        <!-- Modal confirmar reserva -->
+            <div class="modal fade" id="confirmarEliminarModal" value="" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmarEliminarModalLabel">Eliminar</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Desea eliminar esta sede?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger confirmar">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal reserva confirmada -->
+            <div class="modal fade" id="eliminacionConfirmadaModal" tabindex="-1" role="dialog" aria-labelledby="eliminacionConfirmadaModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p>Sede eliminada</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="aceptarEliminarButton">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <%@include file="footer.html" %>
     </body>
 </html>
+
+<script>
+        $(document).on("click", ".eliminar", function () {
+        let sedeId = $(this).val();
+        let sede = <% out.print(request.getParameter("sede"));%>
+        $('#confirmarEliminarModal').val(sedeId);
+
+        $(".confirmar").click(function () {
+            $.ajax({
+                method: "POST",
+                url: "Sede",
+                data: {
+                comando: 'eliminar',    
+                sedeId: sedeId}
+            })
+                    .done(function () {
+                        $('#aceptarEliminarButton').click(function () {
+                            $.ajax({
+                                method: "GET",
+                                url: "Sede"
+                            })
+                                    .done(function () {
+                                        location.reload();
+                                    });
+                        });
+                        $('#confirmarEliminarModal').modal('toggle');
+                        $('#eliminacionConfirmadaModal').modal('toggle');
+                    });
+        });
+    });
+</script>

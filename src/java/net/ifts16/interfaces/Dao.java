@@ -22,7 +22,7 @@ public interface Dao<T> {
 
     void crear(T t);
 
-    void actualizar(int id);
+    void actualizar(T t);
 
     void borrar(int id);
 }

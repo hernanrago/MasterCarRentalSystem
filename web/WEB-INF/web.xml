@@ -56,7 +56,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SedeServlet</servlet-name>
-        <url-pattern>/SedeServlet</url-pattern>
+        <url-pattern>/Sede</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AutomovilServlet</servlet-name>

@@ -54,12 +54,12 @@ public class ModeloDAO implements Dao<Modelo> {
     }
 
     @Override
-    public void actualizar(int id) {
+    public void borrar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void borrar(int id) {
+    public void actualizar(Modelo t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

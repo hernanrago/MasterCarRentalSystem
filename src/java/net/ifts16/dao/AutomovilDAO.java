@@ -135,10 +135,6 @@ public class AutomovilDAO implements Dao<Automovil> {
         }
     }
 
-    @Override
-    public void actualizar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     @Override
     public void borrar(int id) {
@@ -155,6 +151,11 @@ public class AutomovilDAO implements Dao<Automovil> {
             e.printStackTrace(System.out);
         }
 
+    }
+
+    @Override
+    public void actualizar(Automovil t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

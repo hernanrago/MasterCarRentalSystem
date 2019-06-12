@@ -97,11 +97,6 @@ public class UsuarioDAO implements Dao<Usuario> {
     }
 
     @Override
-    public void actualizar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public void borrar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -124,6 +119,11 @@ public class UsuarioDAO implements Dao<Usuario> {
 
         }
         return null;
+    }
+
+    @Override
+    public void actualizar(Usuario t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

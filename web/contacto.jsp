@@ -11,9 +11,10 @@
     <body>
         <%@include file="header.jsp"%>
         <div class="container">
+            <br>
             <h2>Ubicación de las Sedes</h2>
             <p clas="text-justify">
-                Fijate cual es la sede que mas te gusta. Recorda que tambien tenemos el servicio puerta a puerta.<br>
+                Fijate cual es la sede que mas te gusta. Recordá que también tenemos el servicio puerta a puerta.<br>
             </p>
             <br>
             <div class="row">

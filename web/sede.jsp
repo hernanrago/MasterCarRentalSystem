@@ -14,9 +14,9 @@
         <div class="container">
             <div class="text-center">
                 <h1>Alta de Sede</h1>
-                <form class="form-signin" action="SedeServlet" method="post">
+                <form class="form-signin" action="Sede" method="post">
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
-                    <input type="hidden" name="tipo" value="registro"/>
+                    <input type="hidden" name="comando" value="crear"/>
                     <div class="form-group">
                         <input type="text" class="form-control" id="domicilio" name="domicilio" aria-describedby="domicilio" placeholder="Domicilio" required="required">
                     </div>

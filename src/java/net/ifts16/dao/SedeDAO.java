@@ -100,18 +100,18 @@ public class SedeDAO implements Dao<Sede> {
     }
 
     @Override
-    public void actualizar(int id) {
-        Sede s = obtener(id);
+    public void actualizar(Sede t) {
         try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_SEDE);
-            preparedStatement.setString(1, s.getDomicilio());
-            preparedStatement.setString(2, s.getCodigoPostal());
-            preparedStatement.setString(3, s.getCiudad());
-            preparedStatement.setString(4, s.getProvincia());
-            preparedStatement.setInt(5, s.getId());
+            preparedStatement.setString(1, t.getDomicilio());
+            preparedStatement.setString(2, t.getCodigoPostal());
+            preparedStatement.setString(3, t.getCiudad());
+            preparedStatement.setString(4, t.getProvincia());
+            preparedStatement.setInt(5, t.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
     }
+
 }

@@ -13,11 +13,11 @@
         <%@include file="header.jsp"%>
         <div class="container">
             <div class="text-center">
-                <form class="form-signin" action="SedeServlet" method="post">
-                    <input type="hidden" name="tipo" value="editar"/>
+                <form class="form-signin" action="Sede" method="post">
+                    <input type="hidden" name="comando" value="actualizar"/>
                     <h1>Editar Sede</h1>
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
-                    <%Sede sede = new SedeDAO().obtener(Integer.parseInt(request.getParameter("id")));%>
+                    <%Sede sede = (Sede)request.getAttribute("sede"); %>
                     <div class="form-group">
                         <input type="text" class="form-control" id="id" name="id" readonly="id" aria-describedby="id" value="<%= sede.getId()%>">
                     </div>

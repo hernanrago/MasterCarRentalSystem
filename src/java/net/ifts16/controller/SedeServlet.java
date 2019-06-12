@@ -6,10 +6,7 @@
 package net.ifts16.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,24 +25,29 @@ public class SedeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        switch (request.getParameter("tipo")) {
-            case "registro":
-                ingresarSede(request);
-                response.sendRedirect("consultSede.jsp");
-                break;
-            case "listado":
-                request.setAttribute("sedes", mostrarSedes(request));
-                request.getRequestDispatcher("consultSede.jsp").forward(request, response);
-                break;
-            case "editar":
-                editSede(request);
-                response.sendRedirect("consultSede.jsp");
-                break;
-            case "eliminar":
-                elimSede(request);
-                response.sendRedirect("consultSede.jsp");
-                break;
+        String comando = request.getParameter("comando");
+
+        if (comando != null) {
+            switch (comando) {
+                case "nuevo":
+                    request.getRequestDispatcher("sede.jsp").forward(request, response);
+                    break;
+                case "crear":
+                    crearSede(request);
+                    break;
+                case "editar":
+                    editarSede(request, response);
+                    break;
+                case "actualizar":
+                    actualizarSede(request);
+                    break;
+                case "eliminar":
+                    eliminarSede(request);
+                    break;
+            }
         }
+        request.setAttribute("sedes", mostrarSedes(request));
+        request.getRequestDispatcher("consultSede.jsp").forward(request, response);
 
     }
 
@@ -66,7 +68,7 @@ public class SedeServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void ingresarSede(HttpServletRequest request) throws ServletException, IOException {
+    private void crearSede(HttpServletRequest request) throws ServletException, IOException {
 
         Sede sede = new Sede(request.getParameter("domicilio"),
                 request.getParameter("codigoPostal"),
@@ -75,7 +77,6 @@ public class SedeServlet extends HttpServlet {
 
         sedeDAO = new SedeDAO();
         sedeDAO.crear(sede);
-
     }
 
     private List<Sede> mostrarSedes(HttpServletRequest request) throws ServletException, IOException {
@@ -83,14 +84,26 @@ public class SedeServlet extends HttpServlet {
         return sedeDAO.obtenerTodos();
     }
 
-    private void editSede(HttpServletRequest request) throws ServletException, IOException {
+    private void editarSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         sedeDAO = new SedeDAO();
-        sedeDAO.actualizar(Integer.parseInt(request.getParameter("id")));
+        Sede sede = sedeDAO.obtener(Integer.parseInt(request.getParameter("id")));
+        request.setAttribute("sede", sede);
+        request.getRequestDispatcher("editSede.jsp").forward(request, response);
     }
 
-    private void elimSede(HttpServletRequest request) throws ServletException, IOException {
-        int sede = Integer.parseInt(request.getParameter("id"));
+    private void actualizarSede(HttpServletRequest request) throws ServletException, IOException {
+        sedeDAO = new SedeDAO();
+        Sede sede = new Sede(
+                Integer.parseInt(request.getParameter("id")),
+                request.getParameter("domicilio"),
+                request.getParameter("codigoPostal"),
+                request.getParameter("ciudad"),
+                request.getParameter("provincia"));
+        sedeDAO.actualizar(sede);
+    }
 
+    private void eliminarSede(HttpServletRequest request) throws ServletException, IOException {
+        int sede = Integer.parseInt(request.getParameter("sedeId"));
         sedeDAO = new SedeDAO();
         sedeDAO.borrar(sede);
     }
