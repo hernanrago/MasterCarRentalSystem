@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -33,28 +34,32 @@ public class UsuarioServlet extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException, SQLException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
 
-        switch (request.getParameter("comando")) {
-            case "ingreso":
-                try {
-                    request.login(request.getParameter("nombreUsuario"), request.getParameter("contrasena"));
-                    RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                    rd.forward(request, response);
-                } catch (ServletException e) {
-                    Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, e);
-                    RequestDispatcher rd = request.getRequestDispatcher("ingreso.jsp");
-                    rd.forward(request, response);
-                }
-                break;
-            case "salir":
-                salir(request, response);
-                break;
-            case "registro":
-                insertarUsuario(request);
-                response.setStatus(200);
-                break;
+        String comando = request.getParameter("comando");
 
+        if (comando != null) {
+            switch (request.getParameter(comando)) {
+                case "ingreso":
+                    try {
+                        request.login(request.getParameter("nombreUsuario"), request.getParameter("contrasena"));
+                        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                        rd.forward(request, response);
+                    } catch (ServletException e) {
+                        Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, e);
+                        RequestDispatcher rd = request.getRequestDispatcher("ingreso.jsp");
+                        rd.forward(request, response);
+                    }
+                    break;
+                case "salir":
+                    salir(request, response);
+                    break;
+                case "registro":
+                    insertarUsuario(request);
+                    response.setStatus(200);
+                    break;
+            }
         }
-
+        request.setAttribute("usuarios", mostrarUsuarios());
+        request.getRequestDispatcher("usuarios.jsp").forward(request, response);
 //        insertarUsuario(request, response);
 //
 //        request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -111,4 +116,7 @@ public class UsuarioServlet extends HttpServlet {
 
     }
 
+    private List<Usuario> mostrarUsuarios() {
+        return new UsuarioDAO().obtenerTodos();
+    }
 }

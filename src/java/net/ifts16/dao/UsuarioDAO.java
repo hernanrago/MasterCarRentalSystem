@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -28,6 +29,7 @@ import net.ifts16.util.AdministradorBaseDatos;
 public class UsuarioDAO implements Dao<Usuario> {
 
     private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, nombre_usuario, contrasena, rol) VALUES (?, ?, ?, ?, ?);";
+    private static final String SELECT_USER = "SELECT * from usuario";
     private static final String SELECT_USER_ID = "SELECT * from usuario where id = ?";
 //    private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ? and contrasena = ?";
     private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ?";
@@ -78,7 +80,25 @@ public class UsuarioDAO implements Dao<Usuario> {
 
     @Override
     public List<Usuario> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection c = AdministradorBaseDatos.obtenerConexion();
+                PreparedStatement ps = c.prepareStatement(SELECT_USER)) {
+            ResultSet rs = ps.executeQuery();
+            List<Usuario> usuarios = new ArrayList<>();
+            while (rs.next()) {
+                usuarios.add(new Usuario(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("contrasena"),
+                        rs.getString("rol"))
+                );
+            }
+            return usuarios;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+            return null;
+        }
     }
 
     @Override
