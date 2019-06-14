@@ -28,6 +28,14 @@ public class Usuario {
         this.rol = Rol.valueOf(rol);
     }
 
+    public Usuario(int id, String nombre, String apellido, String nombreUsuario, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.nombreUsuario = nombreUsuario;
+        this.rol = Rol.valueOf(rol);
+    }
+
     public Usuario(int id, String nombre, String apellido, String nombreUsuario, String contrasena, String rol) {
         this.id = id;
         this.nombre = nombre;
@@ -37,16 +45,10 @@ public class Usuario {
         this.rol = Rol.valueOf(rol);
     }
 
-    /**
-     * @return the id
-     */
     public int getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
     public void setId(int id) {
         this.id = id;
     }

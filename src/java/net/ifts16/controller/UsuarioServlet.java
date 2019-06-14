@@ -44,6 +44,12 @@ public class UsuarioServlet extends HttpServlet {
                 case "crear":
                     crearUsuario(request);
                     break;
+                case "editar":
+                    editarUsuario(request, response);
+                    break;
+                case "actualizar":
+                    actualizarUsuario(request);
+                    break;
                 case "salir":
                     salir(request, response);
                     break;
@@ -111,6 +117,30 @@ public class UsuarioServlet extends HttpServlet {
                         request.getParameter("nombreUsuario"),
                         request.getParameter("contrasena"),
                         request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name()
+                )
+        );
+    }
+
+    private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            usuarioDAO = new UsuarioDAO();
+            Usuario u = usuarioDAO.obtener(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("usuario", u);
+            request.getRequestDispatcher("editar-usuario.jsp").forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void actualizarUsuario(HttpServletRequest request) {
+        usuarioDAO = new UsuarioDAO();
+        usuarioDAO.actualizar(
+                new Usuario(
+                        Integer.parseInt(request.getParameter("id")),
+                        request.getParameter("nombre"),
+                        request.getParameter("apellido"),
+                        request.getParameter("nombreUsuario"),
+                        request.getParameter("rol")
                 )
         );
     }

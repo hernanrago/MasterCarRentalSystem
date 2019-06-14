@@ -7,6 +7,8 @@ package net.ifts16.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -84,14 +86,18 @@ public class SedeServlet extends HttpServlet {
         return sedeDAO.obtenerTodos();
     }
 
-    private void editarSede(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        sedeDAO = new SedeDAO();
-        Sede sede = sedeDAO.obtener(Integer.parseInt(request.getParameter("id")));
-        request.setAttribute("sede", sede);
-        request.getRequestDispatcher("editSede.jsp").forward(request, response);
+    private void editarSede(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            sedeDAO = new SedeDAO();
+            Sede sede = sedeDAO.obtener(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("sede", sede);
+            request.getRequestDispatcher("editSede.jsp").forward(request, response);
+        } catch (ServletException | IOException ex) {
+            Logger.getLogger(SedeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void actualizarSede(HttpServletRequest request) throws ServletException, IOException {
+    private void actualizarSede(HttpServletRequest request) {
         sedeDAO = new SedeDAO();
         Sede sede = new Sede(
                 Integer.parseInt(request.getParameter("id")),

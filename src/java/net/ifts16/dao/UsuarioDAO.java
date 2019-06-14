@@ -28,15 +28,15 @@ import net.ifts16.util.AdministradorBaseDatos;
  */
 public class UsuarioDAO implements Dao<Usuario> {
 
-    private static final String INSERT_USER = "INSERT INTO usuario (nombre, apellido, nombre_usuario, contrasena, rol) VALUES (?, ?, ?, ?, ?);";
-    private static final String SELECT_USER = "SELECT * from usuario";
-    private static final String SELECT_USER_ID = "SELECT * from usuario where id = ?";
-//    private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ? and contrasena = ?";
-    private static final String SELECT_USER_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ?";
-
+    private static final String INSERT_USUARIO = "INSERT INTO usuario (nombre, apellido, nombre_usuario, contrasena, rol) VALUES (?, ?, ?, ?, ?);";
+    private static final String SELECT_USUARIO = "SELECT * from usuario";
+    private static final String SELECT_USUARIO_ID = "SELECT * from usuario where id = ?";
+    private static final String SELECT_USUARIO_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ?";
+    private static final String UPDATE_USUARIO = "UPDATE usuario SET nombre = ?, apellido = ?, nombre_usuario = ? , rol = ? WHERE id = ?";
+    
     public Usuario identificar(String usuario, String contrasena) {
         try (Connection c = AdministradorBaseDatos.obtenerConexion()) {
-            PreparedStatement ps = c.prepareStatement(SELECT_USER_NOMBRE_USUARIO_CONTRASENA);
+            PreparedStatement ps = c.prepareStatement(SELECT_USUARIO_NOMBRE_USUARIO_CONTRASENA);
             ps.setString(1, usuario);
 //            ps.setString(2, encriptarContrasena(contrasena));
 
@@ -57,7 +57,7 @@ public class UsuarioDAO implements Dao<Usuario> {
     @Override
     public Usuario obtener(int id) {
         try (Connection connection = AdministradorBaseDatos.obtenerConexion();
-                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ID)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USUARIO_ID)) {
             preparedStatement.setInt(1, id);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -81,7 +81,7 @@ public class UsuarioDAO implements Dao<Usuario> {
     @Override
     public List<Usuario> obtenerTodos() {
         try (Connection c = AdministradorBaseDatos.obtenerConexion();
-                PreparedStatement ps = c.prepareStatement(SELECT_USER)) {
+                PreparedStatement ps = c.prepareStatement(SELECT_USUARIO)) {
             ResultSet rs = ps.executeQuery();
             List<Usuario> usuarios = new ArrayList<>();
             while (rs.next()) {
@@ -104,7 +104,7 @@ public class UsuarioDAO implements Dao<Usuario> {
     @Override
     public void crear(Usuario t) {
         try (Connection connection = AdministradorBaseDatos.obtenerConexion();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USUARIO)) {
             preparedStatement.setString(1, t.getNombre());
             preparedStatement.setString(2, t.getApellido());
             preparedStatement.setString(3, t.getNombreUsuario());
@@ -143,7 +143,16 @@ public class UsuarioDAO implements Dao<Usuario> {
 
     @Override
     public void actualizar(Usuario t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_USUARIO);
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setString(2, t.getApellido());
+            preparedStatement.setString(3, t.getNombreUsuario());
+            preparedStatement.setString(4, t.getRol().name());
+            preparedStatement.setInt(5, t.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }    }
 
 }
