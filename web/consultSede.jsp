@@ -28,7 +28,7 @@
                     <th class="text-center">Provincia</th>
                     <th class="text-center">Acciones</th>
                 </tr>
-                <%List<Sede> sedes = new SedeDAO().obtenerTodos();
+                <%List<Sede> sedes = (List<Sede>)request.getAttribute("sedes");
                     for (Sede a : sedes) {
                 %>
                 <tr>
@@ -41,8 +41,7 @@
                         <a href="Sede?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
                         <button type="button" class="btn btn-danger btn-sm eliminar" value="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarEliminarModal">
                                 Eliminar
-                            </button>
-                        <!--<a value="<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>-->
+                        </button>
                     </td>
                 </tr>
                 <% } %>

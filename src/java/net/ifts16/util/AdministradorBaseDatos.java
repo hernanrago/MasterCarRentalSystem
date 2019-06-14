@@ -19,9 +19,9 @@ public class AdministradorBaseDatos {
 
     private static Connection connection;
     
-    private static final String URL = "jdbc:mysql://localhost:3306/master_car_rental_system";
+    private static final String URL = "jdbc:mysql://localhost:3306/MasterCarRentalSystem";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = "root";
+    private static final String CONTRASENA = "";
 
     public static Connection obtenerConexion() {
         try {

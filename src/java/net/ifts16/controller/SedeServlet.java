@@ -48,7 +48,7 @@ public class SedeServlet extends HttpServlet {
                     break;
             }
         }
-        request.setAttribute("sedes", mostrarSedes(request));
+        request.setAttribute("sedes", mostrarSedes());
         request.getRequestDispatcher("consultSede.jsp").forward(request, response);
 
     }
@@ -81,9 +81,8 @@ public class SedeServlet extends HttpServlet {
         sedeDAO.crear(sede);
     }
 
-    private List<Sede> mostrarSedes(HttpServletRequest request) throws ServletException, IOException {
-        sedeDAO = new SedeDAO();
-        return sedeDAO.obtenerTodos();
+    private List mostrarSedes() throws ServletException, IOException {
+        return new SedeDAO().obtenerTodos();
     }
 
     private void editarSede(HttpServletRequest request, HttpServletResponse response) {
