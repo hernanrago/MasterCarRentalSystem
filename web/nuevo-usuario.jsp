@@ -1,9 +1,10 @@
 <%-- 
-    Document   : registracion
+    Document   : nuevo-usuario
     Created on : May 7, 2019, 11:29:25 PM
     Author     : Hernán Rago
 --%>
 
+<%@page import="net.ifts16.enums.Rol"%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
             <div class="text-center">
                 <form class="form-signin" action="Usuario" method="post">
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
-                    <input type="hidden" name="comando" value="registro"/>
+                    <input type="hidden" name="comando" value="crear"/>
                     <div class="form-group">
                         <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" placeholder="Ingresar nombre" required="required">
                     </div>
@@ -27,6 +28,16 @@
                     <div class="form-group">
                         <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Ingresar contraseña" required="required">
                     </div>
+                    <div class="form-group">
+                        <select name="rol" class="custom-select">
+                            <option selected>Rol</option>
+                            <%
+                                for (Rol r : Rol.values()) {
+                                    out.print("<option value=" + r.name() + ">" + r.toString() + "</option>");
+                                }
+                            %>        
+                        </select>
+                    </div>                 
                     <input id="registrar" type="button" class="btn btn-primary" value="Registrar"/>
                 </form>
                 <hr class="featurette-divider">
@@ -54,8 +65,8 @@
     $('#registrar').click(function () {
         $.post('Usuario', $('.form-signin').serialize())
                 .done(function () {
-                    $('#aceptarRegistroButton').click(function(){
-                        location.href ='Index';
+                    $('#aceptarRegistroButton').click(function () {
+                        location.href = 'Index';
                     });
                     $('#registroConfirmadoModal').modal('toggle');
                 });

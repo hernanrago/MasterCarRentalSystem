@@ -10,7 +10,22 @@ package net.ifts16.enums;
  * @author Hernán Rago
  */
 public enum Rol {
-    ADMINISTRADOR,
-    OPERADOR,
-    CLIENTE
+    ADMINISTRADOR {
+        @Override
+        public String toString() {
+            return "Administrador";
+        }
+    },
+    OPERADOR {
+        @Override
+        public String toString() {
+            return "Operador";
+        }
+    },
+    CLIENTE{
+                @Override
+        public String toString() {
+            return "Cliente";
+        }
+    },
 }

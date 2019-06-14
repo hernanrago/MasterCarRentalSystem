@@ -37,23 +37,17 @@ public class UsuarioServlet extends HttpServlet {
         String comando = request.getParameter("comando");
 
         if (comando != null) {
-            switch (request.getParameter(comando)) {
-                case "ingreso":
-                    try {
-                        request.login(request.getParameter("nombreUsuario"), request.getParameter("contrasena"));
-                        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-                        rd.forward(request, response);
-                    } catch (ServletException e) {
-                        Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, e);
-                        RequestDispatcher rd = request.getRequestDispatcher("ingreso.jsp");
-                        rd.forward(request, response);
-                    }
+            switch (comando) {
+                case "nuevo":
+                    request.getRequestDispatcher("nuevo-usuario.jsp").forward(request, response);
+                    break;
+                case "crear":
+                    crearUsuario(request);
                     break;
                 case "salir":
                     salir(request, response);
                     break;
                 case "registro":
-                    insertarUsuario(request);
                     response.setStatus(200);
                     break;
             }
@@ -90,21 +84,8 @@ public class UsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void insertarUsuario(HttpServletRequest request)
-            throws SQLException, IOException, ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        String nombreUsuario = request.getParameter("nombreUsuario");
-        String contrasena = request.getParameter("contrasena");
-        String rol = request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name();
-        Usuario usuario = new Usuario(nombre, apellido, nombreUsuario, contrasena, rol);
-        usuarioDAO = new UsuarioDAO();
-        usuarioDAO.crear(usuario);
-
 //        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 //        rd.forward(request, response);
-    }
-
     private void salir(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.logout();
@@ -118,5 +99,19 @@ public class UsuarioServlet extends HttpServlet {
 
     private List<Usuario> mostrarUsuarios() {
         return new UsuarioDAO().obtenerTodos();
+    }
+
+    private void crearUsuario(HttpServletRequest request)
+            throws SQLException, IOException, ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
+        usuarioDAO = new UsuarioDAO();
+        usuarioDAO.crear(
+                new Usuario(
+                        request.getParameter("nombre"),
+                        request.getParameter("apellido"),
+                        request.getParameter("nombreUsuario"),
+                        request.getParameter("contrasena"),
+                        request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name()
+                )
+        );
     }
 }

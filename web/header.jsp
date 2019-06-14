@@ -35,7 +35,7 @@
                             Administrador
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Usuarios</a>
+                            <a class="dropdown-item" href="Usuario">Usuarios</a>
                             <a class="dropdown-item" href="#">Sedes</a>
                             <a class="dropdown-item" href="#">Automóviles</a>
                             <a class="dropdown-item" href="#">Reservas</a>
