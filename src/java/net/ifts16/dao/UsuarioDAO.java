@@ -33,7 +33,8 @@ public class UsuarioDAO implements Dao<Usuario> {
     private static final String SELECT_USUARIO_ID = "SELECT * from usuario where id = ?";
     private static final String SELECT_USUARIO_NOMBRE_USUARIO_CONTRASENA = "SELECT * from usuario where nombre_usuario = ?";
     private static final String UPDATE_USUARIO = "UPDATE usuario SET nombre = ?, apellido = ?, nombre_usuario = ? , rol = ? WHERE id = ?";
-    
+    private static final String DELETE_USUARIO = "DELETE FROM usuario WHERE id = ?";
+
     public Usuario identificar(String usuario, String contrasena) {
         try (Connection c = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement ps = c.prepareStatement(SELECT_USUARIO_NOMBRE_USUARIO_CONTRASENA);
@@ -118,7 +119,14 @@ public class UsuarioDAO implements Dao<Usuario> {
 
     @Override
     public void borrar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(DELETE_USUARIO);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
 
     private String encriptarContrasena(String contrasena) {
@@ -153,6 +161,7 @@ public class UsuarioDAO implements Dao<Usuario> {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
-        }    }
+        }
+    }
 
 }

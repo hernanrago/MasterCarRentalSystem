@@ -56,7 +56,7 @@
                             <h5 class="modal-title" id="confirmarEliminarModalLabel">Eliminar</h5>
                         </div>
                         <div class="modal-body">
-                            <p>¿Desea eliminar esta sede?</p>
+                            <p>¿Desea eliminar este usuario?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -71,7 +71,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p>Sede eliminada</p>
+                            <p>Usuario eliminado</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="aceptarEliminarButton">Aceptar</button>
@@ -87,23 +87,23 @@
 
 <script>
     $(document).on("click", ".eliminar", function () {
-        let sedeId = $(this).val();
-        let sede = <% out.print(request.getParameter("sede"));%>
-        $('#confirmarEliminarModal').val(sedeId);
+        let usuarioId = $(this).val();
+        let usuario = <% out.print(request.getParameter("usuario"));%>
+        $('#confirmarEliminarModal').val(usuarioId);
 
         $(".confirmar").click(function () {
             $.ajax({
                 method: "POST",
-                url: "Sede",
+                url: "Usuario",
                 data: {
                     comando: 'eliminar',
-                    sedeId: sedeId}
+                    usuarioId: usuarioId}
             })
                     .done(function () {
                         $('#aceptarEliminarButton').click(function () {
                             $.ajax({
                                 method: "GET",
-                                url: "Sede"
+                                url: "Usuario"
                             })
                                     .done(function () {
                                         location.reload();

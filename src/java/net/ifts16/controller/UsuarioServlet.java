@@ -50,6 +50,9 @@ public class UsuarioServlet extends HttpServlet {
                 case "actualizar":
                     actualizarUsuario(request);
                     break;
+                case "eliminar":
+                    eliminarUsuario(request);
+                    break;
                 case "salir":
                     salir(request, response);
                     break;
@@ -143,5 +146,10 @@ public class UsuarioServlet extends HttpServlet {
                         request.getParameter("rol")
                 )
         );
+    }
+
+    private void eliminarUsuario(HttpServletRequest request) {
+        usuarioDAO = new UsuarioDAO();
+        usuarioDAO.borrar(Integer.parseInt(request.getParameter("usuarioId")));
     }
 }
