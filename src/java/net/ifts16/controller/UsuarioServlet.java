@@ -58,13 +58,18 @@ public class UsuarioServlet extends HttpServlet {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                     break;
                 case "salir":
-                    salir(request, response);
+                    salir(request);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
                     break;
             }
         }
+        
+        else{
+            request.setAttribute("usuarios", mostrarUsuarios());
+            request.getRequestDispatcher("usuarios.jsp").forward(request, response);
+        }
 
-        request.setAttribute("usuarios", mostrarUsuarios());
-        request.getRequestDispatcher("usuarios.jsp").forward(request, response);
+
 //        insertarUsuario(request, response);
 //
 //        request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -97,15 +102,8 @@ public class UsuarioServlet extends HttpServlet {
 
 //        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 //        rd.forward(request, response);
-    private void salir(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.logout();
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    private void salir(HttpServletRequest request) {
+        request.getSession().invalidate();
     }
 
     private List<Usuario> mostrarUsuarios() {
@@ -160,6 +158,8 @@ public class UsuarioServlet extends HttpServlet {
         Usuario u = usuarioDAO.identificar(request.getParameter("nombreUsuario"),
                 request.getParameter("contrasena"));
 
-        if (u != null) request.getSession().setAttribute("usuario", u);
+        if (u != null) {
+            request.getSession().setAttribute("usuario", u);
+        }
     }
 }
