@@ -8,8 +8,6 @@ package net.ifts16.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import javax.annotation.Resource;
 
 /**
  *
@@ -19,9 +17,9 @@ public class AdministradorBaseDatos {
 
     private static Connection connection;
     
-    private static final String URL = "jdbc:mysql://localhost:3306/MasterCarRentalSystem";
+    private static final String URL = "jdbc:mysql://localhost:3306/master_car_rental_system";
     private static final String USUARIO = "root";
-    private static final String CONTRASENA = "";
+    private static final String CONTRASENA = "root";
 
     public static Connection obtenerConexion() {
         try {

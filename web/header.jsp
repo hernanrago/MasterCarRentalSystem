@@ -1,8 +1,9 @@
+<%@page import="net.ifts16.model.Usuario"%>
 <%@page import="net.ifts16.dao.SedeDAO"%>
 <%@page import="net.ifts16.model.Sede"%>
 <%@page import="java.util.List"%>
 <%@page import="java.security.Principal"%>
-<% Principal usuario = request.getUserPrincipal(); %>
+<% Usuario usuario = (Usuario) request.getSession().getAttribute("usuario"); %>
 
 <div>
     <div>
@@ -25,11 +26,17 @@
                         <a class="nav-link" href="Registro">Registro</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="Empresa">Empresa</a>
+                        <a class="nav-link" href="Empresa">Empresa </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="Contacto">Contacto</a>
                     </li>
+
+                    <%
+                        if (usuario != null) {
+                            switch (usuario.getRol().toString()) {
+                                case "Administrador":
+                    %>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administrador
@@ -41,20 +48,31 @@
                             <a class="dropdown-item" href="#">Reservas</a>
                         </div>
                     </li>
+                    <%
+                            break;
+                        case "Cliente":
+                    %>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <div class="d-inline p-2 bg-primary text-white"><%= usuario.getNombreUsuario()%></div>
+                        </a>
+                    </li>
+                    <%
+                                    break;
+                            }
+                        }
+                    %>
+
                 </ul>
                 <%
-                    if (usuario != null) {
-                        out.print("<li class=\"nav-item active\"><a class=\"nav-link\"><text style=\"color:#1bb5ac;\"><strong>" + usuario.getName().toUpperCase() + "</strong></text></a></li>");
-                    } else {
-                        out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"ingreso.jsp\">Ingresa</button></a></form>");
-                    }
-                %>
+                    if (usuario == null)
+                    out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"ingreso.jsp\">Ingresa</button></a></form>");
+                    %>
                 <%
                     if (usuario != null) {
-                        //out.print("<li><a href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</a></li>");
-                        out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</button></a></form>");
+                    out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</button></a></form>");
                     }
-                %>
+                    %>
             </div>
         </nav>              
     </div>

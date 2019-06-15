@@ -5,22 +5,21 @@
  */
 package net.ifts16.dao;
 
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.KeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.ifts16.enums.Rol;
 import net.ifts16.interfaces.Dao;
 import net.ifts16.model.Usuario;
 import net.ifts16.util.AdministradorBaseDatos;
+import net.ifts16.util.AdministradorContrasenas;
 
 /**
  *
@@ -39,14 +38,15 @@ public class UsuarioDAO implements Dao<Usuario> {
         try (Connection c = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement ps = c.prepareStatement(SELECT_USUARIO_NOMBRE_USUARIO_CONTRASENA);
             ps.setString(1, usuario);
-//            ps.setString(2, encriptarContrasena(contrasena));
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.first()) {
-                Usuario u = new Usuario();
-                u.setNombreUsuario(usuario);
-                return u;
+                if (AdministradorContrasenas.validarContrasena(contrasena, rs.getString("contrasena"))) {
+                    Usuario u = new Usuario();
+                    u.setNombreUsuario(rs.getString("nombre_usuario"));
+                    u.setRol(Rol.valueOf(rs.getString("rol")));
+                    return u;
+                }
             }
 
         } catch (Exception e) {
@@ -109,11 +109,13 @@ public class UsuarioDAO implements Dao<Usuario> {
             preparedStatement.setString(1, t.getNombre());
             preparedStatement.setString(2, t.getApellido());
             preparedStatement.setString(3, t.getNombreUsuario());
-            preparedStatement.setString(4, encriptarContrasena(t.getContrasena()));
+            preparedStatement.setString(4, AdministradorContrasenas.encriptarContrasena(t.getContrasena()));
             preparedStatement.setString(5, t.getRol().name());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -127,26 +129,6 @@ public class UsuarioDAO implements Dao<Usuario> {
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
-    }
-
-    private String encriptarContrasena(String contrasena) {
-        try {
-            SecureRandom random = new SecureRandom();
-            byte[] salt = new byte[16];
-            random.nextBytes(salt);
-
-            KeySpec spec = new PBEKeySpec(contrasena.toCharArray(), salt, 65536, 128);
-            SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-
-            byte[] hash = factory.generateSecret(spec).getEncoded();
-
-            return new String(hash, "UTF-8");
-
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException | UnsupportedEncodingException e) {
-            e.printStackTrace(System.out);
-
-        }
-        return null;
     }
 
     @Override

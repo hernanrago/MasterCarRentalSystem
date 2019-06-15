@@ -14,7 +14,7 @@
             <div class="text-center">
                 <form class="form-signin" action="Usuario" method="post">
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
-                    <input type="hidden" name="comando" value="ingreso" />
+                    <input type="hidden" name="comando" value="ingresar" />
                     <div class="form-group">
                         <label for="nombreUsuario">Ingresa al Sistema</label>
                         <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" aria-describedby="nombreUsuario" placeholder="Ingresar nombre de usuario">

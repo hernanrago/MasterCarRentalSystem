@@ -53,14 +53,16 @@ public class UsuarioServlet extends HttpServlet {
                 case "eliminar":
                     eliminarUsuario(request);
                     break;
+                case "ingresar":
+                    ingresar(request, response);
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                    break;
                 case "salir":
                     salir(request, response);
                     break;
-                case "registro":
-                    response.setStatus(200);
-                    break;
             }
         }
+
         request.setAttribute("usuarios", mostrarUsuarios());
         request.getRequestDispatcher("usuarios.jsp").forward(request, response);
 //        insertarUsuario(request, response);
@@ -151,5 +153,13 @@ public class UsuarioServlet extends HttpServlet {
     private void eliminarUsuario(HttpServletRequest request) {
         usuarioDAO = new UsuarioDAO();
         usuarioDAO.borrar(Integer.parseInt(request.getParameter("usuarioId")));
+    }
+
+    private void ingresar(HttpServletRequest request, HttpServletResponse response) {
+        usuarioDAO = new UsuarioDAO();
+        Usuario u = usuarioDAO.identificar(request.getParameter("nombreUsuario"),
+                request.getParameter("contrasena"));
+
+        if (u != null) request.getSession().setAttribute("usuario", u);
     }
 }
