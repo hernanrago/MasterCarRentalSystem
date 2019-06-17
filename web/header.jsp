@@ -28,48 +28,45 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="Contacto">Contacto</a>
                 </li>
-
-                <%
-                    if (usuario != null) {
-                        switch (usuario.getRol().toString()) {
-                            case "Administrador":
-                %>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Administrador
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="Usuario">Usuarios</a>
-                        <a class="dropdown-item" href="Sede">Sedes</a>
-                        <a class="dropdown-item" href="#">Automóviles</a>
-                        <a class="dropdown-item" href="#">Reservas</a>
-                    </div>
-                </li>
-                <%
-                        break;
-                    case "Cliente":
-                %>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">
-                        <div class="d-inline p-2 bg-primary text-white"><%= usuario.getNombreUsuario()%></div>
-                    </a>
-                </li>
-                <%
-                                break;
-                        }
-                    }
-                %>
-
             </ul>
             <%
-                if (usuario == null) {
-                    out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"ingreso.jsp\">Ingresa</button></a></form>");
-                }
-            %>
-            <%
                 if (usuario != null) {
-                    out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"/MasterCarRentalSystem/Usuario?comando=salir\">Salir</button></a></form>");
+                    switch (usuario.getRol().toString()) {
+                        case "Administrador":
+            %>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Administrador
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="Usuario">Usuarios</a>
+                    <a class="dropdown-item" href="Sede">Sedes</a>
+                    <a class="dropdown-item" href="#">Automóviles</a>
+                    <a class="dropdown-item" href="#">Reservas</a>
+                    <a class="dropdown-item" href="Usuario?comando=salir">Salir</a>
+                </div>
+            </div>
+            <%
+                    break;
+                case "Cliente":
+            %>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= usuario.getNombreUsuario()%>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="Perfil">Perfil</a>
+                    <a class="dropdown-item" href="Usuario?comando=salir">Salir</a>
+                </div>
+            </div>
+            <%
+                            break;
+                    }
+                } else {
+                    out.print("<form class=\"form-inline my-2 my-lg-0\"><a <button class=\"btn btn-outline-success my-2 my-sm-0\" href=\"ingreso.jsp\">Ingresa</button></a></form>");
+
                 }
+
             %>
         </div>
     </nav>
