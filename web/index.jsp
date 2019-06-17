@@ -10,27 +10,28 @@
 <!DOCTYPE html>
 <html>
     <%@include file="head.html" %>
-    <body>
+    <body>        
         <%@include file="header.jsp"%>
-
+        
         <div class="container">
-            <br>
-            <form action="Automoviles" method="GET">
+            <div class="jumbotron">
+                <h1>Consultar vehículos disponibles</h1>
+                <form action="Automoviles" method="GET">
                 <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="fechaAlquiler">Fecha de alquiler</label>
+                            <label for="fechaAlquiler"><p class="lead">Fecha de alquiler</p></label>
                             <!--<input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">-->
                             <input id="fechaAlquiler" name="fechaAlquiler" placeholder="Escoger fecha"/>
 
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="fechaDevolucion">Fecha de devolución</label>
+                            <label for="fechaDevolucion"><p class="lead">Fecha de devolución</p></label>
                             <!--<input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">-->
                             <input id="fechaDevolucion" name="fechaDevolucion" placeholder="Escoger fecha"/>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="sede">Sede</label>
+                            <label for="sede"><p class="lead">Sede</p></label>
                             <select class="form-control custom-select" id="sede" name="sede">
                                 <option value="todas">Todas la sedes</option>
                                 <% List<Sede> sedes = new SedeDAO().obtenerTodos();
@@ -43,10 +44,13 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <button type="submit" class="btn btn-primary">Consultar</button>
+                            <button type="submit" class="btn btn-lg btn-primary">Consultar</button>
                         </div>
                     </div>
             </form>
+            </div>
+            <br>
+            
             <hr class="featurette-divider">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -149,5 +153,6 @@
             <hr class="featurette-divider">
         </div>
         <%@include file="footer.html" %>
+        
     </body>
 </html>

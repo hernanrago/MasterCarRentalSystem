@@ -1,3 +1,7 @@
+.banner {
+    padding: 1.5rem 0rem;
+}
+
 #miSectionNav.container {
     width: 1280px !important;
 }
@@ -50,24 +54,31 @@
 /* If you don't want the footer to be responsive, remove these media queries */
 
 @media (max-width: 600px) {
+
     .footer-basic-centered{
-	padding: 35px;
+        padding: 35px;
     }
 
     .footer-basic-centered .footer-company-motto{
-	font-size: 18px;
+        font-size: 18px;
     }
 
     .footer-basic-centered .footer-company-name{
-	font-size: 12px;
+        font-size: 12px;
     }
 
     .footer-basic-centered .footer-links{
-	font-size: 14px;
-	padding: 25px 0 20px;
+        font-size: 14px;
+        padding: 25px 0 20px;
     }
 
     .footer-basic-centered .footer-links a{
-	line-height: 1.8;
+        line-height: 1.8;
+    }
+}
+
+@media (min-width: 576px){
+    .banner {
+        padding: 3.5rem 0rem;
     }
 }
