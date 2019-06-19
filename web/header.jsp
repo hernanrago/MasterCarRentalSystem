@@ -42,7 +42,7 @@
                         <a class="dropdown-item" href="Usuario">Usuarios</a>
                         <a class="dropdown-item" href="Sede">Sedes</a>
                         <a class="dropdown-item" href="#">Automóviles</a>
-                        <a class="dropdown-item" href="#">Reservas</a>
+                        <a class="dropdown-item" href="Reserva">Reservas</a>
                     </div>
                 </li>
                 <%

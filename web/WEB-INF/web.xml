@@ -64,7 +64,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ReservaServlet</servlet-name>
-        <url-pattern>/ReservaServlet</url-pattern>
+        <url-pattern>/Reserva</url-pattern>
     </servlet-mapping>
        <servlet-mapping>
         <servlet-name>Empresa</servlet-name>

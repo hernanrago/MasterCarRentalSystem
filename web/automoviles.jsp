@@ -130,7 +130,10 @@
             $.ajax({
                 method: "POST",
                 url: "ReservaServlet",
-                data: {automovilId: automovilId}
+                data: {
+                    comando: 'reservar'
+                    automovilId: automovilId
+                }
             })
                     .done(function () {
                         $('#aceptarReservaButton').click(function () {
