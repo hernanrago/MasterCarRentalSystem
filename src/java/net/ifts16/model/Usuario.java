@@ -6,6 +6,7 @@
 package net.ifts16.model;
 
 import net.ifts16.enums.Rol;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -14,7 +15,14 @@ import net.ifts16.enums.Rol;
 public class Usuario {
 
     private int id;
-    private String nombre, apellido, nombreUsuario, contrasena;
+    @NotEmpty(message = "El campo nombre no puede estar vacío")
+    private String nombre;
+    @NotEmpty(message = "El campo apellido no puede estar vacío")
+    private String apellido;
+    @NotEmpty(message = "El campo nombre de usuario no puede estar vacío")
+    private String nombreUsuario;
+    @NotEmpty(message = "El campo contraseña no puede estar vacío")
+    private String contrasena;
     private Rol rol;
 
     public Usuario() {

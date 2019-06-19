@@ -104,6 +104,8 @@ public class UsuarioDAO implements Dao<Usuario> {
 
     @Override
     public void crear(Usuario t) {
+
+        
         try (Connection connection = AdministradorBaseDatos.obtenerConexion();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USUARIO)) {
             preparedStatement.setString(1, t.getNombre());
@@ -112,9 +114,7 @@ public class UsuarioDAO implements Dao<Usuario> {
             preparedStatement.setString(4, AdministradorContrasenas.encriptarContrasena(t.getContrasena()));
             preparedStatement.setString(5, t.getRol().name());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+        } catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

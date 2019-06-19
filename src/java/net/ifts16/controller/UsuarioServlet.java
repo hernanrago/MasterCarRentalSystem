@@ -5,19 +5,29 @@
  */
 package net.ifts16.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Path;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import net.ifts16.dao.UsuarioDAO;
 import net.ifts16.enums.Rol;
 import net.ifts16.model.Usuario;
@@ -42,7 +52,7 @@ public class UsuarioServlet extends HttpServlet {
                     request.getRequestDispatcher("nuevo-usuario.jsp").forward(request, response);
                     break;
                 case "crear":
-                    crearUsuario(request);
+                    crearUsuario(request, response);
                     break;
                 case "editar":
                     editarUsuario(request, response);
@@ -62,13 +72,10 @@ public class UsuarioServlet extends HttpServlet {
                     request.getRequestDispatcher("index.jsp").forward(request, response);
                     break;
             }
-        }
-        
-        else{
+        } else {
             request.setAttribute("usuarios", mostrarUsuarios());
             request.getRequestDispatcher("usuarios.jsp").forward(request, response);
         }
-
 
 //        insertarUsuario(request, response);
 //
@@ -110,18 +117,33 @@ public class UsuarioServlet extends HttpServlet {
         return new UsuarioDAO().obtenerTodos();
     }
 
-    private void crearUsuario(HttpServletRequest request)
+    private void crearUsuario(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException, NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeySpecException {
         usuarioDAO = new UsuarioDAO();
-        usuarioDAO.crear(
-                new Usuario(
-                        request.getParameter("nombre"),
-                        request.getParameter("apellido"),
-                        request.getParameter("nombreUsuario"),
-                        request.getParameter("contrasena"),
-                        request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name()
-                )
-        );
+
+        Usuario u = new Usuario(
+                request.getParameter("nombre"),
+                request.getParameter("apellido"),
+                request.getParameter("nombreUsuario"),
+                request.getParameter("contrasena"),
+                request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name());
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Usuario>> violations = validator.validate(u);
+
+        if (violations != null) {
+
+            List<String> mensajes = new ArrayList<>();
+            violations.forEach(v -> mensajes.add(v.getMessage()));
+            
+            response.setContentType("text/json");
+            response.getWriter().print(new Gson().toJson(mensajes));
+//            response.sendError(HttpServletResponse.SC_BAD_REQUEST, new Gson().toJson(mensajes));
+
+        } else {
+            usuarioDAO.crear(u);
+        }
     }
 
     private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
