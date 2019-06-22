@@ -132,28 +132,28 @@ public class UsuarioServlet extends HttpServlet {
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<Usuario>> violations = validator.validate(u);
 
-        if (violations != null) {
+        if (violations.isEmpty()) usuarioDAO.crear(u);
+        else {
+                List<String> mensajes = new ArrayList<>();
+        violations.forEach(v -> mensajes.add(v.getMessage()));
 
-            List<String> mensajes = new ArrayList<>();
-            violations.forEach(v -> mensajes.add(v.getMessage()));
-            
-            response.setContentType("text/json");
-            response.getWriter().print(new Gson().toJson(mensajes));
+        response.setContentType("text/json");
+        response.getWriter().print(new Gson().toJson(mensajes));
 //            response.sendError(HttpServletResponse.SC_BAD_REQUEST, new Gson().toJson(mensajes));
-
-        } else {
-            usuarioDAO.crear(u);
-        }
     }
+}
 
-    private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
+private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
         try {
             usuarioDAO = new UsuarioDAO();
             Usuario u = usuarioDAO.obtener(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("usuario", u);
             request.getRequestDispatcher("editar-usuario.jsp").forward(request, response);
-        } catch (ServletException | IOException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        
+
+} catch (ServletException | IOException ex) {
+            Logger.getLogger(UsuarioServlet.class
+.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
