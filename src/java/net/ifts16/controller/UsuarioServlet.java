@@ -11,26 +11,24 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Path;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import net.ifts16.dao.UsuarioDAO;
 import net.ifts16.enums.Rol;
 import net.ifts16.model.Usuario;
+import net.ifts16.util.Validador;
 
 /**
  *
@@ -102,11 +100,6 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 //        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 //        rd.forward(request, response);
     private void salir(HttpServletRequest request) {
@@ -128,32 +121,29 @@ public class UsuarioServlet extends HttpServlet {
                 request.getParameter("contrasena"),
                 request.getParameter("rol") != null ? request.getParameter("rol") : Rol.CLIENTE.name());
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        Set<ConstraintViolation<Usuario>> violations = validator.validate(u);
+        Map<Path, List<String>> violaciones = Validador.validar(u);
 
-        if (violations.isEmpty()) usuarioDAO.crear(u);
-        else {
-                List<String> mensajes = new ArrayList<>();
-        violations.forEach(v -> mensajes.add(v.getMessage()));
-
-        response.setContentType("text/json");
-        response.getWriter().print(new Gson().toJson(mensajes));
+        if (violaciones.isEmpty()) {
+            usuarioDAO.crear(u);
+        } else {
+            
+            response.setContentType("text/json");
+            response.getWriter().print(new Gson().toJson(violaciones));
+            }
+ 
 //            response.sendError(HttpServletResponse.SC_BAD_REQUEST, new Gson().toJson(mensajes));
     }
-}
 
-private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
+    private void editarUsuario(HttpServletRequest request, HttpServletResponse response) {
         try {
             usuarioDAO = new UsuarioDAO();
             Usuario u = usuarioDAO.obtener(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("usuario", u);
             request.getRequestDispatcher("editar-usuario.jsp").forward(request, response);
-        
 
-} catch (ServletException | IOException ex) {
+        } catch (ServletException | IOException ex) {
             Logger.getLogger(UsuarioServlet.class
-.getName()).log(Level.SEVERE, null, ex);
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

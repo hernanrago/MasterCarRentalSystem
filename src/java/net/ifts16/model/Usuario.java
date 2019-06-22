@@ -6,6 +6,7 @@
 package net.ifts16.model;
 
 import net.ifts16.enums.Rol;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -15,14 +16,31 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Usuario {
 
     private int id;
+
     @NotEmpty(message = "El campo nombre no puede estar vacío")
+    @Length(min = 2,
+            max = 50,
+            message = "El campo nombre debe tener entre {min} y {max} caracteres")
     private String nombre;
+
     @NotEmpty(message = "El campo apellido no puede estar vacío")
+    @Length(min = 2,
+            max = 50,
+            message = "El campo apellido debe tener entre {min} y {max} caracteres")
     private String apellido;
+
     @NotEmpty(message = "El campo nombre de usuario no puede estar vacío")
+    @Length(min = 2,
+            max = 50,
+            message = "El campo nombre de usuario debe tener entre {min} y {max} caracteres")
     private String nombreUsuario;
+
     @NotEmpty(message = "El campo contraseña no puede estar vacío")
+    @Length(min = 2,
+            max = 50,
+            message = "El campo contraseña debe tener entre {min} y {max} caracteres")
     private String contrasena;
+    
     private Rol rol;
 
     public Usuario() {
