@@ -6,7 +6,6 @@
 package net.ifts16.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -74,7 +73,7 @@ public class ReservaServlet extends HttpServlet {
                 new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovilId"))),
 //                new AutomovilDAO().obtener(1),
 //                new UsuarioDAO().oUbtener(Integer.parseInt(request.getParameter("usuario"))) 
-                new UsuarioDAO().obtener(1) 
+                new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuarioId"))) 
         );
         
         reservaDAO = new ReservaDAO();

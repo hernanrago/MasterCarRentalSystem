@@ -25,6 +25,10 @@
             uiLibrary: 'bootstrap4',
             locale: 'es-es',
             minDate: today,
+            format: 'dd-mm-yyyy',
+            footer: true,
+            modal: true,
+            header: true,
             maxDate: function () {
                 return $('#fechaDevolucion').val();
             }
@@ -32,6 +36,10 @@
         $('#fechaDevolucion').datepicker({
             uiLibrary: 'bootstrap4',
             locale: 'es-es',
+            format: 'dd-mm-yyyy',
+            footer: true,
+            modal: true,
+            header: true,
             minDate: function () {
                 return $('#fechaAlquiler').val();
             }

@@ -43,6 +43,7 @@ public class UsuarioDAO implements Dao<Usuario> {
             if (rs.first()) {
                 if (AdministradorContrasenas.validarContrasena(contrasena, rs.getString("contrasena"))) {
                     Usuario u = new Usuario();
+                    u.setId(rs.getInt("id"));
                     u.setNombreUsuario(rs.getString("nombre_usuario"));
                     u.setRol(Rol.valueOf(rs.getString("rol")));
                     return u;

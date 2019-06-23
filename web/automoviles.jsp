@@ -15,39 +15,41 @@
     <body>
         <%@include file="header.jsp"%>
         <div class="container">
-            <br>
-            <form action="Automoviles" method="GET">
+            <div class="jumbotron">
+                <h1>Consultar vehículos disponibles</h1>
+                <form action="Automoviles" method="GET">
                 <input type="hidden" id="comando" name="comando" value="automovilesDisponibles"/>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="fechaAlquiler">Fecha de alquiler</label>
-                        <!--<input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">-->
-                        <input id="fechaAlquiler" name="fechaAlquiler" placeholder="Escoger fecha"/>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="fechaAlquiler"><p class="lead">Fecha de alquiler</p></label>
+                            <!--<input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">-->
+                            <input id="fechaAlquiler" name="fechaAlquiler" placeholder="Escoger fecha"/>
 
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="fechaDevolucion"><p class="lead">Fecha de devolución</p></label>
+                            <!--<input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">-->
+                            <input id="fechaDevolucion" name="fechaDevolucion" placeholder="Escoger fecha"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="sede"><p class="lead">Sede</p></label>
+                            <select class="form-control custom-select" id="sede" name="sede">
+                                <option value="todas">Todas la sedes</option>
+                                <% List<Sede> sedes = new SedeDAO().obtenerTodos();
+                                    for (Sede s : sedes) {
+                                %>
+                                <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="submit" class="btn btn-lg btn-primary">Consultar</button>
+                        </div>
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="fechaDevolucion">Fecha de devolución</label>
-                        <!--<input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">-->
-                        <input id="fechaDevolucion" name="fechaDevolucion" placeholder="Escoger fecha"/>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="sede">Sede</label>
-                        <select class="form-control custom-select" id="sede" name="sede">
-                            <option value="todas">Todas la sedes</option>
-                            <% List<Sede> sedes = new SedeDAO().obtenerTodos();
-                                for (Sede s : sedes) {
-                            %>
-                            <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
-                            <%
-                                }
-                            %>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <button type="submit" class="btn btn-primary">Consultar</button>
-                    </div>
-                </div>
             </form>
+            </div>
             <hr class="featurette-divider">
             <div class="row">
                 <%List<Automovil> automoviles = (ArrayList<Automovil>) request.getAttribute("automoviles");
@@ -73,7 +75,7 @@
                                 Reservado
                             </div>
                             <% } else {%>
-                            <button type="button" class="btn btn-primary reservar" value="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarReservaModal">
+                            <button type="button" class="btn btn-primary" reservar="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarReservaModal">
                                 Reservar
                             </button>
                             <% } %>
@@ -95,7 +97,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary confirmar">Reservar</button>
+                            <button type="button" class="btn btn-primary" confirmar>Reservar</button>
                         </div>
                     </div>
                 </div>
@@ -121,18 +123,24 @@
 </html>
 
 <script>
-    $(document).on("click", ".reservar", function () {
-        let automovilId = $(this).val();
-        let sede = <% out.print(request.getParameter("sede"));%>
-        $('#confirmarReservaModal').val(automovilId);
-
-        $(".confirmar").click(function () {
+    let reservas = document.querySelectorAll('[reservar]');
+    let automovilId;
+    let usuarioId = <%= usuario.getId() %>;
+    
+    reservas.forEach((e) => {
+            e.onclick = function() {          
+               automovilId = this.getAttribute('reservar');
+           };
+    });
+    
+    document.querySelector('[confirmar]').onclick = function () {
             $.ajax({
                 method: "POST",
-                url: "ReservaServlet",
+                url: "Reserva",
                 data: {
-                    comando: 'reservar'
-                    automovilId: automovilId
+                    comando: 'reservar',
+                    automovilId: automovilId,
+                    usuarioId : usuarioId
                 }
             })
                     .done(function () {
@@ -150,6 +158,6 @@
                         $('#confirmarReservaModal').modal('toggle');
                         $('#reservaConfirmadaModal').modal('toggle');
                     });
-        });
-    });
+        };
+
 </script>
