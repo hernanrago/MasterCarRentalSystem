@@ -93,7 +93,14 @@
                             <h5 class="modal-title" id="confirmarReservaModalLabel">Reservar</h5>
                         </div>
                         <div class="modal-body">
-                            <p>¿Desea reservar este automóvil?</p>
+                            <h3>Elija la Fecha de Reserva</h3>
+                            <label for="fechaAlquiler2"><p>Fecha de alquiler</p></label>
+                            <!--<input type="date" class="form-control" id="fechaAlquiler" aria-describedby="fechaAlquiler" placeholder="Escoger fecha">-->
+                            <input id="fechaAlquiler2" name="fechaAlquiler2" placeholder="Escoger fecha"/>
+                            <br>
+                            <label for="fechaDevolucion2"><p>Fecha de devolución</p></label>
+                            <!--<input type="date" class="form-control" id="fechaDevolucion" aria-describedby="fechaDevolucion" placeholder="Escoger fecha">-->
+                            <input id="fechaDevolucion2" name="fechaDevolucion2" placeholder="Escoger fecha" fechaDevolucion2/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -134,13 +141,17 @@
     });
     
     document.querySelector('[confirmar]').onclick = function () {
+        let fechaEntrega = $('#fechaAlquiler2').val();
+        let fechaDevolucion = $('#fechaDevolucion2').val();
             $.ajax({
                 method: "POST",
                 url: "Reserva",
                 data: {
                     comando: 'reservar',
                     automovilId: automovilId,
-                    usuarioId : usuarioId
+                    usuarioId : usuarioId,
+                    fechaEntrega: fechaEntrega,
+                    fechaDevolucion: fechaDevolucion
                 }
             })
                     .done(function () {
@@ -160,4 +171,32 @@
                     });
         };
 
+</script>
+<script type="text/javascript" >
+    $(document).ready(function () {
+        let today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#fechaAlquiler2').datepicker({
+            uiLibrary: 'bootstrap4',
+            locale: 'es-es',
+            minDate: today,
+            format: 'yyyy-mm-dd',
+            footer: true,
+            modal: true,
+            header: true,
+            maxDate: function () {
+                return $('#fechaDevolucion2').val();
+            }
+        });
+        $('#fechaDevolucion2').datepicker({
+            uiLibrary: 'bootstrap4',
+            locale: 'es-es',
+            format: 'yyyy-mm-dd',
+            footer: true,
+            modal: true,
+            header: true,
+            minDate: function () {
+                return $('#fechaAlquiler2').val();
+            }
+        });
+    });
 </script>

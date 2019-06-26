@@ -27,7 +27,7 @@
                 </form>
                 <div class="checkbox mb-3">
                     <label>
-                        <a href="registro.jsp">Usuario Nuevo - Registrate</a>
+                        <a href="Registro">Usuario Nuevo - Registrate</a>
                     </label>
                 </div>
                 <hr class="featurette-divider">

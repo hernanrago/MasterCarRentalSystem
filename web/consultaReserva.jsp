@@ -41,51 +41,111 @@
             <table class="table table-bordered">
                 <input type="hidden" name="tipo" value="listado" />
                 <tr>
-                    <th class="text-center">ID</th>
-                    <th class="text-center">Usuario</th>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
                     <th class="text-center">Fecha Reserva</th>
-                    <th class="text-center">Fecha Entrega</th>
                     <th class="text-center">Modelo</th>
                     <th class="text-center">Ubicacion</th>
+                    <th class="text-center">Ver Mas</th>
                     <th class="text-center">Acciones</th>
                 </tr>
                 <%List<Reserva> reservas = (List<Reserva>) request.getAttribute("reservas");
                     for (Reserva a : reservas) {
+                        if (a.getFechaCancelacion() != null){
+                %>
+                           <tr>
+                                <td class="text-center"><%= a.getUsuario().getNombre()%>
+                                <td class="text-center"><%= a.getUsuario().getApellido()%>
+                                <td class="text-center"><%= a.getFechaReserva()%>
+                                <td class="text-center"><%= a.getAutomovil().getModelo().getMarca()%>
+                                <td class="text-center"><%= a.getAutomovil().getSedeUbicacion().getDomicilio()%>
+                                <td class="text-center"><button type="button" class="btn btn-info btn-sm informacion" value="<%= a.getId()%>">Informacion</button>    
+                                <td class="text-center">
+                                    <a href="Reserva?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
+                                </td>
+                            </tr> 
+                <%
+                        } else {
                 %>
                 <tr>
-                    <td class="text-center"><%= a.getId()%></td>
-                    <td class="text-center"><%= a.getUsuario().getNombreUsuario()%>
                     <td class="text-center"><%= a.getUsuario().getNombre()%>
                     <td class="text-center"><%= a.getUsuario().getApellido()%>
                     <td class="text-center"><%= a.getFechaReserva()%>
-                    <td class="text-center"><%= a.getFechaCancelacion()%>
                     <td class="text-center"><%= a.getAutomovil().getModelo().getMarca()%>
                     <td class="text-center"><%= a.getAutomovil().getSedeUbicacion().getDomicilio()%>
+                    <td class="text-center"><button type="button" class="btn btn-info btn-sm informacion" value="<%= a.getId()%>">Informacion</button>    
                     <td class="text-center">
                         <a href="Reserva?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
                         <button type="button" class="btn btn-danger btn-sm eliminar" value="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarEliminarModal">
-                            Eliminar
+                            Cancelar
                         </button>
                     </td>
                 </tr>
-                <% }%>
+                <%      }
+                    }
+                %>
             </table>  
             
+                        <!-- Modal ver informacion -->
+            <div class="modal fade" id="verInformacion">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Informacion de la reserva</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5 class="modal-title">Informacion del usuario</h5>
+                            <br>
+                            <div class="list-group">
+                                <div class="list-group">
+                                    <li class="list-group-item"><b>Nombre y Apellido: </b><span id="nombre"/></li>
+                                    <li class="list-group-item"><b>Usuario: </b><span id="usuario"/></li>
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="modal-title">Informacion del Vehiculo</h5>
+                            <br>
+                            <div class="list-group">
+                                <div class="list-group">
+                                    <li class="list-group-item"><b>Modelo: </b><span id="modelo"/></li>
+                                    <li class="list-group-item"><b>Patente: </b><span id="patente"/></li>
+                                    <li class="list-group-item"><b>Cambios: </b><span id="cambios"/></li>
+                                    <li class="list-group-item"><b>Pasajeros: </b><span id="pasajeros"/></li>
+                                    <li class="list-group-item"><b>Puertas: </b><span id="puertas"/></li>
+                                    <li class="list-group-item"><b>Precio: </b><span id="precio"/></li>
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="modal-title">Informacion de la reserva</h5>
+                            <br>
+                            <div class="list-group">
+                                <div class="list-group">
+                                    <li class="list-group-item"><b>Fecha Entrega: </b><span id="fechaEntregaR"/></li>
+                                    <li class="list-group-item"><b>Fecha Devolucion: </b><span id="fechaDevolucionR"/></li>
+                                    <li class="list-group-item"><b>Fecha Reserva: </b><span id="fechaReservaR"/></li>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Listo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        
                         <!-- Modal confirmar reserva -->
             <div class="modal fade" id="confirmarEliminarModal" value="" tabindex="-1" role="dialog" aria-labelledby="confirmarEliminarModal" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="confirmarEliminarModalLabel">Eliminar</h5>
+                            <h5 class="modal-title" id="confirmarEliminarModalLabel">Cancelar</h5>
                         </div>
                         <div class="modal-body">
-                            <p>¿Desea eliminar esta reserva?</p>
+                            <p>¿Desea Cancelar esta reserva?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger confirmar">Eliminar</button>
+                            <button type="button" class="btn btn-danger confirmar">Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -121,7 +181,7 @@
                 method: "POST",
                 url: "Reserva",
                 data: {
-                comando: 'eliminar',    
+                comando: 'cancelar',    
                 reservaId: reservaId}
             })
                     .done(function () {
@@ -138,5 +198,34 @@
                         $('#eliminacionConfirmadaModal').modal('toggle');
                     });
         });
+    });
+</script>
+
+<script>
+        $(document).on('click', '.informacion', function(){
+       let reservaId = $(this).val(); 
+        $.ajax({
+            method: "POST",
+            url: "Reserva",
+            data: {
+                comando: "mostrarReserva",    
+                reservaId: reservaId
+            },
+            success: function(data){
+                let datos = JSON.parse(data);
+                $('#nombre').text(datos.nombre + " " + datos.apellido);
+                $('#usuario').text(datos.usuario);
+                $('#modelo').text(datos.modelo);
+                $('#precio').text(datos.precio);
+                $('#patente').text(datos.patente);
+                $('#cambios').text(datos.cambios);
+                $('#pasajeros').text(datos.pasajeros);
+                $('#puertas').text(datos.puertas);
+                $('#fechaReservaR').text(datos.fechaReserva);
+                $('#fechaEntregaR').text(datos.fechaEntrega);
+                $('#fechaDevolucionR').text(datos.fechaDevolucion);
+                $('#verInformacion').modal('show');
+            }
+            });
     });
 </script>

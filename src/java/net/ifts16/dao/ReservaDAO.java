@@ -6,9 +6,12 @@
 package net.ifts16.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import net.ifts16.interfaces.Dao;
@@ -23,7 +26,7 @@ import net.ifts16.util.AdministradorBaseDatos;
  */
 public class ReservaDAO implements Dao<Reserva> {
 
-    private static final String INSERT_RESERVA = "INSERT INTO reserva (fecha_reserva, automovil_id, usuario_id) VALUES (?, ?, ?);";
+    private static final String INSERT_RESERVA = "INSERT INTO reserva (fecha_reserva, fecha_entrega, fecha_devolucion, automovil_id, usuario_id) VALUES (?, ?, ?, ?, ?);";
     private static final String SELECT_RESERVA = "SELECT * FROM reserva";
     private static final String SELECT_RESERVA_ID = "SELECT * FROM reserva WHERE id = ?";
     private static final String SELECT_RESERVA_UBICACION = "SELECT * FROM reserva where automovil_id = ?";
@@ -44,7 +47,9 @@ public class ReservaDAO implements Dao<Reserva> {
             Reserva reserva = new Reserva();
             while (rs.next()) {
                 reserva.setId(rs.getInt("id"));
-                reserva.setFechaReserva(rs.getDate("fecha_reserva"));        
+                reserva.setFechaReserva(rs.getDate("fecha_reserva"));  
+                reserva.setFechaReserva(rs.getDate("fecha_entrega"));
+                reserva.setFechaReserva(rs.getDate("fecha_devolucion"));
                 reserva.setFechaCancelacion(rs.getDate("fecha_cancelacion"));         
                 reserva.setAutomovil(automovilDAO.obtener(rs.getInt("automovil_id")));        
                 reserva.setUsuario(usuarioDAO.obtener(rs.getInt("usuario_id")));        
@@ -69,6 +74,8 @@ public class ReservaDAO implements Dao<Reserva> {
                         new Reserva(
                                 rs.getInt("id"),
                                 rs.getDate("fecha_reserva"),
+                                rs.getDate("fecha_entrega"),
+                                rs.getDate("fecha_devolucion"),
                                 rs.getDate("fecha_cancelacion"),
                                 automovilDAO.obtener(rs.getInt("automovil_id")),
                                 usuarioDAO.obtener(rs.getInt("usuario_id"))
@@ -95,6 +102,8 @@ public class ReservaDAO implements Dao<Reserva> {
                     new Reserva(
                         rs.getInt("id"),
                         rs.getDate("fecha_reserva"),
+                        rs.getDate("fecha_entrega"),
+                        rs.getDate("fecha_devolucion"),
                         rs.getDate("fecha_cancelacion"), 
                         automovilDAO.obtener(rs.getInt("automovil_id")),
                         usuarioDAO.obtener(rs.getInt("usuario_id"))
@@ -113,11 +122,11 @@ public class ReservaDAO implements Dao<Reserva> {
         try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(INSERT_RESERVA);
             preparedStatement.setDate(1, t.getFechaReserva());
-            preparedStatement.setInt(2, t.getAutomovil().getId());
-            preparedStatement.setInt(3, t.getUsuario().getId());
-
-            int x = preparedStatement.executeUpdate();
-            System.out.println(x);
+            preparedStatement.setDate(2, t.getFechaEntrega());
+            preparedStatement.setDate(3, t.getFechaDevolucion());
+            preparedStatement.setInt(4, t.getAutomovil().getId());
+            preparedStatement.setInt(5, t.getUsuario().getId());
+            preparedStatement.executeUpdate();
             
             automovilDAO = new AutomovilDAO();
             automovilDAO.reservar(t.getAutomovil().getId());
@@ -153,5 +162,27 @@ public class ReservaDAO implements Dao<Reserva> {
             e.printStackTrace(System.out);
         }
     }
-
+    
+    public void cancelarReserva(Reserva t){
+        
+    }
+    
+    public Date normalizarFecha(String fecha){
+        java.sql.Date fecFormatoDate = null;
+        try {
+            SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            fecFormatoDate = new java.sql.Date(sdf.parse(fecha).getTime());
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        
+        return fecFormatoDate;
+    }
+    
+    public String fechaCadena(java.sql.Date fecha){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaCadena = sdf.format(fecha);
+        
+        return fechaCadena;
+    }
 }

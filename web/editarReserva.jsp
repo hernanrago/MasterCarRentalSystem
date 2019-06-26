@@ -31,7 +31,7 @@
                         <input type="text" class="form-control" id="apellido" name="apellido" aria-describedby="apellido" value="<%= reserva.getUsuario().getApellido()%>" readonly="apellido">
                     </div>
                     <div class="form-group">
-                        <input type="date" class="form-control" id="reserva" name="reserva" placeholder="<%= reserva.getFechaReserva()%>" required="required">
+                        <input type="text" class="form-control" id="reserva" name="reserva" placeholder="<%= reserva.getFechaReserva()%>" readonly="reserva">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" id="entrega" name="entrega" placeholder="<%= reserva.getFechaCancelacion()%>" required="required">

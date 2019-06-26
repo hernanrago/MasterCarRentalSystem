@@ -14,6 +14,8 @@ import java.sql.Date;
 public class Reserva {
     private int id;
     private Date fechaReserva;
+    private Date fechaEntrega;
+    private Date fechaDevolucion;
     private Date fechaCancelacion;
     private Automovil automovil;
     private Usuario usuario;
@@ -21,15 +23,19 @@ public class Reserva {
     public Reserva() {
     }
     
-        public Reserva(Date fechaReserva, Automovil automovil, Usuario usuario) {
+    public Reserva(Date fechaReserva, Date fechaEntrega, Date fechaDevolucion, Automovil automovil, Usuario usuario) {
         this.fechaReserva = fechaReserva;
+        this.fechaEntrega = fechaEntrega;
+        this.fechaDevolucion = fechaDevolucion;
         this.automovil = automovil;
         this.usuario = usuario;
     }
 
-    public Reserva(int id, Date fechaReserva, Date fechaCancelacion, Automovil automovil, Usuario usuario) {
+    public Reserva(int id, Date fechaReserva, Date fechaEntrega, Date fechaDevolucion, Date fechaCancelacion, Automovil automovil, Usuario usuario) {
         this.id = id;
         this.fechaReserva = fechaReserva;
+        this.fechaEntrega = fechaEntrega;
+        this.fechaDevolucion = fechaDevolucion;
         this.fechaCancelacion = fechaCancelacion;
         this.automovil = automovil;
         this.usuario = usuario;
@@ -61,6 +67,34 @@ public class Reserva {
      */
     public void setFechaReserva(Date fechaReserva) {
         this.fechaReserva = fechaReserva;
+    }
+
+    /**
+     * @return the fechaEntrega
+     */
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    /**
+     * @param fechaEntrega the fechaEntrega to set
+     */
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    /**
+     * @return the fechaDevolucion
+     */
+    public Date getFechaDevolucion() {
+        return fechaDevolucion;
+    }
+
+    /**
+     * @param fechaDevolucion the fechaDevolucion to set
+     */
+    public void setFechaDevolucion(Date fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     /**

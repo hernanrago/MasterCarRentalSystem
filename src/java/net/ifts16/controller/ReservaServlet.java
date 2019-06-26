@@ -6,6 +6,7 @@
 package net.ifts16.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import net.ifts16.dao.AutomovilDAO;
 import net.ifts16.dao.ReservaDAO;
 import net.ifts16.dao.UsuarioDAO;
 import net.ifts16.model.Reserva;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -48,6 +50,9 @@ public class ReservaServlet extends HttpServlet {
                 case "actualizar":
                     actualizarReserva(request, response);
                 break;
+                case "mostrarReserva":
+                    mostrarReserva(request, response);
+                break;
             }
         }else{
             request.getRequestDispatcher("listaReserva.jsp").forward(request, response);
@@ -70,9 +75,9 @@ public class ReservaServlet extends HttpServlet {
     private void reservar(HttpServletRequest request, HttpServletResponse response) {
         Reserva reserva = new Reserva(
                 new Date(new java.util.Date().getTime()),
+                new ReservaDAO().normalizarFecha(request.getParameter("fechaEntrega")),
+                new ReservaDAO().normalizarFecha(request.getParameter("fechaDevolucion")),
                 new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("automovilId"))),
-//                new AutomovilDAO().obtener(1),
-//                new UsuarioDAO().oUbtener(Integer.parseInt(request.getParameter("usuario"))) 
                 new UsuarioDAO().obtener(Integer.parseInt(request.getParameter("usuarioId"))) 
         );
         
@@ -118,5 +123,35 @@ public class ReservaServlet extends HttpServlet {
                 
         //);
     }
-
+    
+    private void mostrarReserva(HttpServletRequest request, HttpServletResponse response){
+        reservaDAO = new ReservaDAO();
+        Reserva reserva = reservaDAO.obtener(Integer.parseInt(request.getParameter("reservaId")));
+        //String fechaReserva = reservaDAO.fechaCadena(reserva.getFechaReserva());
+        //String fechaEntrega = reservaDAO.fechaCadena(reserva.getFechaEntrega());
+        //String fechaDevolucion = reservaDAO.fechaCadena(reserva.getFechaDevolucion());
+        PrintWriter out = null;
+        try {
+            out = response.getWriter();
+            JSONObject json = new JSONObject();
+            json.put("usuario", reserva.getUsuario().getNombreUsuario());
+            json.put("nombre", reserva.getUsuario().getNombre());
+            json.put("apellido", reserva.getUsuario().getApellido());
+            json.put("modelo", reserva.getAutomovil().getModelo().getMarca().toString());
+            json.put("patente", reserva.getAutomovil().getPatente());
+            json.put("precio", reserva.getAutomovil().getPrecio());
+            json.put("cambios", reserva.getAutomovil().getCambios().toString());
+            json.put("pasajeros", reserva.getAutomovil().getPasajeros());
+            json.put("puertas", reserva.getAutomovil().getPuertas());
+            json.put("fechaEntrega", "2019-04-06");
+            json.put("fechaDevolucion", "2019-04-06");
+            json.put("fechaReserva", "2019-04-06");
+            json.put("ubicacion", reserva.getAutomovil().getSedeUbicacion().getDomicilio());
+            out.print(json);
+        } catch (IOException ex) {
+            Logger.getLogger(ReservaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
+        }
+    }
 }
