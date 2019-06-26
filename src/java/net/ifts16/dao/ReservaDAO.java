@@ -32,6 +32,7 @@ public class ReservaDAO implements Dao<Reserva> {
     private static final String SELECT_RESERVA_UBICACION = "SELECT * FROM reserva where automovil_id = ?";
     private static final String DELETE_RESERVA = "DELETE FROM reserva WHERE id = ?";
     private static final String UPDATE_RESERVA = "UPDATE reserva SET fecha_reserva = ?, fecha_cancelacion = ?, automovil_id = ?, usuario_id = ? WHERE id = ?";
+    private static final String UPDATE_RESERVA_CANCELACION = "UPDATE reserva SET fecha_cancelacion = ? WHERE id = ?";
     private AutomovilDAO automovilDAO;
     private UsuarioDAO usuarioDAO;
     
@@ -164,7 +165,17 @@ public class ReservaDAO implements Dao<Reserva> {
     }
     
     public void cancelarReserva(Reserva t){
-        
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_RESERVA_CANCELACION);
+            preparedStatement.setDate(1, t.getFechaCancelacion());
+            preparedStatement.setInt(2, t.getId());
+            preparedStatement.executeUpdate();
+            
+            automovilDAO = new AutomovilDAO();
+            automovilDAO.cancelarReserva(t.getAutomovil().getId());
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
     
     public Date normalizarFecha(String fecha){

@@ -51,21 +51,21 @@
                 </tr>
                 <%List<Reserva> reservas = (List<Reserva>) request.getAttribute("reservas");
                     for (Reserva a : reservas) {
-                        if (a.getFechaCancelacion() != null){
+                        if (a.getFechaCancelacion() != null) {
                 %>
-                           <tr>
-                                <td class="text-center"><%= a.getUsuario().getNombre()%>
-                                <td class="text-center"><%= a.getUsuario().getApellido()%>
-                                <td class="text-center"><%= a.getFechaReserva()%>
-                                <td class="text-center"><%= a.getAutomovil().getModelo().getMarca()%>
-                                <td class="text-center"><%= a.getAutomovil().getSedeUbicacion().getDomicilio()%>
-                                <td class="text-center"><button type="button" class="btn btn-info btn-sm informacion" value="<%= a.getId()%>">Informacion</button>    
-                                <td class="text-center">
-                                    <a href="Reserva?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
-                                </td>
-                            </tr> 
+                <tr>
+                    <td class="text-center"><%= a.getUsuario().getNombre()%>
+                    <td class="text-center"><%= a.getUsuario().getApellido()%>
+                    <td class="text-center"><%= a.getFechaReserva()%>
+                    <td class="text-center"><%= a.getAutomovil().getModelo().getMarca()%>
+                    <td class="text-center"><%= a.getAutomovil().getSedeUbicacion().getDomicilio()%>
+                    <td class="text-center"><button type="button" class="btn btn-info btn-sm informacion" value="<%= a.getId()%>">Informacion</button>    
+                    <td class="text-center">
+                        <a href="#" class="btn btn-warning btn-sm">Reserva Cancelada</a>
+                    </td>
+                </tr> 
                 <%
-                        } else {
+                } else {
                 %>
                 <tr>
                     <td class="text-center"><%= a.getUsuario().getNombre()%>
@@ -156,7 +156,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p>Reserva eliminada</p>
+                            <p>Reserva Cancelada</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="aceptarEliminarButton">Aceptar</button>

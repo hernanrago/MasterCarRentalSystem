@@ -53,6 +53,9 @@ public class ReservaServlet extends HttpServlet {
                 case "mostrarReserva":
                     mostrarReserva(request, response);
                 break;
+                case "cancelar":
+                    cancelarReserva(request, response);
+                break;
             }
         }else{
             request.getRequestDispatcher("listaReserva.jsp").forward(request, response);
@@ -153,5 +156,21 @@ public class ReservaServlet extends HttpServlet {
         } finally {
             out.close();
         }
+    }
+
+    private void cancelarReserva(HttpServletRequest request, HttpServletResponse response) {
+        reservaDAO = new ReservaDAO();
+        Reserva reserva = reservaDAO.obtener(Integer.parseInt(request.getParameter("reservaId")));
+        
+        Reserva rCancelada = new Reserva(
+                reserva.getId(),
+                reserva.getFechaReserva(),
+                reserva.getFechaEntrega(),
+                reserva.getFechaDevolucion(),
+                new Date(new java.util.Date().getTime()),
+                reserva.getAutomovil(),
+                reserva.getUsuario()
+        );
+        reservaDAO.cancelarReserva(rCancelada);
     }
 }
