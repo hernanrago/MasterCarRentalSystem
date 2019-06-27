@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import net.ifts16.util.AdministradorBaseDatos;
 import net.ifts16.enums.Marca;
@@ -22,6 +23,7 @@ import net.ifts16.model.Modelo;
 public class ModeloDAO implements Dao<Modelo> {
 
     private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE id = ?";
+    private static final String SELECT_MODELO_TODOS = "SELECT * FROM modelo";
 
     @Override
     public Modelo obtener(int id) {
@@ -45,7 +47,24 @@ public class ModeloDAO implements Dao<Modelo> {
 
     @Override
     public List<Modelo> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(SELECT_MODELO_TODOS);
+            ResultSet rs = preparedStatement.executeQuery();
+            List<Modelo> modelo = new ArrayList<>();
+            while (rs.next()) {
+                modelo.add(
+                        new Modelo(
+                                rs.getInt("id"),
+                                rs.getString("nombre"),
+                                Marca.valueOf(rs.getString("marca"))
+                        ));
+            }
+            return modelo;
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 
     @Override

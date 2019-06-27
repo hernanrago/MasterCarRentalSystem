@@ -17,7 +17,7 @@
             <div class="text-center">
                 <form class="form-signin" action="Usuario" method="post">
                     <input type="hidden" name="comando" value="actualizar"/>
-                    <h1>Editar Sede</h1>
+                    <h1>Editar Usuario</h1>
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
                     <%Usuario u = (Usuario) request.getAttribute("usuario");%>
                     <div class="form-group">

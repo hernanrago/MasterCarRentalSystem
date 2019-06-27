@@ -31,7 +31,7 @@ public class ReservaDAO implements Dao<Reserva> {
     private static final String SELECT_RESERVA_ID = "SELECT * FROM reserva WHERE id = ?";
     private static final String SELECT_RESERVA_UBICACION = "SELECT * FROM reserva where automovil_id = ?";
     private static final String DELETE_RESERVA = "DELETE FROM reserva WHERE id = ?";
-    private static final String UPDATE_RESERVA = "UPDATE reserva SET fecha_reserva = ?, fecha_cancelacion = ?, automovil_id = ?, usuario_id = ? WHERE id = ?";
+    private static final String UPDATE_RESERVA = "UPDATE reserva SET fecha_entrega = ?, fecha_devolucion = ?, automovil_id = ? WHERE id = ?";
     private static final String UPDATE_RESERVA_CANCELACION = "UPDATE reserva SET fecha_cancelacion = ? WHERE id = ?";
     private AutomovilDAO automovilDAO;
     private UsuarioDAO usuarioDAO;
@@ -49,8 +49,8 @@ public class ReservaDAO implements Dao<Reserva> {
             while (rs.next()) {
                 reserva.setId(rs.getInt("id"));
                 reserva.setFechaReserva(rs.getDate("fecha_reserva"));  
-                reserva.setFechaReserva(rs.getDate("fecha_entrega"));
-                reserva.setFechaReserva(rs.getDate("fecha_devolucion"));
+                reserva.setFechaEntrega(rs.getDate("fecha_entrega"));
+                reserva.setFechaDevolucion((rs.getDate("fecha_devolucion")));
                 reserva.setFechaCancelacion(rs.getDate("fecha_cancelacion"));         
                 reserva.setAutomovil(automovilDAO.obtener(rs.getInt("automovil_id")));        
                 reserva.setUsuario(usuarioDAO.obtener(rs.getInt("usuario_id")));        
@@ -153,11 +153,10 @@ public class ReservaDAO implements Dao<Reserva> {
     public void actualizar(Reserva t) {
         try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
             PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_RESERVA);
-            preparedStatement.setDate(1, t.getFechaReserva());
-            preparedStatement.setDate(2, t.getFechaCancelacion());
+            preparedStatement.setDate(1, t.getFechaEntrega());//fecha entrega
+            preparedStatement.setDate(2, t.getFechaDevolucion());//fecha devolucion
             preparedStatement.setInt(3, t.getAutomovil().getId());
-            preparedStatement.setInt(4, t.getUsuario().getId());
-            preparedStatement.setInt(5, t.getId());
+            preparedStatement.setInt(4, t.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);

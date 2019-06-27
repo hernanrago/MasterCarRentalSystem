@@ -4,6 +4,8 @@
     Author     : vitor
 --%>
 
+<%@page import="net.ifts16.dao.AutomovilDAO"%>
+<%@page import="net.ifts16.model.Automovil"%>
 <%@page import="net.ifts16.model.Reserva"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,30 +20,33 @@
                     <h1>Editar Reserva</h1>
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
                     <%Reserva reserva = (Reserva)request.getAttribute("reserva"); %>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="id" name="id" readonly="id" aria-describedby="id" value="<%= reserva.getId()%>">
+                    <div class="list-group">
+                        <input type="hidden" id="autoActual" name="autoActual" value="<%= reserva.getAutomovil().getId() %>"/>
+                        <input type="hidden" id="id" name="id" value="<%= reserva.getId() %>"/>
+                        <li class="list-group-item"><b>Nombre: </b><%= reserva.getUsuario().getNombre()%></li>
+                        <li class="list-group-item"><b>Apellido: </b><%= reserva.getUsuario().getApellido()%></li>
+                        <li class="list-group-item"><b>Usuario: </b><%= reserva.getUsuario().getNombreUsuario()%></li>
+                        <li class="list-group-item"><b>Fecha Reserva: </b><%= reserva.getFechaReserva()%></li>
+                        <li class="list-group-item"><b>Fecha Entrega: </b><%= reserva.getFechaEntrega()%></li>
+                        <li class="list-group-item"><input id="fechaAlquiler2" name="fechaAlquiler2" placeholder="Escoger nueva fecha"/></li>
+                        <li class="list-group-item"><b>Fecha Devolucion: </b><%= reserva.getFechaDevolucion()%></li>
+                        <li class="list-group-item"><input id="fechaDevolucion2" name="fechaDevolucion2" placeholder="Escoger nueva fecha"/></li>
+                        <li class="list-group-item">
+                            <select class="form-control custom-select" id="autoFinal" name="autoFinal">
+                                <option value="<%= reserva.getAutomovil().getId() %>">Vehiculos Disponibles</option>
+                                <% List<Automovil> automovil = new AutomovilDAO().obtenerTodos();
+                                    for (Automovil s : automovil) {
+                                        if (s.isReservado() == false) {
+                                %>
+                                <% out.print("<option value=" + s.getId() + ">" + s.getModelo().getMarca() + "</option>"); %>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </select>
+                        </li>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="usuario" value="<%= reserva.getUsuario().getNombreUsuario()%>" readonly="usuario">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="nombre" name="nombre" aria-describedby="nombre" value="<%= reserva.getUsuario().getNombre()%>" readonly="nombre">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="apellido" name="apellido" aria-describedby="apellido" value="<%= reserva.getUsuario().getApellido()%>" readonly="apellido">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="reserva" name="reserva" placeholder="<%= reserva.getFechaReserva()%>" readonly="reserva">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="entrega" name="entrega" placeholder="<%= reserva.getFechaCancelacion()%>" required="required">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="modelo" name="modelo" aria-describedby="modelo" value="<%= reserva.getAutomovil().getModelo().getMarca()%>" readonly="modelo">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="sede" name="sede" aria-describedby="sede" value="<%= reserva.getAutomovil().getSedeUbicacion().getDomicilio()%>" readonly="sede">
-                    </div>
+                    <br>
                     <input id="editar" type="button" class="btn btn-primary" data-toggle="modal" data-target="#edicionConfirmadaModal" value="Editar">
                 </form>
                 
@@ -73,5 +78,34 @@
                     });
                     $('#registroConfirmadoModal').modal('toggle');
                 });
+    });
+</script>
+
+<script type="text/javascript" >
+    $(document).ready(function () {
+        let today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('#fechaAlquiler2').datepicker({
+            uiLibrary: 'bootstrap4',
+            locale: 'es-es',
+            minDate: today,
+            format: 'yyyy-mm-dd',
+            footer: true,
+            modal: true,
+            header: true,
+            maxDate: function () {
+                return $('#fechaDevolucion2').val();
+            }
+        });
+        $('#fechaDevolucion2').datepicker({
+            uiLibrary: 'bootstrap4',
+            locale: 'es-es',
+            format: 'yyyy-mm-dd',
+            footer: true,
+            modal: true,
+            header: true,
+            minDate: function () {
+                return $('#fechaAlquiler2').val();
+            }
+        });
     });
 </script>

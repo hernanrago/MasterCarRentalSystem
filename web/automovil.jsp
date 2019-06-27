@@ -4,54 +4,98 @@
     Author     : Hernán Rago
 --%>
 
+<%@page import="net.ifts16.dao.ModeloDAO"%>
+<%@page import="net.ifts16.model.Modelo"%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de Automóvil</title>
-    </head>
+    <%@include file="head.html" %>
     <body>
-        <h1>Alta de Automóvil</h1>
-        <div>
-            <form action="AutomovilServlet" method="post">
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Patente</td>
-                            <td><input type="text" name="patente"/></td>
-                        </tr>
-                        <tr>
-                            <td>Modelo</td>
-                            <td><input type="text" name="modelo"/></td>
-                        </tr>
-                        <tr>
-                            <td>pasajeros</td>
-                            <td><input type="number" name="pasajeros"/></td>
-                        </tr>
-                        <tr>
-                            <td>puertas</td>
-                            <td><input type="number" name="puertas"/></td>
-                        </tr>
-                        <tr>
-                            <td>precio</td>
-                            <td><input type="number" name="precio"/></td>
-                        </tr>
-                        <tr>
-                            <td>cambios</td>
-                            <td><input type="text" name="cambios"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <input type="submit" value="registrar" />
+        <%@include file="header.jsp"%>
+        <div class="container">
+            <div class="text-center">
+            <form class="form-signin" action="Automoviles" method="post">
+                <h1>Editar Usuario</h1>
+                <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
+                <input type="hidden" name="comando" value="ingresarAutomovil"/>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="patente" name="patente" aria-describedby="patente" placeholder="Ingresar Patente" required="required">
+                </div>
+                <select class="form-group custom-select" id="modelo" name="modelo">
+                    <option>Marca</option>
+                    <% List<Modelo> modelos = new ModeloDAO().obtenerTodos();
+                        for (Modelo s : modelos) {
+                    %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getMarca().toString() + "</option>"); %>
+                    <%
+                        }
+                    %>
+                </select>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="pasajeros" name="pasajeros" aria-describedby="pasajeros" placeholder="Ingresar cantidad pasajeros" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="puertas" name="puertas" aria-describedby="puertas" placeholder="Ingresar cantidad de puertas" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="precio" name="precio" placeholder="Ingresar precio" required="precio">
+                </div>
+                <select class="form-group custom-select" id="cambios" name="cambios">
+                    <option>Tipo de Caja</option>
+                    <option>Automatico</option>
+                    <option>Manual</option>
+                </select>
+                <select class="form-group custom-select" id="sedeRadicacion" name="sedeRadicacion">
+                    <option>Sede Radicacion</option>
+                    <% List<Sede> sedes = new SedeDAO().obtenerTodos();
+                        for (Sede s : sedes) {
+                    %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
+                    <%
+                        }
+                    %>
+                </select>
+                <select class="form-group custom-select"id="sedeUbicacion" name="sedeUbicacion">
+                    <option>Sede Ubicacion</option>
+                    <% List<Sede> sedes1 = new SedeDAO().obtenerTodos();
+                        for (Sede s : sedes1) {
+                    %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
+                    <%
+                        }
+                    %>
+                </select>
+                <input id="registrar" type="button" class="btn btn-primary" value="Registrar"/>
             </form>
+            <hr class="featurette-divider">
+            </div>
         </div>
 
-    </body>
+        <div class="modal fade" id="registroConfirmadoModal" tabindex="-1" role="dialog" aria-labelledby="registroConfirmadoModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p>Vehiculo Registrado Correctamente</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="aceptarRegistroButton">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%@include file="footer.html" %>
+</body>
 </html>
+
+<script>
+    $('#registrar').click(function () {
+        $.post('Automoviles', $('.form-signin').serialize())
+                .done(function () {
+                    $('#aceptarRegistroButton').click(function () {
+                        location.href = 'Automoviles';
+                    });
+                    $('#registroConfirmadoModal').modal('toggle');
+                });
+    });
+</script>

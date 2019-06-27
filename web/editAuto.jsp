@@ -14,26 +14,38 @@
         <%@include file="header.jsp"%>
         <div class="container">
             <div class="text-center">
-                <form class="form-signin" action="Sede" method="post">
+                <form class="form-signin" action="Automoviles" method="post">
                     <input type="hidden" name="comando" value="actualizar"/>
                     <h1>Editar Auto</h1>
                     <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
-                    <%Automovil auto = (Automovil)request.getAttribute("sede"); %>
+                    <%Automovil auto = (Automovil)request.getAttribute("auto"); %>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="id" name="id" readonly="id" aria-describedby="id" value="<%= auto.getModelo().getMarca()%>">
+                        <input type="text" class="form-control" id="id" name="id" readonly="id" aria-describedby="id" value="<%= auto.getId() %>">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="domicilio" name="domicilio" aria-describedby="domicilio" value="<%= auto.getModelo().getNombre()%>" required="required">
+                        <input type="text" class="form-control" id="modelo" name="modelo" aria-describedby="modelo" value="<%= auto.getModelo().getNombre()%>" readonly="modelo">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="codigoPostal" name="codigoPostal" aria-describedby="codigoPostal" value="<%= auto.getPatente()%>" required="required">
+                        <input type="text" class="form-control" id="pasajeros" name="pasajeros" aria-describedby="pasajeros" value="<%= auto.getPasajeros() %>" required="required">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="ciudad" name="ciudad" aria-describedby="ciudad" value="<%= auto.getSedeRadicacion().getDomicilio()%>" required="required">
+                        <input type="text" class="form-control" id="patente" name="patente" aria-describedby="patente" value="<%= auto.getPatente() %>" required="required">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="provincia" name="provincia" value="<%= auto.getProvincia()%>" required="required">
+                        <input type="text" class="form-control" id="cambios" name="cambios" aria-describedby="cambios" value="<%= auto.getCambios() %>" required="required">
                     </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="precio" name="precio" aria-describedby="precio" value="<%= auto.getPrecio() %>" required="required">
+                    </div>
+                    <select class="form-group custom-select">
+                        <% List<Sede> sedes = new SedeDAO().obtenerTodos();
+                            for (Sede s : sedes) {
+                        %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getDomicilio() + "</option>"); %>
+                        <%
+                            }
+                        %>
+                    </select>
                     <button type="submit" class="btn btn-primary">Editar</button>
                 </form>
                 <hr class="featurette-divider">

@@ -28,20 +28,33 @@ public class AutomovilServlet extends HttpServlet {
 
     private AutomovilDAO automovilDAO;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        switch (request.getParameter("comando")) {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String comando = request.getParameter("comando");
+        
+        if(comando != null){
+            switch (comando) {
+            case "nuevo":
+                request.getRequestDispatcher("automovil.jsp").forward(request, response);
+            break;
             case "automovilesDisponibles":
                 mostrarAutomovilesDisponibles(request, response);
                 break;
             case "ingresarAutomovil":
                 ingresarAutomovil(request, response);
-                break;
-            default:
-            request.getRequestDispatcher("automoviles.jsp").forward(request,response);
+            break;
+            case "editar":
+                editarAuto(request, response);
+            break;
+            case "mostrarAutos":
+                mostrarAutos(request, response);
+            break;    
+            }
+        }else{
+            request.setAttribute("autos", mostrarAutos(request, response));
+            request.getRequestDispatcher("consultAuto.jsp").forward(request,response);
         }
-
-//        }
+        
     }
 
     @Override
@@ -81,10 +94,10 @@ public class AutomovilServlet extends HttpServlet {
     }
 
     private void ingresarAutomovil(HttpServletRequest request, HttpServletResponse response) {
-                Automovil automovil = new Automovil(
+            Automovil automovil = new Automovil(
                 request.getParameter("patente"),
-                //                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
-                new ModeloDAO().obtener(1),
+                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+                //new ModeloDAO().obtener(1),
                 Integer.parseInt(request.getParameter("pasajeros")),
                 Integer.parseInt(request.getParameter("puertas")),
                 new BigDecimal(request.getParameter("precio")),
@@ -92,13 +105,27 @@ public class AutomovilServlet extends HttpServlet {
                 Cambios.AUTOMATICO,
                 //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
                 //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
-                new SedeDAO().obtener(1),
-                new SedeDAO().obtener(1),
+                new SedeDAO().obtener(Integer.parseInt("sedeRadicacion")),
+                new SedeDAO().obtener(Integer.parseInt("sedeUbicacion")),
                 false,
                 false);
 
         automovilDAO = new AutomovilDAO();
         automovilDAO.crear(automovil);
     }
+    
+    private List mostrarAutos(HttpServletRequest request, HttpServletResponse response){
+        return new AutomovilDAO().obtenerTodos();
+    }
 
+    private void editarAuto(HttpServletRequest request, HttpServletResponse response) {
+        try{
+            automovilDAO = new AutomovilDAO();
+            Automovil automovil = automovilDAO.obtener(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("auto", automovil);
+            request.getRequestDispatcher("editAuto.jsp").forward(request, response);
+        }catch (ServletException | IOException ex) {
+            Logger.getLogger(SedeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

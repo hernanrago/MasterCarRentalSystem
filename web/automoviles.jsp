@@ -74,10 +74,12 @@
                             <div class="alert alert-info" role="alert" style="margin-bottom: 0">
                                 Reservado
                             </div>
-                            <% } else {%>
+                            <% } else if(usuario != null) { %>
                             <button type="button" class="btn btn-primary" reservar="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarReservaModal">
                                 Reservar
                             </button>
+                            <% } else { %>
+                            <a type="button" class="btn btn-primary" href="ingreso.jsp">Ingresa Para Reservar</a>
                             <% } %>
                         </div>
                     </div>

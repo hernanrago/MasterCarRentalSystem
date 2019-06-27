@@ -40,6 +40,15 @@ public class Reserva {
         this.automovil = automovil;
         this.usuario = usuario;
     }
+    
+    public Reserva(int id, Date fechaEntrega, Date fechaDevolucion, Automovil automovil) {
+        this.id = id;
+        this.fechaReserva = fechaReserva;
+        this.fechaEntrega = fechaEntrega;
+        this.fechaDevolucion = fechaDevolucion;
+        this.automovil = automovil;
+        this.usuario = usuario;
+    }
 
     /**
      * @return the id

@@ -28,7 +28,8 @@ import org.json.simple.JSONObject;
 
 public class ReservaServlet extends HttpServlet {
     private ReservaDAO reservaDAO;
-
+    private AutomovilDAO automovilDAO;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         String comando = request.getParameter("comando");
@@ -120,19 +121,25 @@ public class ReservaServlet extends HttpServlet {
     }
 
     private void actualizarReserva(HttpServletRequest request, HttpServletResponse response) {
-       // reservaDAO = new ReservaDAO();
-        //Reserva reserva = new Reserva(
-          //      Integer.parseInt(request.getParameter("id")),
-                
-        //);
+        automovilDAO = new AutomovilDAO();
+        automovilDAO.cancelarReserva(Integer.parseInt(request.getParameter("autoActual")));
+        automovilDAO.reservar(Integer.parseInt(request.getParameter("autoFinal")));
+        reservaDAO = new ReservaDAO();
+        Reserva reserva = new Reserva(
+                Integer.parseInt(request.getParameter("id")),
+                new ReservaDAO().normalizarFecha(request.getParameter("fechaAlquiler2")),
+                new ReservaDAO().normalizarFecha(request.getParameter("fechaDevolucion2")),
+                new AutomovilDAO().obtener(Integer.parseInt(request.getParameter("autoFinal")))
+        );
+        reservaDAO.actualizar(reserva);
     }
     
     private void mostrarReserva(HttpServletRequest request, HttpServletResponse response){
         reservaDAO = new ReservaDAO();
         Reserva reserva = reservaDAO.obtener(Integer.parseInt(request.getParameter("reservaId")));
-        //String fechaReserva = reservaDAO.fechaCadena(reserva.getFechaReserva());
-        //String fechaEntrega = reservaDAO.fechaCadena(reserva.getFechaEntrega());
-        //String fechaDevolucion = reservaDAO.fechaCadena(reserva.getFechaDevolucion());
+        String fechaReserva = reservaDAO.fechaCadena(reserva.getFechaReserva());
+        String fechaEntrega = reservaDAO.fechaCadena(reserva.getFechaEntrega());
+        String fechaDevolucion = reservaDAO.fechaCadena(reserva.getFechaDevolucion());
         PrintWriter out = null;
         try {
             out = response.getWriter();
@@ -146,9 +153,9 @@ public class ReservaServlet extends HttpServlet {
             json.put("cambios", reserva.getAutomovil().getCambios().toString());
             json.put("pasajeros", reserva.getAutomovil().getPasajeros());
             json.put("puertas", reserva.getAutomovil().getPuertas());
-            json.put("fechaEntrega", "2019-04-06");
-            json.put("fechaDevolucion", "2019-04-06");
-            json.put("fechaReserva", "2019-04-06");
+            json.put("fechaEntrega", fechaEntrega);
+            json.put("fechaDevolucion", fechaDevolucion);
+            json.put("fechaReserva", fechaReserva);
             json.put("ubicacion", reserva.getAutomovil().getSedeUbicacion().getDomicilio());
             out.print(json);
         } catch (IOException ex) {

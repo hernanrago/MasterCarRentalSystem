@@ -17,7 +17,7 @@
             <br>
             <h1>AUTOS</h1>
             <hr>
-            <a href="Sede?comando=nuevo" class="btn btn-success btn-lg">Ingresar Auto</a>
+            <a href="Automoviles?comando=nuevo" class="btn btn-success btn-lg">Ingresar Auto</a>
             <br>
             <br>
             <table class="table table-bordered">
@@ -30,7 +30,7 @@
                     <th class="text-center">Sede</th>
                     <th class="text-center">Alquilado</th>
                 </tr>
-                <%List<Automovil> auto = new AutomovilDAO().obtenerTodos();
+                <%List<Automovil> auto = (ArrayList<Automovil>) request.getAttribute("autos");
                     for (Automovil a : auto) {
                 %>
                 <tr>
@@ -40,11 +40,10 @@
                     <td class="text-center"><%= a.getPatente()%></td>
                     <td class="text-center"><%= a.getSedeRadicacion().getDomicilio()%></td>
                     <td class="text-center">
-                        <a href="Sede?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="Automoviles?comando=editar&id=<%= a.getId()%>" class="btn btn-warning btn-sm">Editar</a>
                         <button type="button" class="btn btn-danger btn-sm eliminar" value="<%= a.getId()%>" data-toggle="modal" data-target="#confirmarEliminarModal">
-                                Eliminar
-                            </button>
-                        <!--<a value="<%= a.getId()%>" class="btn btn-danger btn-sm">Eliminar</a>-->
+                            Eliminar
+                        </button>
                     </td>
                 </tr>
                 <% } %>
@@ -58,7 +57,7 @@
                             <h5 class="modal-title" id="confirmarEliminarModalLabel">Eliminar</h5>
                         </div>
                         <div class="modal-body">
-                            <p>¿Desea eliminar esta sede?</p>
+                            <p>¿Desea eliminar este vehiculo?</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -73,7 +72,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <p>Sede eliminada</p>
+                            <p>Vehiculo eliminado</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="aceptarEliminarButton">Aceptar</button>
