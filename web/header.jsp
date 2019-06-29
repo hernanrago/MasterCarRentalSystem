@@ -42,6 +42,7 @@
                     <a class="dropdown-item" href="Usuario">Usuarios</a>
                     <a class="dropdown-item" href="Sede">Sedes</a>
                     <a class="dropdown-item" href="Automoviles">Automóviles</a>
+                    <a class="dropdown-item" href="Modelo">Modelos</a>
                     <a class="dropdown-item" href="Reserva">Reservas</a>
                     <a class="dropdown-item" href="Usuario?comando=salir">Salir</a>
                 </div>

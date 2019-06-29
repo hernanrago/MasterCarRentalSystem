@@ -30,6 +30,11 @@ public class Modelo {
         this.marca = marca;
     }
     
+    public Modelo(int id, String nombre) {
+        this.id = id;
+        this.nombre = nombre;
+    }
+    
     /**
      * @return the id
      */

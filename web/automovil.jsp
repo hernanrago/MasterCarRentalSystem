@@ -4,6 +4,10 @@
     Author     : Hernán Rago
 --%>
 
+<%@page import="net.ifts16.enums.Marca"%>
+<%@page import="net.ifts16.enums.Cambios"%>
+<%@page import="net.ifts16.dao.AutomovilDAO"%>
+<%@page import="net.ifts16.model.Automovil"%>
 <%@page import="net.ifts16.dao.ModeloDAO"%>
 <%@page import="net.ifts16.model.Modelo"%>
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,18 +19,18 @@
         <div class="container">
             <div class="text-center">
             <form class="form-signin" action="Automoviles" method="post">
-                <h1>Editar Usuario</h1>
+                <h1>Ingresar Automovil</h1>
                 <img class="mb-4" src="resources/images/car-logo.png" alt="" width="72" height="72">
                 <input type="hidden" name="comando" value="ingresarAutomovil"/>
                 <div class="form-group">
                     <input type="text" class="form-control" id="patente" name="patente" aria-describedby="patente" placeholder="Ingresar Patente" required="required">
                 </div>
                 <select class="form-group custom-select" id="modelo" name="modelo">
-                    <option>Marca</option>
+                    <option>Modelo</option>
                     <% List<Modelo> modelos = new ModeloDAO().obtenerTodos();
                         for (Modelo s : modelos) {
                     %>
-                        <% out.print("<option value=" + s.getId() + ">" + s.getMarca().toString() + "</option>"); %>
+                        <% out.print("<option value=" + s.getId() + ">" + s.getMarca().toString() + " - " + s.getNombre() + "</option>"); %>
                     <%
                         }
                     %>
@@ -42,8 +46,10 @@
                 </div>
                 <select class="form-group custom-select" id="cambios" name="cambios">
                     <option>Tipo de Caja</option>
-                    <option>Automatico</option>
-                    <option>Manual</option>
+                    <% for(Cambios c : Cambios.values()){
+                    %>    
+                       <% out.print("<option value=" + c.name() + ">" + c.toString() + "</option>"); %> 
+                    <% } %>
                 </select>
                 <select class="form-group custom-select" id="sedeRadicacion" name="sedeRadicacion">
                     <option>Sede Radicacion</option>
@@ -66,11 +72,12 @@
                     %>
                 </select>
                 <input id="registrar" type="button" class="btn btn-primary" value="Registrar"/>
+                <a href="Modelo" class="btn btn-secondary">Ingresar Modelo</a>
             </form>
             <hr class="featurette-divider">
             </div>
         </div>
-
+                
         <div class="modal fade" id="registroConfirmadoModal" tabindex="-1" role="dialog" aria-labelledby="registroConfirmadoModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

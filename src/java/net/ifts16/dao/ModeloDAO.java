@@ -22,8 +22,11 @@ import net.ifts16.model.Modelo;
  */
 public class ModeloDAO implements Dao<Modelo> {
 
+    private static final String INSERT_MODELO = "INSERT INTO modelo (nombre, marca) VALUES (?,?);";
     private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE id = ?";
     private static final String SELECT_MODELO_TODOS = "SELECT * FROM modelo";
+    private static final String DELETE_MODELO = "DELETE FROM modelo WHERE id = ?";
+    private static final String UPDATE_MODELO = "UPDATE modelo SET nombre = ? WHERE id= ?;";
 
     @Override
     public Modelo obtener(int id) {
@@ -69,17 +72,39 @@ public class ModeloDAO implements Dao<Modelo> {
 
     @Override
     public void crear(Modelo t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(INSERT_MODELO);
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setString(2, t.getMarca().name());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+
+        }
     }
 
     @Override
     public void borrar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(DELETE_MODELO);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
 
     @Override
     public void actualizar(Modelo t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_MODELO);
+            preparedStatement.setString(1, t.getNombre());
+            preparedStatement.setInt(2, t.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
 
 }

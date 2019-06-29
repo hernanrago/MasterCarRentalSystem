@@ -36,6 +36,10 @@
         <servlet-name>ReservaServlet</servlet-name>
         <servlet-class>net.ifts16.controller.ReservaServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModeloServlet</servlet-name>
+        <servlet-class>net.ifts16.controller.ModeloServlet</servlet-class>
+    </servlet>
     
     <!--mapping-->
     <servlet-mapping>
@@ -63,6 +67,10 @@
         <url-pattern>/Automoviles</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ModeloServlet</servlet-name>
+        <url-pattern>/Modelo</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
         <servlet-name>ReservaServlet</servlet-name>
         <url-pattern>/Reserva</url-pattern>
     </servlet-mapping>
