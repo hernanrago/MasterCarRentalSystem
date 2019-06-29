@@ -59,7 +59,21 @@ public class Automovil {
         this.reservado = reservado;
         this.alquilado = alquilado;
     }
-
+    
+    public Automovil(int id, String patente, Modelo modelo, int pasajeros, int puertas,
+            BigDecimal precio, Cambios cambios, Sede sedeRadicacion,
+            Sede sedeUbicacion) {
+        this.id = id;
+        this.patente = patente;
+        this.modelo = modelo;
+        this.pasajeros = pasajeros;
+        this.puertas = puertas;
+        this.precio = precio;
+        this.cambios = cambios;
+        this.sedeRadicacion = sedeRadicacion;
+        this.sedeUbicacion = sedeUbicacion;
+    }
+    
     /**
      * @return the id
      */

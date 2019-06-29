@@ -137,6 +137,17 @@ public class AutomovilServlet extends HttpServlet {
     }
 
     private void actualizarAuto(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        automovilDAO = new AutomovilDAO();
+        Automovil automovil = new Automovil(
+                Integer.parseInt(request.getParameter("id")),
+                request.getParameter("patente"),
+                new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
+                Integer.parseInt(request.getParameter("pasajeros")),
+                Integer.parseInt(request.getParameter("puertas")),
+                new BigDecimal(request.getParameter("precio")),
+                Cambios.valueOf(request.getParameter("cambios")) ,
+                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
+                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion")))
+        );
     }
 }

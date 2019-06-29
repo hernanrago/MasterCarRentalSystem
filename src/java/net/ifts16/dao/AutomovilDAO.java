@@ -29,6 +29,7 @@ public class AutomovilDAO implements Dao<Automovil> {
     private static final String RESERVA = "UPDATE automovil set reservado = true WHERE id = ?";
     private static final String RESERVA_CANCELAR = "UPDATE automovil set reservado = false WHERE id = ?";
     private static final String DELETE_AUTOMOVIL = "DELETE FROM automovil WHERE id = ?";
+    private static final String UPDATE_AUTOMOVIL = "UPDATE automovil set patente = ?, modelo_id = ?, pasajeros = ?, puertas = ?, precio = ?, cambios = ?, sede_radicacion_id = ?, sede_ubicacion_id = ? WHERE id = ?";
     
 
     @Override
@@ -164,7 +165,22 @@ public class AutomovilDAO implements Dao<Automovil> {
 
     @Override
     public void actualizar(Automovil t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(UPDATE_AUTOMOVIL);
+            preparedStatement.setString(1, t.getPatente());
+            preparedStatement.setInt(2, t.getModelo().getId());
+            preparedStatement.setInt(3, t.getPasajeros());
+            preparedStatement.setInt(4, t.getPuertas());
+            preparedStatement.setBigDecimal(5, t.getPrecio());
+            preparedStatement.setString(6, t.getCambios().name());
+            preparedStatement.setInt(7, t.getSedeRadicacion().getId());
+            preparedStatement.setInt(8, t.getSedeUbicacion().getId());
+            preparedStatement.setInt(9, t.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+
+        }
     }
     
     public void cancelarReserva(int id){
