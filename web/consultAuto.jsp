@@ -88,23 +88,21 @@
 
 <script>
         $(document).on("click", ".eliminar", function () {
-        let sedeId = $(this).val();
-        let sede = <% out.print(request.getParameter("sede"));%>
-        $('#confirmarEliminarModal').val(sedeId);
+        let autoId = $(this).val();
 
         $(".confirmar").click(function () {
             $.ajax({
                 method: "POST",
-                url: "Sede",
+                url: "Automoviles",
                 data: {
                 comando: 'eliminar',    
-                sedeId: sedeId}
+                autoId: autoId}
             })
                     .done(function () {
                         $('#aceptarEliminarButton').click(function () {
                             $.ajax({
                                 method: "GET",
-                                url: "Sede"
+                                url: "Automoviles"
                             })
                                     .done(function () {
                                         location.reload();

@@ -28,6 +28,7 @@ public class AutomovilDAO implements Dao<Automovil> {
     private static final String SELECT_AUTOMOVIL_ID = "SELECT * FROM automovil WHERE id = ?";
     private static final String RESERVA = "UPDATE automovil set reservado = true WHERE id = ?";
     private static final String RESERVA_CANCELAR = "UPDATE automovil set reservado = false WHERE id = ?";
+    private static final String DELETE_AUTOMOVIL = "DELETE FROM automovil WHERE id = ?";
     
 
     @Override
@@ -140,7 +141,13 @@ public class AutomovilDAO implements Dao<Automovil> {
 
     @Override
     public void borrar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try (Connection conexion = AdministradorBaseDatos.obtenerConexion()) {
+            PreparedStatement preparedStatement = conexion.prepareStatement(DELETE_AUTOMOVIL);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
     }
 
     public void reservar(int id) {

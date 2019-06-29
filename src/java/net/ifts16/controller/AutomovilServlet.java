@@ -49,6 +49,12 @@ public class AutomovilServlet extends HttpServlet {
             case "mostrarAutos":
                 mostrarAutos(request, response);
             break;    
+            case"eliminar":
+                eliminarAuto(request, response);
+            break;
+            case "actualizar":
+                actualizarAuto(request, response);
+            break;
             }
         }else{
             request.setAttribute("autos", mostrarAutos(request, response));
@@ -97,16 +103,12 @@ public class AutomovilServlet extends HttpServlet {
             Automovil automovil = new Automovil(
                 request.getParameter("patente"),
                 new ModeloDAO().obtener(Integer.parseInt(request.getParameter("modelo"))),
-                //new ModeloDAO().obtener(1),
                 Integer.parseInt(request.getParameter("pasajeros")),
                 Integer.parseInt(request.getParameter("puertas")),
                 new BigDecimal(request.getParameter("precio")),
-                //                Cambios.valueOf(request.getParameter("cambios")) ,
-                Cambios.AUTOMATICO,
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
-                //                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
-                new SedeDAO().obtener(Integer.parseInt("sedeRadicacion")),
-                new SedeDAO().obtener(Integer.parseInt("sedeUbicacion")),
+                Cambios.valueOf(request.getParameter("cambios")) ,
+                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
+                new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion"))),
                 false,
                 false);
 
@@ -127,5 +129,14 @@ public class AutomovilServlet extends HttpServlet {
         }catch (ServletException | IOException ex) {
             Logger.getLogger(SedeServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void eliminarAuto(HttpServletRequest request, HttpServletResponse response) {
+        automovilDAO = new AutomovilDAO();
+        automovilDAO.borrar(Integer.parseInt(request.getParameter("autoId")));
+    }
+
+    private void actualizarAuto(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
