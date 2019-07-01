@@ -43,11 +43,9 @@ public class Reserva {
     
     public Reserva(int id, Date fechaEntrega, Date fechaDevolucion, Automovil automovil) {
         this.id = id;
-        this.fechaReserva = fechaReserva;
         this.fechaEntrega = fechaEntrega;
         this.fechaDevolucion = fechaDevolucion;
         this.automovil = automovil;
-        this.usuario = usuario;
     }
 
     /**

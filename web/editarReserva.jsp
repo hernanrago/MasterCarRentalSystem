@@ -28,9 +28,9 @@
                         <li class="list-group-item"><b>Usuario: </b><%= reserva.getUsuario().getNombreUsuario()%></li>
                         <li class="list-group-item"><b>Fecha Reserva: </b><%= reserva.getFechaReserva()%></li>
                         <li class="list-group-item"><b>Fecha Entrega: </b><%= reserva.getFechaEntrega()%></li>
-                        <li class="list-group-item"><input id="fechaAlquiler2" name="fechaAlquiler2" placeholder="Escoger nueva fecha"/></li>
+                        <li class="list-group-item"><input id="fechaAlquiler2" value="<%= reserva.getFechaEntrega().toString() %>" name="fechaAlquiler2" placeholder="Escoger nueva fecha"/></li>
                         <li class="list-group-item"><b>Fecha Devolucion: </b><%= reserva.getFechaDevolucion()%></li>
-                        <li class="list-group-item"><input id="fechaDevolucion2" name="fechaDevolucion2" placeholder="Escoger nueva fecha"/></li>
+                        <li class="list-group-item"><input id="fechaDevolucion2" value="<%= reserva.getFechaDevolucion()%>" name="fechaDevolucion2" placeholder="Escoger nueva fecha"/></li>
                         <li class="list-group-item">
                             <select class="form-control custom-select" id="autoFinal" name="autoFinal">
                                 <option value="<%= reserva.getAutomovil().getId() %>">Vehiculos Disponibles</option>
@@ -38,7 +38,7 @@
                                     for (Automovil s : automovil) {
                                         if (s.isReservado() == false) {
                                 %>
-                                <% out.print("<option value=" + s.getId() + ">" + s.getModelo().getMarca() + "</option>"); %>
+                                <% out.print("<option value=" + s.getId() + ">" + s.getModelo().getMarca() + s.getModelo().getNombre() + "</option>"); %>
                                 <%
                                         }
                                     }

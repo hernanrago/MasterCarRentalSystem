@@ -158,18 +158,10 @@
             })
                     .done(function () {
                         $('#aceptarReservaButton').click(function () {
-                            $.ajax({
-                                method: "GET",
-                                url: "Automoviles",
-                                data: {comando: "automovilesDisponibles",
-                                    sede: sede}
-                            })
-                                    .done(function () {
-                                        location.reload();
-                                    });
+                            location.reload();
                         });
-                        $('#confirmarReservaModal').modal('toggle');
-                        $('#reservaConfirmadaModal').modal('toggle');
+                    $('#confirmarReservaModal').modal('toggle');
+                    $('#reservaConfirmadaModal').modal('toggle');
                     });
         };
 
