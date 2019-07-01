@@ -149,5 +149,6 @@ public class AutomovilServlet extends HttpServlet {
                 new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeRadicacion"))),
                 new SedeDAO().obtener(Integer.parseInt(request.getParameter("sedeUbicacion")))
         );
+        automovilDAO.actualizar(automovil);
     }
 }
